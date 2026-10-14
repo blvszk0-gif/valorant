@@ -155,7 +155,8 @@ function renderGlossary() {
   });
   entries.sort((a,b) => a.term.localeCompare(b.term, 'pl'));
   const categories = ['Wszystkie', ...new Set(entries.map(item => item.category).sort((a,b) => a.localeCompare(b, 'pl')))];
-  root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> MATERIAŁ POMOCNICZY</div><h1>SŁOWNIK <em>VALORANTA.</em></h1><p>Angielskie nazwy, skróty i określenia używane w grze oraz w lekcjach. Wpisz hasło albo wybierz kategorię.</p></section><section class="glossary-tools"><label class="glossary-search-wrap"><span>⌕</span><input id="glossary-search" type="search" placeholder="Szukaj hasła, skrótu lub opisu…" aria-label="Szukaj w słowniku"></label><div class="glossary-categories" role="group" aria-label="Kategorie słownika">${categories.map((category,index)=>`<button class="glossary-filter ${index===0?'active':''}" data-category="${esc(category)}">${esc(category)}</button>`).join('')}</div><p class="glossary-count" id="glossary-count" aria-live="polite"></p><div class="glossary-list" id="glossary-list"></div></section><p class="glossary-source">Słownik bazuje na materiałach kursu i <a href="https://playvalorant.com/en-us/news/announcements/beginners-guide/" target="_blank" rel="noreferrer">oficjalnym poradniku początkującego Riot Games ↗</a>. Slang może się różnić między graczami.</p>`;
+  root.innerHTML = `<section class="page-intro"><div><div class="eyebrow"><span></span> MATERIAŁ POMOCNICZY</div><h1>SŁOWNIK <em>VALORANTA.</em></h1><p>Angielskie nazwy, skróty i określenia używane w grze oraz w lekcjach. Wpisz hasło albo wybierz kategorię.</p></div><button class="primary-button" data-quiz="glossary">QUIZ ZE SŁOWNIKA <span>↗</span></button></section><section class="glossary-tools"><label class="glossary-search-wrap"><span>⌕</span><input id="glossary-search" type="search" placeholder="Szukaj hasła, skrótu lub opisu…" aria-label="Szukaj w słowniku"></label><div class="glossary-categories" role="group" aria-label="Kategorie słownika">${categories.map((category,index)=>`<button class="glossary-filter ${index===0?'active':''}" data-category="${esc(category)}">${esc(category)}</button>`).join('')}</div><p class="glossary-count" id="glossary-count" aria-live="polite"></p><div class="glossary-list" id="glossary-list"></div></section><p class="glossary-source">Słownik bazuje na materiałach kursu i <a href="https://playvalorant.com/en-us/news/announcements/beginners-guide/" target="_blank" rel="noreferrer">oficjalnym poradniku początkującego Riot Games ↗</a>. Slang może się różnić między graczami.</p>`;
+  bindQuizButtons(root);
   const search = root.querySelector('#glossary-search');
   const list = root.querySelector('#glossary-list');
   const count = root.querySelector('#glossary-count');
@@ -228,7 +229,7 @@ function showWeaponDetails(weapon) {
   dialog.showModal();
 }
 function renderPractice() {
-  root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> POWTÓRKA W FORMIE GRY</div><h1>ZGADNIJ, <em>KTO TO?</em></h1><p>Krótki trening w stylu zgadywanki: portret agenta, ikonka umiejętności, broń albo przypisanie do roli. Każde pytanie ma cztery odpowiedzi.</p></section><div class="practice-grid"><article class="practice-card"><div class="practice-symbol portrait-practice"><img src="${esc(agents.find(a=>a.name==='Sova')?.portrait || agents[0].portrait)}" alt=""></div><div class="eyebrow small"><span></span> ROZPOZNAWANIE</div><h2>Kto to <em>jest?</em></h2><p>Rozpoznaj agentów po ich portretach. 10 pytań, cztery odpowiedzi.</p><button class="primary-button" data-quiz="portrait">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol skill-practice"><img src="${esc(agents.flatMap(a=>a.abilities).find(x=>x.icon)?.icon || '')}" alt=""></div><div class="eyebrow small"><span></span> IKONY UMIEJĘTNOŚCI</div><h2>Czyja to <em>umiejętność?</em></h2><p>Spójrz na ikonkę i wybierz agenta, do którego należy.</p><button class="primary-button" data-quiz="ability">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol roles-practice"><div>4</div></div><div class="eyebrow small"><span></span> ROLE AGENTÓW</div><h2>Jaka to <em>rola?</em></h2><p>Wskaż rolę agenta na podstawie jego portretu.</p><button class="primary-button" data-quiz="role">ZAGRAJ <span>↗</span></button></article><article class="practice-card map-practice-card"><div class="practice-symbol map-practice-symbol"><span>MAPY</span><b>A</b><b>B</b></div><div class="eyebrow small"><span></span> SPRAWDŹ SIĘ</div><h2>Callouty <em>map.</em></h2><p>Uzupełnij puste punkty z pamięci i sprawdź wynik. Każda runda losuje kolejne miejsca.</p><button class="primary-button" data-go="map-practice">WYBIERZ MAPĘ <span>↗</span></button></article><article class="practice-card weapon-practice-card"><div class="practice-symbol weapon-practice-symbol"><span>ARSENAŁ</span><b>V</b></div><div class="eyebrow small"><span></span> ROZPOZNAWANIE</div><h2>Jaka to <em>broń?</em></h2><p>Rozpoznaj broń na obrazku i wybierz jej nazwę spośród czterech odpowiedzi.</p><button class="primary-button" data-quiz="weapon">ZAGRAJ <span>↗</span></button></article></div><p class="practice-footnote">Postęp lekcji zapisuje się w tej przeglądarce na tym urządzeniu.</p>`;
+  root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> POWTÓRKA W FORMIE GRY</div><h1>ZGADNIJ, <em>KTO TO?</em></h1><p>Krótki trening w stylu zgadywanki: portret agenta, ikonka umiejętności, broń, pojęcia ze słowniczka albo przypisanie do roli. Każde pytanie ma cztery odpowiedzi.</p></section><div class="practice-grid"><article class="practice-card"><div class="practice-symbol portrait-practice"><img src="${esc(agents.find(a=>a.name==='Sova')?.portrait || agents[0].portrait)}" alt=""></div><div class="eyebrow small"><span></span> ROZPOZNAWANIE</div><h2>Kto to <em>jest?</em></h2><p>Rozpoznaj agentów po ich portretach. 10 pytań, cztery odpowiedzi.</p><button class="primary-button" data-quiz="portrait">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol skill-practice"><img src="${esc(agents.flatMap(a=>a.abilities).find(x=>x.icon)?.icon || '')}" alt=""></div><div class="eyebrow small"><span></span> IKONY UMIEJĘTNOŚCI</div><h2>Czyja to <em>umiejętność?</em></h2><p>Spójrz na ikonkę i wybierz agenta, do którego należy.</p><button class="primary-button" data-quiz="ability">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol roles-practice"><div>4</div></div><div class="eyebrow small"><span></span> ROLE AGENTÓW</div><h2>Jaka to <em>rola?</em></h2><p>Wskaż rolę agenta na podstawie jego portretu.</p><button class="primary-button" data-quiz="role">ZAGRAJ <span>↗</span></button></article><article class="practice-card map-practice-card"><div class="practice-symbol map-practice-symbol"><span>MAPY</span><b>A</b><b>B</b></div><div class="eyebrow small"><span></span> SPRAWDŹ SIĘ</div><h2>Callouty <em>map.</em></h2><p>Uzupełnij puste punkty z pamięci i sprawdź wynik. Każda runda losuje kolejne miejsca.</p><button class="primary-button" data-go="map-practice">WYBIERZ MAPĘ <span>↗</span></button></article><article class="practice-card weapon-practice-card"><div class="practice-symbol weapon-practice-symbol"><span>ARSENAŁ</span><b>V</b></div><div class="eyebrow small"><span></span> ROZPOZNAWANIE</div><h2>Jaka to <em>broń?</em></h2><p>Rozpoznaj broń na obrazku i wybierz jej nazwę spośród czterech odpowiedzi.</p><button class="primary-button" data-quiz="weapon">ZAGRAJ <span>↗</span></button></article><article class="practice-card glossary-practice-card"><div class="practice-symbol glossary-practice-symbol"><span>GG</span><b>ABC</b></div><div class="eyebrow small"><span></span> SŁOWNICZEK</div><h2>Co to za <em>pojęcie?</em></h2><p>Przeczytaj definicję i wybierz pasujące hasło spośród czterech odpowiedzi.</p><button class="primary-button" data-quiz="glossary">ZAGRAJ <span>↗</span></button></article></div><p class="practice-footnote">Postęp lekcji zapisuje się w tej przeglądarce na tym urządzeniu.</p>`;
   bindScreenActions();
 }
 async function loadMapCatalog() {
@@ -386,6 +387,20 @@ function showScreen(screen) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function makeQuestions(type) {
+  if (type === 'glossary') {
+    const glossary = [...(window.VALORANT_GLOSSARY || [])];
+    agents.forEach(agent => {
+      glossary.push({ term: agent.name, definition: agent.description || `Agent z rolą ${agent.role}.` });
+      (agent.abilities || []).forEach(ability => glossary.push({ term: ability.name, definition: `${agent.name} · ${slotName(ability.slot || 'Ability')}. ${ability.description || 'Umiejętność agenta.'}` }));
+    });
+    const entries = [...new Map(glossary.filter(item => item.term && item.definition).map(item => [item.term, item])).values()];
+    if (entries.length < 4) return [];
+    return shuffle(entries).slice(0, Math.min(10, entries.length)).map(item => {
+      const wrong = shuffle(entries.filter(other => other.term !== item.term)).slice(0, 3).map(other => other.term);
+      const options = shuffle([item.term, ...wrong]);
+      return { prompt: 'Jakie hasło pasuje do tej definicji?', definition: item.definition, options, correct: options.indexOf(item.term), why: `${item.term}: ${item.definition}` };
+    });
+  }
   if (type === 'role') {
     return shuffle(agents).slice(0, 8).map(agent => {
       const options = shuffle(roles);
@@ -438,9 +453,11 @@ async function startQuiz(type) {
   }
   const dialog = document.querySelector('#quiz-dialog');
   const labels = { role: ['QUIZ · ROLE', 'Dopasuj agenta do roli', 'role'], ability: ['QUIZ · UMIEJĘTNOŚCI', 'Czyja to umiejętność?', 'agents'], portrait: ['TRENING · PORTRETY', 'Rozpoznaj agenta', null], weapon: ['QUIZ · ARSENAŁ', 'Rozpoznaj broń', null] };
-  const [label,title,progressId] = labels[type] || labels.role;
+  const allLabels = { ...labels, glossary: ['QUIZ · SŁOWNICZEK', 'Rozpoznaj pojęcie', null] };
+  const [label,title,progressId] = allLabels[type] || labels.role;
   activeQuiz = { type, progressId };
   questionSet = questions || makeQuestions(type); questionIndex = 0; score = 0; selectedAnswer = null; answered = false;
+  if (!questionSet.length) { showToast('Brakuje haseł w słowniczku do przygotowania quizu.'); return; }
   document.querySelector('#dialog-kicker').textContent = label;
   document.querySelector('#dialog-title').textContent = title;
   document.querySelector('#quiz-label').textContent = '✳ PYTANIE';
@@ -453,7 +470,9 @@ function renderQuestion() {
   selectedAnswer = null; answered = false;
   document.querySelector('#quiz-counter').textContent = `${questionIndex + 1} / ${questionSet.length}`;
   document.querySelector('#quiz-question').textContent = question.prompt;
-  const quizMedia = question.videoId
+  const quizMedia = question.definition
+    ? `<div class="question-art question-definition">${esc(question.definition)}</div>`
+    : question.videoId
     ? `<div class="question-art question-video-art"><iframe src="https://drive.google.com/file/d/${encodeURIComponent(question.videoId)}/preview" title="${esc(question.alt)}" loading="lazy" allow="autoplay; fullscreen" allowfullscreen></iframe></div>`
     : `<div class="question-art ${activeQuiz.type === 'ability' ? 'question-icon-art' : ''} ${activeQuiz.type === 'weapon' ? 'question-weapon-art' : ''}"><img src="${esc(question.image)}" alt="${esc(question.alt)}"></div>`;
   document.querySelector('#quiz-media').innerHTML = quizMedia;
