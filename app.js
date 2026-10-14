@@ -2,6 +2,8 @@ const agents = window.VALORANT_DATA || [];
 const root = document.querySelector('#screen-root');
 const navButtons = [...document.querySelectorAll('[data-nav]')];
 const roles = ['Inicjator', 'Szturmowiec', 'Strażnik', 'Kontroler'];
+const roleEnglishNames = { Inicjator: 'Initiator', Szturmowiec: 'Duelist', Strażnik: 'Sentinel', Kontroler: 'Controller' };
+function roleDisplayName(role) { return `${role} / ${roleEnglishNames[role] || role}`; }
 const roleInfo = {
   'Inicjator': { icon: 'valorant_role_jpg/Inicjator_rola.jpg', examples: 'Sova · Gekko · Skye' },
   'Szturmowiec': { icon: 'valorant_role_jpg/Szturmowiec_rola.jpg', examples: 'Jett · Raze · Phoenix' },
@@ -107,7 +109,7 @@ function renderRoles() {
     const info = roleInfo[role];
     const exampleAgent = agents.find(agent => agent.role === role);
     const description = exampleAgent?.roleDescription || '';
-    return `<article class="role-card"><img src="${esc(info.icon)}" alt="Ikona roli ${esc(role)}"><div><h3>${esc(role)}</h3><p>${esc(description)}</p><small>PRZYKŁADY · ${esc(info.examples)}</small></div></article>`;
+    return `<article class="role-card"><img src="${esc(info.icon)}" alt="Ikona roli ${esc(roleDisplayName(role))}"><div><h3>${esc(roleDisplayName(role))}</h3><p>${esc(description)}</p><small>PRZYKŁADY · ${esc(info.examples)}</small></div></article>`;
   }).join('');
   root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> LEKCJA 01 · ROLE</div><h1>CZTERY ROLE.<br><em>JEDNA DRUŻYNA.</em></h1><p>Obejrzyj nagranie, poznaj zadania każdej roli, a potem dopasuj agentów do ich specjalizacji.</p></section><section class="lesson-layout"><div class="lesson-main">${videoMarkup('edytowane/1.mp4','Lekcja 1 — role agentów')}<div class="lesson-note"><span>✳</span><p>Role opisują, jak agent najczęściej wspiera drużynę. Nie są sztywnymi zasadami — każdy agent może pomagać na różne sposoby.</p></div></div><aside class="lesson-aside"><div class="aside-kicker">W TEJ LEKCJI</div><h2>Zapamiętaj <em>cztery role.</em></h2><p>Wypatruj ich zadań, kiedy poznajesz kolejnych agentów.</p><button class="primary-button" data-quiz="role">ROZPOCZNIJ QUIZ <span>↗</span></button><div class="aside-meta">8 PYTAŃ · 4 ODPOWIEDZI DO WYBORU</div></aside></section><section class="roles-section"><div class="section-head"><div><div class="eyebrow small"><span></span> PODSTAWY</div><h2>Kto za co <em>odpowiada?</em></h2></div></div><div class="role-grid">${cards}</div></section>`;
   bindScreenActions();
@@ -116,8 +118,8 @@ function renderAgentGrid(filter = '') {
   const grid = document.querySelector('#agent-grid');
   if (!grid) return;
   const query = filter.trim().toLocaleLowerCase('pl');
-  const shown = agents.filter(a => a.name.toLocaleLowerCase('pl').includes(query) || a.role.toLocaleLowerCase('pl').includes(query));
-  grid.innerHTML = shown.map(agent => `<button class="agent-tile ${selectedAgent?.id === agent.id ? 'selected' : ''}" data-agent="${esc(agent.id)}"><img src="${esc(agent.portrait)}" alt=""><span><b>${esc(agent.name)}</b><small>${esc(agent.role)}</small></span><i>↗</i></button>`).join('') || '<p class="empty-state">Nie znaleziono agenta.</p>';
+  const shown = agents.filter(a => a.name.toLocaleLowerCase('pl').includes(query) || roleDisplayName(a.role).toLocaleLowerCase('pl').includes(query));
+  grid.innerHTML = shown.map(agent => `<button class="agent-tile ${selectedAgent?.id === agent.id ? 'selected' : ''}" data-agent="${esc(agent.id)}"><img src="${esc(agent.portrait)}" alt=""><span><b>${esc(agent.name)}</b><small>${esc(roleDisplayName(agent.role))}</small></span><i>↗</i></button>`).join('') || '<p class="empty-state">Nie znaleziono agenta.</p>';
   grid.querySelectorAll('[data-agent]').forEach(button => button.addEventListener('click', () => {
     selectedAgent = agents.find(a => a.id === button.dataset.agent) || agents[0];
     renderAgentDetail();
@@ -129,7 +131,7 @@ function renderAgentDetail() {
   if (!box || !selectedAgent) return;
   const a = selectedAgent;
   const skills = a.abilities.map(ability => `<article class="ability-card"><div class="ability-icon-wrap">${ability.icon ? `<img src="${esc(ability.icon)}" alt="Ikona ${esc(ability.name)}">` : '<span class="passive-icon">PASSIVE</span>'}</div><div><div class="ability-slot">${esc(slotName(ability.slot))}</div><h3>${esc(abilityDisplayName(ability))}</h3><p>${esc(ability.description)}</p></div></article>`).join('');
-  box.innerHTML = `<div class="agent-detail-head"><div><div class="eyebrow small"><span></span> ${esc(a.role)}</div><h2>${esc(a.name)}</h2><p>${esc(a.description)}</p></div><img class="agent-detail-portrait" src="${esc(a.portrait)}" alt="Portret agenta ${esc(a.name)}"></div><div class="agent-detail-video">${videoMarkup(a.video,`Lekcja agenta — ${a.name}`,a.portrait)}</div><div class="section-head ability-heading"><div><div class="eyebrow small"><span></span> ZESTAW UMIEJĘTNOŚCI</div><h2>Co potrafi <em>${esc(a.name)}?</em></h2></div><button class="secondary-button" data-quiz="ability">QUIZ UMIEJĘTNOŚCI ↗</button></div><div class="ability-grid">${skills}</div>`;
+  box.innerHTML = `<div class="agent-detail-head"><div><div class="eyebrow small"><span></span> ${esc(roleDisplayName(a.role))}</div><h2>${esc(a.name)}</h2><p>${esc(a.description)}</p></div><img class="agent-detail-portrait" src="${esc(a.portrait)}" alt="Portret agenta ${esc(a.name)}"></div><div class="agent-detail-video">${videoMarkup(a.video,`Lekcja agenta — ${a.name}`,a.portrait)}</div><div class="section-head ability-heading"><div><div class="eyebrow small"><span></span> ZESTAW UMIEJĘTNOŚCI</div><h2>Co potrafi <em>${esc(a.name)}?</em></h2></div><button class="secondary-button" data-quiz="ability">QUIZ UMIEJĘTNOŚCI ↗</button></div><div class="ability-grid">${skills}</div>`;
   bindQuizButtons(box);
 }
 function slotName(slot) {
@@ -170,7 +172,7 @@ function renderGlossary() {
   updateNav('glossary');
   const entries = [...(window.VALORANT_GLOSSARY || [])];
   agents.forEach(agent => {
-    entries.push({ term: agent.name, category: 'Agenci i umiejętności', also: agent.role, definition: agent.description || `Agent z rolą ${agent.role}.` });
+    entries.push({ term: agent.name, category: 'Agenci i umiejętności', also: roleDisplayName(agent.role), definition: agent.description || `Agent z rolą ${roleDisplayName(agent.role)}.` });
     (agent.abilities || []).forEach(ability => entries.push({ term: abilityDisplayName(ability), category: 'Agenci i umiejętności', also: agent.name, definition: `${agent.name} · ${slotName(ability.slot || 'Ability')}. ${ability.description || 'Umiejętność agenta.'}` }));
   });
   entries.sort((a,b) => a.term.localeCompare(b.term, 'pl'));
@@ -410,7 +412,7 @@ function makeQuestions(type) {
   if (type === 'glossary') {
     const glossary = [...(window.VALORANT_GLOSSARY || [])];
     agents.forEach(agent => {
-      glossary.push({ term: agent.name, definition: agent.description || `Agent z rolą ${agent.role}.` });
+      glossary.push({ term: agent.name, definition: agent.description || `Agent z rolą ${roleDisplayName(agent.role)}.` });
       (agent.abilities || []).forEach(ability => glossary.push({ term: abilityDisplayName(ability), definition: `${agent.name} · ${slotName(ability.slot || 'Ability')}. ${ability.description || 'Umiejętność agenta.'}` }));
     });
     const entries = [...new Map(glossary.filter(item => item.term && item.definition).map(item => [item.term, item])).values()];
@@ -423,8 +425,8 @@ function makeQuestions(type) {
   }
   if (type === 'role') {
     return shuffle(agents).slice(0, 8).map(agent => {
-      const options = shuffle(roles);
-      return { prompt: `Którą rolę pełni ${agent.name}?`, image: agent.portrait, alt: `Portret agenta ${agent.name}`, options, correct: options.indexOf(agent.role), why: `${agent.name} to ${agent.role}. ${agent.roleDescription}` };
+      const options = shuffle(roles.map(roleDisplayName));
+      return { prompt: `Którą rolę pełni ${agent.name}?`, image: agent.portrait, alt: `Portret agenta ${agent.name}`, options, correct: options.indexOf(roleDisplayName(agent.role)), why: `${agent.name} to ${roleDisplayName(agent.role)}. ${agent.roleDescription}` };
     });
   }
   if (type === 'ability') {
@@ -449,7 +451,7 @@ function makeQuestions(type) {
     return shuffle(agents).slice(0, 10).map(agent => {
       const wrong = shuffle(agents.filter(other => other.id !== agent.id)).slice(0, 3).map(other => other.name);
       const options = shuffle([agent.name, ...wrong]);
-      return { prompt: 'Kto jest na portrecie?', image: agent.portrait, alt: 'Portret agenta', options, correct: options.indexOf(agent.name), why: `To ${agent.name}, agent z rolą ${agent.role}.` };
+      return { prompt: 'Kto jest na portrecie?', image: agent.portrait, alt: 'Portret agenta', options, correct: options.indexOf(agent.name), why: `To ${agent.name}, agent z rolą ${roleDisplayName(agent.role)}.` };
     });
   }
   return [];
