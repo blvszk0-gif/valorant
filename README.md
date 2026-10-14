@@ -39,3 +39,5 @@ To jest strona statyczna HTML/CSS/JS, więc nie potrzebuje komendy budowania. Re
 ## Lekcja map i trening calloutów
 
 Sekcja **Lekcja 3 · Mapy** pobiera listę map i ich calloutów z [Valorant API](https://valorant-api.com/v1/maps). W lekcji wybiera się mapę i dostaje pełną minimapę z ponumerowanymi punktami oraz legendę wszystkich nazw. W sekcji **Trening** wybiera się mapę ponownie i uzupełnia pustą minimapę z pamięci. Quiz losuje do ośmiu miejsc na rundę i przechodzi przez całą pulę, zanim zacznie losować od nowa. Na komputerze można przeciągać nazwy, a na telefonie stuknąć nazwę i pole.
+
+Sekcja **Słownik** zawiera podstawowe terminy z rozgrywki, map, komunikacji, ekonomii, strzelania i umiejętności. Nazwy agentów oraz ich umiejętności są dołączane bezpośrednio z danych kursu; hasła można filtrować po kategorii i wyszukiwać.

@@ -64,7 +64,7 @@ function updateNav(screen) {
   activeScreen = screen;
   const navScreen = screen === 'map-practice' ? 'practice' : screen;
   navButtons.forEach(button => button.classList.toggle('active', button.dataset.nav === navScreen));
-  const names = { overview: 'START', roles: 'LEKCJA 1 / ROLE', agents: 'LEKCJA 2 / AGENCI', maps: 'LEKCJA 3 / MAPY', practice: 'TRENING', 'map-practice': 'TRENING / MAPY', extras: 'DODATKOWE LEKCJE' };
+  const names = { overview: 'START', roles: 'LEKCJA 1 / ROLE', agents: 'LEKCJA 2 / AGENCI', maps: 'LEKCJA 3 / MAPY', practice: 'TRENING', 'map-practice': 'TRENING / MAPY', extras: 'DODATKOWE LEKCJE', glossary: 'SŁOWNIK' };
   document.querySelector('#crumb').textContent = names[screen] || 'START';
 }
 function videoMarkup(path, title, poster = '') {
@@ -136,6 +136,36 @@ function renderAgents() {
 function renderExtras() {
   const groups = [...new Set(extraLessons.map(x => x.group))];
   root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> DODATKOWA NAUKA</div><h1>WIEDZA Z <em>ROZGRYWKI.</em></h1><p>Po rolach i agentach możesz przejść do zakupów, broni, interfejsu i przykładów gry na mapie.</p></section><div class="extras-groups">${groups.map(group => `<section class="extra-group"><div class="section-head"><div><div class="eyebrow small"><span></span> ${esc(group)}</div><h2>${group.includes('BRONIE') ? 'Broń i <em>pancerz.</em>' : 'Poznaj <em>mecz.</em>'}</h2></div><span class="section-count">${extraLessons.filter(x => x.group === group).length} NAGRAŃ</span></div><div class="extra-list">${extraLessons.filter(x => x.group === group).map(item => `<details class="extra-video-card"><summary><span class="extra-number">${esc(item.id)}</span><span class="extra-title"><b>${esc(item.title)}</b><small>${esc(item.note)}</small></span><span class="extra-play">▶</span></summary><div class="extra-player">${videoMarkup(`edytowane/${item.file}`,`${item.id} — ${item.title}`)}</div></details>`).join('')}</div></section>`).join('')}</div>`;
+}
+function renderGlossary() {
+  updateNav('glossary');
+  const entries = [...(window.VALORANT_GLOSSARY || [])];
+  agents.forEach(agent => {
+    entries.push({ term: agent.name, category: 'Agenci i umiejętności', also: agent.role, definition: agent.description || `Agent z rolą ${agent.role}.` });
+    (agent.abilities || []).forEach(ability => entries.push({ term: ability.name, category: 'Agenci i umiejętności', also: agent.name, definition: `${agent.name} · ${slotName(ability.slot || 'Ability')}. ${ability.description || 'Umiejętność agenta.'}` }));
+  });
+  entries.sort((a,b) => a.term.localeCompare(b.term, 'pl'));
+  const categories = ['Wszystkie', ...new Set(entries.map(item => item.category).sort((a,b) => a.localeCompare(b, 'pl')))];
+  root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> MATERIAŁ POMOCNICZY</div><h1>SŁOWNIK <em>VALORANTA.</em></h1><p>Angielskie nazwy, skróty i określenia używane w grze oraz w lekcjach. Wpisz hasło albo wybierz kategorię.</p></section><section class="glossary-tools"><label class="glossary-search-wrap"><span>⌕</span><input id="glossary-search" type="search" placeholder="Szukaj hasła, skrótu lub opisu…" aria-label="Szukaj w słowniku"></label><div class="glossary-categories" role="group" aria-label="Kategorie słownika">${categories.map((category,index)=>`<button class="glossary-filter ${index===0?'active':''}" data-category="${esc(category)}">${esc(category)}</button>`).join('')}</div><p class="glossary-count" id="glossary-count" aria-live="polite"></p><div class="glossary-list" id="glossary-list"></div></section><p class="glossary-source">Słownik bazuje na materiałach kursu i <a href="https://playvalorant.com/en-us/news/announcements/beginners-guide/" target="_blank" rel="noreferrer">oficjalnym poradniku początkującego Riot Games ↗</a>. Slang może się różnić między graczami.</p>`;
+  const search = root.querySelector('#glossary-search');
+  const list = root.querySelector('#glossary-list');
+  const count = root.querySelector('#glossary-count');
+  const normalize = value => String(value).toLocaleLowerCase('pl').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  let selectedCategory = 'Wszystkie';
+  const updateResults = () => {
+    const query = normalize(search.value.trim());
+    const visible = entries.filter(item => (selectedCategory === 'Wszystkie' || item.category === selectedCategory)
+      && normalize(`${item.term} ${item.also || ''} ${item.definition}`).includes(query));
+    count.textContent = `${visible.length} ${visible.length === 1 ? 'hasło' : 'haseł'}`;
+    list.innerHTML = visible.length ? visible.map(item => `<article class="glossary-entry"><div class="glossary-entry-head"><h2>${esc(item.term)}</h2><span>${esc(item.category)}</span></div>${item.also ? `<div class="glossary-also">${esc(item.also)}</div>` : ''}<p>${esc(item.definition)}</p></article>`).join('') : '<p class="empty-state">Nie znaleziono takiego hasła.</p>';
+  };
+  search.addEventListener('input', updateResults);
+  root.querySelectorAll('[data-category]').forEach(button => button.addEventListener('click', () => {
+    selectedCategory = button.dataset.category;
+    root.querySelectorAll('[data-category]').forEach(filter => filter.classList.toggle('active', filter === button));
+    updateResults();
+  }));
+  updateResults();
 }
 function renderPractice() {
   root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> POWTÓRKA W FORMIE GRY</div><h1>ZGADNIJ, <em>KTO TO?</em></h1><p>Krótki trening w stylu zgadywanki: portret agenta, ikonka umiejętności albo przypisanie do roli. Każde pytanie ma cztery odpowiedzi.</p></section><div class="practice-grid"><article class="practice-card"><div class="practice-symbol portrait-practice"><img src="${esc(agents.find(a=>a.name==='Sova')?.portrait || agents[0].portrait)}" alt=""></div><div class="eyebrow small"><span></span> ROZPOZNAWANIE</div><h2>Kto to <em>jest?</em></h2><p>Rozpoznaj agentów po ich portretach. 10 pytań, cztery odpowiedzi.</p><button class="primary-button" data-quiz="portrait">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol skill-practice"><img src="${esc(agents.flatMap(a=>a.abilities).find(x=>x.icon)?.icon || '')}" alt=""></div><div class="eyebrow small"><span></span> IKONY UMIEJĘTNOŚCI</div><h2>Czyja to <em>umiejętność?</em></h2><p>Spójrz na ikonkę i wybierz agenta, do którego należy.</p><button class="primary-button" data-quiz="ability">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol roles-practice"><div>4</div></div><div class="eyebrow small"><span></span> ROLE AGENTÓW</div><h2>Jaka to <em>rola?</em></h2><p>Wskaż rolę agenta na podstawie jego portretu.</p><button class="primary-button" data-quiz="role">ZAGRAJ <span>↗</span></button></article><article class="practice-card map-practice-card"><div class="practice-symbol map-practice-symbol"><span>MAPY</span><b>A</b><b>B</b></div><div class="eyebrow small"><span></span> SPRAWDŹ SIĘ</div><h2>Callouty <em>map.</em></h2><p>Uzupełnij puste punkty z pamięci i sprawdź wynik. Każda runda losuje kolejne miejsca.</p><button class="primary-button" data-go="map-practice">WYBIERZ MAPĘ <span>↗</span></button></article></div><p class="practice-footnote">Postęp lekcji zapisuje się w tej przeglądarce na tym urządzeniu.</p>`;
@@ -290,6 +320,7 @@ function showScreen(screen) {
   else if (screen === 'map-practice') renderMapPracticeSelection();
   else if (screen === 'practice') renderPractice();
   else if (screen === 'extras') renderExtras();
+  else if (screen === 'glossary') renderGlossary();
   else renderOverview();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
