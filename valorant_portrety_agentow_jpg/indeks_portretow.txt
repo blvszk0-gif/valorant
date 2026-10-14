@@ -1,0 +1,90 @@
+PORTRETY AGENTÓW VALORANT
+Pełne portrety aktualnych grywalnych agentów, zapisane jako JPG.
+Źródło danych i assetów: https://valorant-api.com/
+
+Astra — Kontroler
+Plik: Astra_portret.jpg
+
+Breach — Inicjator
+Plik: Breach_portret.jpg
+
+Brimstone — Kontroler
+Plik: Brimstone_portret.jpg
+
+Chamber — Strażnik
+Plik: Chamber_portret.jpg
+
+Clove — Kontroler
+Plik: Clove_portret.jpg
+
+Cypher — Strażnik
+Plik: Cypher_portret.jpg
+
+Deadlock — Strażnik
+Plik: Deadlock_portret.jpg
+
+Fade — Inicjator
+Plik: Fade_portret.jpg
+
+Gekko — Inicjator
+Plik: Gekko_portret.jpg
+
+Harbor — Kontroler
+Plik: Harbor_portret.jpg
+
+Iso — Szturmowiec
+Plik: Iso_portret.jpg
+
+Jett — Szturmowiec
+Plik: Jett_portret.jpg
+
+KAY/O — Inicjator
+Plik: KAY_O_portret.jpg
+
+Killjoy — Strażnik
+Plik: Killjoy_portret.jpg
+
+Miks — Kontroler
+Plik: Miks_portret.jpg
+
+Neon — Szturmowiec
+Plik: Neon_portret.jpg
+
+Omen — Kontroler
+Plik: Omen_portret.jpg
+
+Phoenix — Szturmowiec
+Plik: Phoenix_portret.jpg
+
+Raze — Szturmowiec
+Plik: Raze_portret.jpg
+
+Reyna — Szturmowiec
+Plik: Reyna_portret.jpg
+
+Sage — Strażnik
+Plik: Sage_portret.jpg
+
+Skye — Inicjator
+Plik: Skye_portret.jpg
+
+Sova — Inicjator
+Plik: Sova_portret.jpg
+
+Tejo — Inicjator
+Plik: Tejo_portret.jpg
+
+Veto — Strażnik
+Plik: Veto_portret.jpg
+
+Viper — Kontroler
+Plik: Viper_portret.jpg
+
+Vyse — Strażnik
+Plik: Vyse_portret.jpg
+
+Waylay — Szturmowiec
+Plik: Waylay_portret.jpg
+
+Yoru — Szturmowiec
+Plik: Yoru_portret.jpg

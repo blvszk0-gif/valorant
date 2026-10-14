@@ -1,0 +1,4 @@
+# Large local lesson videos are streamed from external object storage in production.
+/edytowane/
+# Community ability videos are not needed by the course frontend; keep them off the site deploy.
+/valorant_filmy_umiejetnosci/

@@ -1,0 +1,583 @@
+VALORANT — UMIEJĘTNOŚCI AGENTÓW
+Opisy po polsku i ikony JPG. Bieżąca lista grywalnych agentów pobrana z Valorant-API.
+Źródło danych i ikon: https://valorant-api.com/ (assetów dostarcza media.valorant-api.com).
+
+Astra — Kontroler
+=================
+Puls Nowej [Umiejetnosc_1]
+Umieść Gwiazdki w Postaci Astral (przycisk ulta).
+
+AKTYWUJ Gwiazdkę, by zdetonować Puls Nowej. Puls Nowej ładuje się przez chwilę, po czym uderza, ogłuszając wszystkich graczy znajdujących się w strefie rażenia.
+Ikona: Astra_Umiejetnosc_1_Puls_Nowej.jpg
+
+Mgławica/Rozproszenie [Umiejetnosc_2]
+Umieść Gwiazdki w Postaci Astral (przycisk ulta). 
+
+AKTYWUJ Gwiazdkę, aby zmienić ją w Mgławicę (dym). UŻYJ Gwiazdki, żeby dokonać jej Rozproszenia, powodując tym samym umieszczenie jej po krótkiej chwili w nowym miejscu. Rozproszenie tworzy na krótko fałszywą Mgławicę w miejscu położenia Gwiazdki, nim ta powróci.
+Ikona: Astra_Umiejetnosc_2_Mgławica_Rozproszenie.jpg
+
+Studnia Grawitacyjna [Umiejetnosc_specjalna]
+Umieść Gwiazdki w Postaci Astral (przycisk ulta).
+
+AKTYWUJ Gwiazdkę, aby stworzyć Studnię Grawitacyjną. Studnia Grawitacyjna przyciąga do środka znajdujących się w pobliżu graczy, a następnie wybucha, wywołując podatność u wszystkich wciąż uwięzionych agentów.
+Ikona: Astra_Umiejetnosc_specjalna_Studnia_Grawitacyjna.jpg
+
+Postać Astral/Gwiezdna Rysa [Ult]
+AKTYWUJ, by wejść w Postać Astral, w której możesz umieszczać Gwiazdki za pomocą STRZAŁU. Gwiazdki można aktywować później, zmieniając je w Puls Nowej, Mgławicę lub Studnię Grawitacyjną.
+
+Gdy Kosmiczny Podział jest naładowany, użyj ALT. STRZAŁU w Postaci Astral, aby rozpocząć celowanie, a następnie STRZAŁU, aby wskazać dwa miejsca. Nieskończony Kosmiczny Podział łączy dwa wybrane przez ciebie punkty. Kosmiczny Podział blokuje pociski i dźwięki.
+Ikona: Astra_Ult_Postać_Astral_Gwiezdna_Rysa.jpg
+
+Postać Astral [Passive]
+AKTYWUJ ulta, by wejść w Postać Astral, i użyj STRZAŁU PODSTAWOWEGO, by umieścić Gwiazdki. Namierz Gwiazdki przy użyciu Pulsu Nowej, Mgławicy lub Studni Grawitacyjnej, aby skorzystać z tych umiejętności.
+Ikona: Astra_Passive_Postać_Astral.jpg
+
+
+Breach — Inicjator
+==================
+Rozbłysk [Umiejetnosc_1]
+WYPOSAŻ ładunek oślepiający. STRZEL, by wypuścić szybki ładunek przez ścianę. Ładunek wybuchnie i oślepi wszystkich patrzących w jego stronę graczy.
+Ikona: Breach_Umiejetnosc_1_Rozbłysk.jpg
+
+Uskok [Umiejetnosc_2]
+WYPOSAŻ Wybuch Sejsmiczny. PRZYTRZYMAJ STRZAŁ, by zwiększyć jego zasięg. PUŚĆ, by wywołać wstrząs ogłuszający wszystkich graczy na obszarze jego działania oraz stojących na drodze do tej strefy.
+Ikona: Breach_Umiejetnosc_2_Uskok.jpg
+
+Wstrząs Wtórny [Umiejetnosc_specjalna]
+WYPOSAŻ ładunek fuzyjny. STRZEL, by wypuścić powolny ładunek przez ścianę. Zada on duże obrażenia każdemu, kto znajdzie się na obszarze jego działania.
+Ikona: Breach_Umiejetnosc_specjalna_Wstrząs_Wtórny.jpg
+
+Kaskadowe Tąpnięcie [Ult]
+WYPOSAŻ ładunek sejsmiczny. STRZEL, by posłać wielki kaskadowy wstrząs na obszarze. Wstrząs ogłusza i wyrzuca w powietrze każdego na swojej drodze.
+Ikona: Breach_Ult_Kaskadowe_Tąpnięcie.jpg
+
+
+Brimstone — Kontroler
+=====================
+Nadajnik Stymulujący [Umiejetnosc_specjalna]
+NATYCHMIAST rzuć nadajnik stymulujący. Po wylądowaniu na ziemi wytworzy pole zapewniające graczom stymulant bitewny i premię do szybkości.
+Ikona: Brimstone_Umiejetnosc_specjalna_Nadajnik_Stymulujący.jpg
+
+Podpalacz [Umiejetnosc_1]
+WYPOSAŻ wyrzutnię granatów zapalających. STRZEL, by wystrzelić granat, który po zatrzymaniu się na ziemi wybucha, tworząc tymczasowy ognisty obszar zadający obrażenia znajdującym się na nim graczom.
+Ikona: Brimstone_Umiejetnosc_1_Podpalacz.jpg
+
+Podniebny Dym [Umiejetnosc_2]
+WYPOSAŻ mapę taktyczną. STRZEL, by określić lokacje, w których zostaną umieszczone chmury dymu Brimstone’a. Zatwierdź wybór przyciskiem ALT. STRZAŁU, by wystrzelić długotrwałe chmury dymu blokujące wizję na danym obszarze.
+Ikona: Brimstone_Umiejetnosc_2_Podniebny_Dym.jpg
+
+Ostrzał Orbitalny [Ult]
+WYPOSAŻ mapę taktyczną. STRZEL, by odpalić długotrwały laserowy ostrzał orbitalny na wybranym obszarze, zadający duże obrażenia w czasie graczom, którzy znajdą się w strefie ataku.
+Ikona: Brimstone_Ult_Ostrzał_Orbitalny.jpg
+
+
+Chamber — Strażnik
+==================
+Schadzka [Umiejetnosc_2]
+WYPOSAŻ kotwicę teleportującą. STRZEL, aby umieścić ją na ziemi. Gdy znajdujesz się na ziemi i w zasięgu działania kotwicy, REAKTYWUJ, by szybko teleportować się do kotwicy. Kotwicę można podnieść i UŻYĆ JEJ PONOWNIE.
+Ikona: Chamber_Umiejetnosc_2_Schadzka.jpg
+
+Znak Rozpoznawczy [Umiejetnosc_specjalna]
+WYPOSAŻ pułapkę, która skanuje otoczenie w poszukiwaniu wrogów. STRZEL, aby umieścić ją na ziemi. Gdy widoczny wróg znajdzie się w jej zasięgu, pułapka zacznie odliczanie, po którym zdestabilizuje teren wokół niego, tworząc tymczasowe pole spowalniające znajdujących się w nim graczy. Pułapkę można podnieść i UŻYĆ JEJ PONOWNIE.
+Ikona: Chamber_Umiejetnosc_specjalna_Znak_Rozpoznawczy.jpg
+
+Łowca Głów [Umiejetnosc_1]
+AKTYWUJ, aby wyposażyć ciężki pistolet. Użyj przycisku ALT. STRZAŁU z wyposażonym pistoletem, by spojrzeć przez celownik.
+Ikona: Chamber_Umiejetnosc_1_Łowca_Głów.jpg
+
+Majstersztyk [Ult]
+AKTYWUJ, by przywołać śmiercionośny, niestandardowy karabin snajperski, który zabije wroga każdym bezpośrednim trafieniem w górną część ciała. Wciśnij ALT. STRZAŁ, by spojrzeć przez celownik. Zabicie wroga tworzy długotrwałe pole spowalniające graczy w obszarze jego działania.
+Ikona: Chamber_Ult_Majstersztyk.jpg
+
+
+Clove — Kontroler
+=================
+Na Zdrówko [Umiejetnosc_specjalna]
+AKTYWUJ, by wchłonąć siłę życiową wyeliminowanego wroga zranionego lub zabitego przez Clove i zyskać przyspieszenie oraz tymczasowe zdrowie.
+Ikona: Clove_Umiejetnosc_specjalna_Na_Zdrówko.jpg
+
+Zwód [Umiejetnosc_2]
+UŻYJ, by wyświetlić mapę pola bitwy. STRZEL, by określić lokacje, w których zostaną umiejscowione chmury Clove. Zatwierdź wybór przyciskiem ALT. STRZAŁU, by wystrzelić chmury blokujące wizję na wybranych obszarach. Clove może używać tej umiejętności po śmierci.
+Ikona: Clove_Umiejetnosc_2_Zwód.jpg
+
+Jeszcze Żyję [Ult]
+AKTYWUJ po śmierci, by wskrzesić postać. Po wskrzeszeniu Clove musi zdobyć zabójstwo lub asystę z zadaniem obrażeń w określonym czasie, bo inaczej zginie. REAKTYWUJ, by anulować wcześniej.
+Ikona: Clove_Ult_Jeszcze_Żyję.jpg
+
+Zamęt [Umiejetnosc_1]
+UŻYJ fragmentu esencji nieśmiertelności. STRZEL, by rzucić fragmentem, który po chwili od wylądowania na ziemi wybuchnie i spowoduje tymczasowy rozpad wszystkich celów w obszarze działania.
+Ikona: Clove_Umiejetnosc_1_Zamęt.jpg
+
+
+Cypher — Strażnik
+=================
+Cyberklatka [Umiejetnosc_1]
+NATYCHMIAST rzuć cyberklatkę przed Cyphera. AKTYWUJ, by stworzyć obszar, który blokuje wizję i odtwarza podpowiedź dźwiękową, kiedy przechodzą przez niego wrogowie.
+Ikona: Cypher_Umiejetnosc_1_Cyberklatka.jpg
+
+Kamera Szpiegowska [Umiejetnosc_2]
+WYPOSAŻ kamerę szpiegowską. STRZEL, by umieścić kamerę w pożądanym miejscu. UŻYJ PONOWNIE tej umiejętności, by wyświetlić obraz z kamery. Pozostając w tym widoku STRZEL, by wypuścić lotkę oznaczającą. Ujawni ona miejsce pobytu każdego trafionego nią gracza. Można go podnieść i UŻYĆ PONOWNIE.
+Ikona: Cypher_Umiejetnosc_2_Kamera_Szpiegowska.jpg
+
+Potykacz [Umiejetnosc_specjalna]
+WYPOSAŻ potykacz. STRZEL, by umieścić zniszczalny i ukryty potykacz w pożądanym miejscu, tworząc linkę między tym miejscem a przeciwległą ścianą. Wrodzy gracze, którzy wejdą w potykacz, zostaną spowolnieni i ujawnieni po krótkiej chwili, jeśli nie zniszczą urządzenia dość szybko. Można go podnieść i UŻYĆ PONOWNIE.
+Ikona: Cypher_Umiejetnosc_specjalna_Potykacz.jpg
+
+Kradzież Neuronów [Ult]
+NATYCHMIAST użyj na obranym za cel zabitym przeciwniku, aby pobrać informacje na temat jego drużyny.  Po chwili położenie wszystkich żywych wrogów zostanie ujawnione dwukrotnie.
+Ikona: Cypher_Ult_Kradzież_Neuronów.jpg
+
+
+Deadlock — Strażnik
+===================
+Wykrywacz Dźwięku [Umiejetnosc_1]
+WYPOSAŻ Wykrywacz Dźwięku. STRZEL, by ustawić urządzenie. Wykrywacz monitoruje obszar na obecność wrogów wydających dźwięki. Jeśli wykryte zostaną odgłosy kroków, wystrzału lub znaczący hałas, cały obszar podlega ogłuszeniu. Można go podnieść i UŻYĆ PONOWNIE.
+Ikona: Deadlock_Umiejetnosc_1_Wykrywacz_Dźwięku.jpg
+
+Siatka Bariery [Umiejetnosc_specjalna]
+WYPOSAŻ dysk Siatki Bariery. STRZEL, by rzucić nim naprzód. Po wylądowaniu dysk stawia barierę wzdłuż trasy lotu, która blokuje ruch postaci.
+Ikona: Deadlock_Umiejetnosc_specjalna_Siatka_Bariery.jpg
+
+GravNet [Umiejetnosc_2]
+WYPOSAŻ granat GravNet. STRZEL, by rzucić. Naciśnij ALT. STRZAŁ, by cisnąć. GravNet detonuje się po wylądowaniu, a postacie znajdujące się w zasięgu jego rażenia są zmuszone przykucnąć i poruszać się powoli.
+Ikona: Deadlock_Umiejetnosc_2_GravNet.jpg
+
+Anihilacja [Ult]
+WYPOSAŻ akcelerator nanoobwodów. STRZEL, aby uwolnić impuls nanoobwodów łapiący pierwszego wroga, z którym wejdzie w kontakt. Wróg zostaje otoczony kokonem i jest ciągnięty wzdłuż ścieżki nanoobwodów. Zginie, chyba że zostanie wcześniej uwolniony. Kokon nanoobwodów można zniszczyć.
+Ikona: Deadlock_Ult_Anihilacja.jpg
+
+
+Fade — Inicjator
+================
+Przejęcie [Umiejetnosc_1]
+WYPOSAŻ węzeł czystego strachu. STRZEL, by rzucić. Węzeł opadnie po określonym czasie. UŻYJ PONOWNIE, aby węzeł opadł wcześniej. Węzeł pęka po zderzeniu, usidlając pobliskich wrogów. Usidleni wrogowie zostają ogłuszeni i ulegają rozpadowi.
+Ikona: Fade_Umiejetnosc_1_Przejęcie.jpg
+
+Prześladowca [Umiejetnosc_2]
+WYPOSAŻ dręczącego obserwatora. STRZEL, by rzucić. Obserwator opadnie po określonym czasie. UŻYJ PONOWNIE, aby obserwator opadł wcześniej. Obserwator atakuje po zderzeniu, ujawniając wrogów w swoim polu widzenia i tworząc prowadzące do nich szlaki przerażenia. Wrogowie mogą go zniszczyć.
+Ikona: Fade_Umiejetnosc_2_Prześladowca.jpg
+
+Grasant [Umiejetnosc_specjalna]
+WYPOSAŻ grasanta. STRZEL, aby wysłać go naprzód. PRZYTRZYMAJ STRZAŁ, aby sterować grasantem przy użyciu celownika. Grasant ruszy śladem pierwszego wroga lub szlakiem przerażenia i wywoła u wroga krótkowzroczność po zderzeniu.
+Ikona: Fade_Umiejetnosc_specjalna_Grasant.jpg
+
+Zmrok [Ult]
+WYPOSAŻ moc koszmaru. WYSTRZEL, aby uwolnić falę niepowstrzymanej energii koszmaru. Wrogowie dotknięci przez falę zostają oznaczeni szlakami przerażenia, ogłuszeni i ulegają rozpadowi.
+Ikona: Fade_Ult_Zmrok.jpg
+
+
+Gekko — Inicjator
+=================
+Wingman [Umiejetnosc_1]
+WYPOSAŻ Wingmana. STRZAŁ wysyła Wingmana, by szukał wrogów. Wingman posyła ogłuszający wybuch w kierunku pierwszego wroga, którego zobaczy. ALT. STRZAŁ podczas celowania w punkt podłożenia lub podłożonego Spike’a sprawi, że Wingman rozbroi lub podłoży Spike’a. Aby podłożyć, Gekko musi mieć Spike’a w ekwipunku. Gdy czas działania Wingmana upłynie, zamienia się w kulkę w stanie uśpienia. Naciśnij przycisk INTERAKCJI, by ją podnieść i otrzymać kolejny ładunek Wingmana po krótkim czasie odnowienia.
+Ikona: Gekko_Umiejetnosc_1_Wingman.jpg
+
+Dizzy [Umiejetnosc_2]
+WYPOSAŻ Dizzy. STRZAŁ posyła Dizzy w powietrze. Dizzy ładuje i wypuszcza plazmowe wybuchy w kierunku wrogów w polu widzenia. Wrogowie trafieni plazmą zostają oślepieni. Gdy czas działania Dizzy upłynie, zamienia się w kulkę w stanie uśpienia. Naciśnij przycisk INTERAKCJI, by podnieść kulkę i otrzymać kolejny ładunek Dizzy po krótkim czasie odnowienia.
+Ikona: Gekko_Umiejetnosc_2_Dizzy.jpg
+
+A Mosh! [Umiejetnosc_specjalna]
+WYPOSAŻ Mosha. STRZEL, by rzucić Moshem jak granatem. Naciśnij ALT. STRZAŁ, by cisnąć. Po wylądowaniu Mosh duplikuje się na dużym obszarze i zadaje niewielkie obrażenia rozłożone w czasie, a po krótkim opóźnieniu eksploduje. Naciśnij przycisk INTERAKCJI, by podnieść kulkę i otrzymać kolejny ładunek Mosha po krótkim czasie odnowienia.
+Ikona: Gekko_Umiejetnosc_specjalna_A_Mosh!.jpg
+
+Thrash [Ult]
+WYPOSAŻ Thrash. STRZEL, by połączyć się z umysłem Thrash i sterować nią na obszarze wroga. AKTYWUJ, by wyskoczyć wprzód i eksplodować, zatrzymując graczy na niewielkim obszarze. Gdy czas działania Thrash upłynie, zamienia się w kulkę w stanie uśpienia. Naciśnij przycisk INTERAKCJI, by podnieść kulkę i otrzymać kolejny ładunek Thrash po krótkim czasie odnowienia. Thrash można odzyskać jednokrotnie.
+Ikona: Gekko_Ult_Thrash.jpg
+
+
+Harbor — Kontroler
+==================
+Wysoki Przypływ [Umiejetnosc_1]
+WYPOSAŻ Wysoki Przypływ. STRZEL, aby wysłać wodę naprzód po ziemi. PRZYTRZYMAJ STRZAŁ, aby kierować wodę w stronę wskazaną przez twój celownik, tworząc zasłaniającą pole widzenia ścianę wzdłuż jej ścieżki. Naciśnij ALT. STRZAŁ, aby woda zatrzymała się wcześniej. Gracze trafieni Wysokim Przypływem zostają SPOWOLNIENI.
+Ikona: Harbor_Umiejetnosc_1_Wysoki_Przypływ.jpg
+
+Burzowe Przepięcie [Umiejetnosc_specjalna]
+WYPOSAŻ Burzowe Przepięcie. STRZEL, aby rzucić, tworząc wybuchowy wir, który po chwili nakłada na znajdujących się w środku graczy spowolnienie i krótkowzroczność.
+Ikona: Harbor_Umiejetnosc_specjalna_Burzowe_Przepięcie.jpg
+
+Zatoka [Umiejetnosc_2]
+WYPOSAŻ Zatokę. AKTYWUJ, by przywołać wodnisty dym na wybranym obszarze. PRZYTRZYMAJ STRZAŁ podczas namierzania, by oddalić znacznik, i PRZYTRZYMAJ ALT. STRZAŁ, by go przybliżyć. PRZEŁADUJ, by przełączyć widok namierzania. REAKTYWUJ, aby osłonić wodnisty dym tarczą, która blokuje wszystkie pociski. Otoczony tarczą wodnisty dym może zostać zniszczony.
+Ikona: Harbor_Umiejetnosc_2_Zatoka.jpg
+
+Rozrachunek [Ult]
+WYPOSAŻ Rozrachunek. STRZEL, aby użyć pełni mocy swego artefaktu, uwalniając wodę pędzącą w przód, która nakłada na trafionych przeciwników efekty krótkowzroczności i spowolnienia.
+Ikona: Harbor_Ult_Rozrachunek.jpg
+
+
+Iso — Szturmowiec
+=================
+Podcięcie [Umiejetnosc_1]
+WYPOSAŻ molekularną strzałę. STRZEL, by wypuścić ją przed siebie, powodując chwilową podatność i tłumiąc wszystkich dotkniętych przez nią graczy. Strzała może przelatywać przez stałe obiekty, w tym ściany.
+Ikona: Iso_Umiejetnosc_1_Podcięcie.jpg
+
+Zlecenie Zabójcy [Ult]
+WYPOSAŻ międzywymiarową arenę. STRZEL, aby cisnąć przez pole bitwy kolumnę energii. Uleczy ona ciebie oraz pierwszego trafionego wroga i wciągnie was na arenę, na której będziecie walczyć w pojedynku na śmierć i życie.
+Ikona: Iso_Ult_Zlecenie_Zabójcy.jpg
+
+Dublet [Umiejetnosc_2]
+NATYCHMIAST zaczyna przygotowywać twoje skupienie. Po osiągnięciu skupienia: zapewnia ci tarczę, która wchłania jedno wystąpienie obrażeń z dowolnego źródła, pozwala ci przeładowywać szybciej i wprawia cię w stan skupienia, w czasie którego zabici lub zranieni przez ciebie przeciwnicy po pokonaniu pozostawiają po sobie kule energii. Strzelenie w tę kulę odnawia twój stan skupienia i obecną tarczę lub nakłada na ciebie nową tarczę.
+Ikona: Iso_Umiejetnosc_2_Dublet.jpg
+
+Plan Awaryjny [Umiejetnosc_specjalna]
+UŻYJ, aby zebrać energię pryzmatyczną. STRZEL, by pchnąć niezniszczalną ścianę energii, która powstrzymuje pociski. ALT. STRZAŁ, by pchnąć wolniejszą wersję ściany.
+Ikona: Iso_Umiejetnosc_specjalna_Plan_Awaryjny.jpg
+
+
+Jett — Szturmowiec
+==================
+Prąd Wstępujący [Umiejetnosc_1]
+NATYCHMIAST wzleć Jett wysoko w górę.
+Ikona: Jett_Umiejetnosc_1_Prąd_Wstępujący.jpg
+
+Pomyślny Wiatr [Umiejetnosc_2]
+AKTYWUJ, aby przygotować podmuch wiatru na pewien czas. UŻYJ PONOWNIE wiatru, aby rozpędzić Jett w kierunku, w którym się porusza. Jeśli stoi nieruchomo, Jett popędzi przed siebie. Reset naładowania Pomyślnego Wiatru następuje co dwa zabójstwa.
+Ikona: Jett_Umiejetnosc_2_Pomyślny_Wiatr.jpg
+
+Zasłona Chmur [Umiejetnosc_specjalna]
+NATYCHMIAST wypuść pocisk, który rozszerza się do rozmiarów sporej chmury blokującej wizję w momencie trafienia. PRZYTRZYMAJ przycisk umiejętności, by zakręcić dym w stronę, w którą celujesz.
+Ikona: Jett_Umiejetnosc_specjalna_Zasłona_Chmur.jpg
+
+Burza Ostrzy [Ult]
+WYPOSAŻ zestaw niezwykle precyzyjnych sztyletów do rzucania. STRZEL, by rzucić jednym sztyletem. Po zabiciu przeciwnika odnowisz wszystkie sztylety. ALT. STRZAŁ pozwala rzucić wszystkimi pozostałymi sztyletami w cel, ale nie odnawia sztyletów po zabiciu przeciwnika.
+Ikona: Jett_Ult_Burza_Ostrzy.jpg
+
+Noszenie [Passive]
+Przytrzymanie przycisku skoku podczas spadania pozwala ci szybować w powietrzu.
+Ikona: Jett_Passive_Noszenie.jpg
+
+
+KAY/O — Inicjator
+=================
+FRAG/ment [Umiejetnosc_specjalna]
+WYPOSAŻ wybuchowy fragment. STRZEL, by rzucić. Naciśnij ALT. STRZAŁ, by cisnąć. Fragment przyczepia się do ziemi i kilkukrotnie wybucha, zadając niemal śmiertelne obrażenia w centrum każdej z eksplozji.
+Ikona: KAY_O_Umiejetnosc_specjalna_FRAG_ment.jpg
+
+dysk/BŁYSK [Umiejetnosc_1]
+WYPOSAŻ granat błyskowy. STRZEL, by wykonać mocny rzut. Wciśnij ALT. STRZAŁ, aby cisnąć jego słabszą wersję, która szybko wybuchnie. Granat błyskowy eksploduje po krótkiej chwili, oślepiając wszystkich w polu widzenia.
+Ikona: KAY_O_Umiejetnosc_1_dysk_BŁYSK.jpg
+
+punkt/ZERO [Umiejetnosc_2]
+WYPOSAŻ tłumiące ostrze. STRZEL, by rzucić. Ostrze wczepia się w pierwszą trafioną powierzchnię, ładuje i tłumi wszystkich przebywających w promieniu eksplozji. Wrogowie mogą je zniszczyć.
+Ikona: KAY_O_Umiejetnosc_2_punkt_ZERO.jpg
+
+NULL/cmd [Ult]
+NATYCHMIAST przeciąża KAY/O spolaryzowaną energią Promienitu, która emituje impulsy o sporym zasięgu z jego pozycji. Wrogowie trafieni impulsami zostają stłumieni na krótki czas. Podczas przeciążenia KAY/O zyskuje stymulant bitewny, a po jego powaleniu można go ponownie ustabilizować.
+Ikona: KAY_O_Ult_NULL_cmd.jpg
+
+
+Killjoy — Strażnik
+==================
+Nanorój [Umiejetnosc_specjalna]
+WYPOSAŻ granat nanoroju. STRZEL, by rzucić granat. Po wylądowaniu na ziemi nanorój ukrywa się. Naciśnij ALT. STRZAŁ, by cisnąć. AKTYWUJ nanorój, by wypuścić niszczycielski rój nanobotów.
+Ikona: Killjoy_Umiejetnosc_specjalna_Nanorój.jpg
+
+Bot Alarmowy [Umiejetnosc_1]
+WYPOSAŻ tajnego Bota Alarmowego. STRZEL, by wypuścić Bota ścigającego wrogów w jego zasięgu.  Po dotarciu do celu Bot wybucha, sprawiając, że wrogowie przebywający na obszarze wybuchu stają się podatni na ataki. PRZYTRZYMAJ przycisk WYPOSAŻENIA, by odwołać wypuszczonego Bota.
+Ikona: Killjoy_Umiejetnosc_1_Bot_Alarmowy.jpg
+
+Działko [Umiejetnosc_2]
+WYPOSAŻ działko. STRZEL, by wypuścić działko, które automatycznie ostrzeliwuje wrogów w promieniu 100 stopni. Podczas namierzania WYPOSAŻ ponownie, by zmienić kierunek działka, i PRZYTRZYMAJ ALT. STRZAŁ, by obrócić. PRZYTRZYMAJ przycisk WYPOSAŻENIA, by odwołać wypuszczone działko.
+Ikona: Killjoy_Umiejetnosc_2_Działko.jpg
+
+Blokada [Ult]
+WYPOSAŻ urządzenie blokujące. STRZEL, by wypuścić urządzenie. Po dłuższej chwili urządzenie zatrzymuje wszystkich wrogów w promieniu swojego działania. Urządzenie może zostać zniszczone przez przeciwników.
+Ikona: Killjoy_Ult_Blokada.jpg
+
+
+Miks — Kontroler
+================
+M-puls [Umiejetnosc_specjalna]
+WYPOSAŻ M-puls. ALT. STRZAŁ przełącza między ogłuszeniem a leczeniem. STRZEL, by rzucić urządzenie. Po wylądowaniu M-puls wysyła fale dźwiękowe, które ogłuszają lub leczą graczy.
+Ikona: Miks_Umiejetnosc_specjalna_M-puls.jpg
+
+Fala [Umiejetnosc_2]
+WYPOSAŻ celownik mapy. STRZEL, by oznaczyć miejsca. ALT. STRZAŁ, by stworzyć zasłony dymne w wybranych miejscach.
+Ikona: Miks_Umiejetnosc_2_Fala.jpg
+
+Harmonizacja [Umiejetnosc_1]
+WYPOSAŻ Harmonizację. Namierz sojusznika i STRZEL, by aktywować stymulant bitewny oraz premię szybkości na sobie i sojuszniku, których efekty odnawiają się przy każdym zabójstwie. ALT. STRZAŁ, by przyznać sobie stymulant bitewny i premię szybkości.
+Ikona: Miks_Umiejetnosc_1_Harmonizacja.jpg
+
+Basowstrząs [Ult]
+WYPOSAŻ Basowstrząs. STRZEL, by naładować i wyzwolić przed sobą soniczną promienność, która odrzuca, ogłusza i spowalnia graczy.
+Ikona: Miks_Ult_Basowstrząs.jpg
+
+
+Neon — Szturmowiec
+==================
+Wysoki Bieg [Umiejetnosc_2]
+NATYCHMIAST wykorzystaj moc Neon, aby znacząco przyspieszyć. Gdy ładunek jest dostępny, użyj ALT. STRZAŁU, aby wykonać doskok – elektryczny ślizg. Reset naładowania ślizgu następuje co dwa zabójstwa.
+Ikona: Neon_Umiejetnosc_2_Wysoki_Bieg.jpg
+
+Błyskawica Przekaźnikowa [Umiejetnosc_1]
+NATYCHMIAST wyemituj błyskawicę energii, która odbije się jeden raz. Po uderzeniu w dowolną powierzchnię błyskawica naelektryzuje znajdujące się poniżej podłoże, wywołując ogłuszający wybuch.
+Ikona: Neon_Umiejetnosc_1_Błyskawica_Przekaźnikowa.jpg
+
+Pas Wysokiego Napięcia [Umiejetnosc_specjalna]
+WYSTRZEL w ziemię przed siebie dwie linie energii, które zatrzymają się po pokonaniu niewielkiej odległości lub trafieniu w powierzchnię. Linie stają się ścianami elektryczności statycznej, które ograniczają wizję.
+Ikona: Neon_Umiejetnosc_specjalna_Pas_Wysokiego_Napięcia.jpg
+
+Nadbieg [Ult]
+Na krótką chwilę wyzwól pełną moc i prędkość Neon, zapewniając jej całe paliwo oraz ładunek ślizgu. STRZEL, by przekształcić moc w zabójczą wiązkę błyskawicy o wysokiej precyzji ruchu. Zabójstwa resetują czas trwania efektu.
+Ikona: Neon_Ult_Nadbieg.jpg
+
+
+Omen — Kontroler
+================
+Paranoja [Umiejetnosc_1]
+WYPOSAŻ oślepiającą kulę.  STRZEL, by wypuścić ją przed siebie, ograniczając chwilowo zasięg wizji i słyszenia wszystkich dotkniętych przez nią graczy. Pocisk ten może przenikać przez ściany.
+Ikona: Omen_Umiejetnosc_1_Paranoja.jpg
+
+Mroczna Osłona [Umiejetnosc_2]
+WYPOSAŻ mroczną kulę i wejdź w międzyświat, by wybrać położenie kuli i ją umieścić. NACIŚNIJ przycisk umiejętności, by wypuścić mroczną kulę w kierunku zaznaczonego miejsca, tworząc długotrwałą mroczną sferę ograniczającą wizję. PRZYTRZYMAJ STRZAŁ podczas namierzania, by oddalić znacznik. PRZYTRZYMAJ ALT. STRZAŁ podczas namierzania, by przybliżyć znacznik. NACIŚNIJ PRZEŁADOWANIE, by przełączyć zwykły widok namierzania.
+Ikona: Omen_Umiejetnosc_2_Mroczna_Osłona.jpg
+
+Krok w Mrok [Umiejetnosc_specjalna]
+WYPOSAŻ umiejętność Krok w Mrok, by zobaczyć jej wskaźnik zasięgu. STRZEL, by rozpocząć krótkie ładowanie, po którym teleportujesz się do zaznaczonego miejsca.
+Ikona: Omen_Umiejetnosc_specjalna_Krok_w_Mrok.jpg
+
+Z Cieni [Ult]
+WYPOSAŻ mapę taktyczną. STRZEL, by rozpocząć teleportację do wybranego miejsca. W trakcie teleportacji Omen będzie widoczny jako cień, który wrogowie mogą zniszczyć, by zapobiec jego teleportacji. NACIŚNIJ PRZYCISK WYPOSAŻENIA, by anulować teleportację.
+Ikona: Omen_Ult_Z_Cieni.jpg
+
+
+Phoenix — Szturmowiec
+=====================
+Pożoga [Umiejetnosc_specjalna]
+WYPOSAŻ płomienną ścianę. STRZEL, by stworzyć wędrującą na wprost ognistą linię, która przenika przez świat, tworzy ścianę ognia blokującą wizję i zadaje obrażenia wszystkim przechodzącym przez nią graczom. Zamiast zadawać obrażenia, płomienna ściana leczy Phoenixa. PRZYTRZYMAJ STRZAŁ, by nagiąć ścianę w kierunku wskazanym przez twój celownik.
+Ikona: Phoenix_Umiejetnosc_specjalna_Pożoga.jpg
+
+Gorące Dłonie [Umiejetnosc_1]
+WYPOSAŻ kulę ognia. STRZEL, by rzucić kulę ognia, która eksploduje po krótkiej chwili lub w momencie zderzenia z ziemią, tworząc tymczasowy ognisty obszar zadający przeciwnikom obrażenia. Zamiast zadawać obrażenia, ognisty obszar leczy Phoenixa. Naciśnij ALT. STRZAŁ, by cisnąć.
+Ikona: Phoenix_Umiejetnosc_1_Gorące_Dłonie.jpg
+
+Podkręcona Piłka [Umiejetnosc_2]
+WYPOSAŻ świetlistą kulę, która leci zakrzywionym torem i eksploduje krótko po jej wyrzuceniu. Przycisk STRZAŁU zakręca świetlistą kulę w lewo. Po eksplozji oślepia ona każdego gracza, który ją zobaczy. Naciśnij ALT. STRZAŁ, by zakręcić świetlistą kulę w prawo. Podkręcona Piłka odświeża się co dwa zabójstwa.
+Ikona: Phoenix_Umiejetnosc_2_Podkręcona_Piłka.jpg
+
+Drugie Podejście [Ult]
+NATYCHMIAST umieść znacznik w miejscu pobytu Phoenixa. Kiedy ta umiejętność jest aktywna, po śmierci lub gdy licznik czasu dojdzie do zera, Phoenix wróci w to samo miejsce z pełnym zdrowiem i z tą samą liczbą punktów pancerza, którą miał podczas rzucania umiejętności.
+Ikona: Phoenix_Ult_Drugie_Podejście.jpg
+
+Wewnętrzny Żar [Passive]
+PASYWNIE leczy Phoenixa zamiast zadawać mu obrażenia, kiedy stoi we własnych płomieniach.
+Ikona: brak
+
+
+Raze — Szturmowiec
+==================
+Bombowa Paka [Umiejetnosc_1]
+NATYCHMIAST rzuć Bombową Paką, która przyczepia się do powierzchni. UŻYJ PONOWNIE tej umiejętności po rozmieszczeniu ładunku, by go zdetonować, przemieszczając wszystkie trafione cele i zadając obrażenia, jeśli był w pełni uzbrojony.
+Ikona: Raze_Umiejetnosc_1_Bombowa_Paka.jpg
+
+Farbujący Granat [Umiejetnosc_2]
+WYPOSAŻ granat kasetowy. STRZEL, by rzucić granat zadający obrażenia i tworzący mniejsze ładunki, z których każdy zadaje obrażenia celom w jego zasięgu. Naciśnij ALT. STRZAŁ, by cisnąć. Reset Farbujących Granatów następuje co dwa zabójstwa.
+Ikona: Raze_Umiejetnosc_2_Farbujący_Granat.jpg
+
+Bum Bot [Umiejetnosc_specjalna]
+WYPOSAŻ Bum Bota. STRZEL, by wypuścić bota, który powędruje w linii prostej po ziemi, odbijając się od ścian. Bum Bot namierzy wrogów widocznych przed nim, po czym popędzi w ich kierunku i eksploduje, zadając duże obrażenia, jeśli uda mu się do nich dotrzeć.
+Ikona: Raze_Umiejetnosc_specjalna_Bum_Bot.jpg
+
+Gwóźdź Programu [Ult]
+WYPOSAŻ wyrzutnię rakiet. STRZEL, by wypuścić rakietę, która w chwili trafienia zada potężne obrażenia obszarowe.
+Ikona: Raze_Ult_Gwóźdź_Programu.jpg
+
+
+Reyna — Szturmowiec
+===================
+Pożarcie [Umiejetnosc_1]
+Żniwa Duszy: Wrogowie, którzy giną w ciągu 3 sek. od otrzymania obrażeń od Reyny, zostawiają po sobie pozostające na ziemi przez 3 sek. Kule Duszy.
+Pożarcie: NATYCHMIAST pochłoń pobliską Kulę Duszy, by szybko zyskać tymczasowe zdrowie. Jeśli CESARZOWA jest aktywna, Pożarcie zostaje rzucone automatycznie, nie pochłania Kuli Duszy, a leczenie jest stałe.
+Ikona: Reyna_Umiejetnosc_1_Pożarcie.jpg
+
+Drwina [Umiejetnosc_2]
+NATYCHMIAST pochłoń pobliską kulę duszy, która zapewni nieuchwytność przez krótki czas. Jeśli CESARZOWA jest aktywna, zapewnia także niewidzialność.
+Ikona: Reyna_Umiejetnosc_2_Drwina.jpg
+
+Rzut Okiem [Umiejetnosc_specjalna]
+WYPOSAŻ eteryczne, zniszczalne oko. AKTYWUJ je, by rzucić oko przed siebie na niewielką odległość. Oko spowoduje krótkowzroczność u wszystkich przeciwników, którzy na nie spojrzą.
+Ikona: Reyna_Umiejetnosc_specjalna_Rzut_Okiem.jpg
+
+Cesarzowa [Ult]
+NATYCHMIAST wprowadza w szał, zapewniając stymulant bitewny, który znacznie zwiększa szybkość strzału, wyposażania i przeładowania. Zapewnia nieskończone ładunki umiejętności Żniwa Duszy.
+Ikona: Reyna_Ult_Cesarzowa.jpg
+
+
+Sage — Strażnik
+===============
+Spowalniająca Kula [Umiejetnosc_1]
+WYPOSAŻ spowalniającą kulę. STRZEL, by wypuścić przed siebie kulę spowalniającą, która po trafieniu eksploduje, tworząc długotrwałe pole spowalniające graczy w obszarze jego działania i zmniejszające ich szybkość doskoku.
+Ikona: Sage_Umiejetnosc_1_Spowalniająca_Kula.jpg
+
+Lecząca Kula [Umiejetnosc_2]
+WYPOSAŻ leczącą kulę. STRZEL, celując w rannego sojusznika, by aktywować na nim efekt leczenia w czasie. Kiedy Sage jest ranna, ALT. STRZAŁ pozwala aktywować jej efekt leczenia w czasie na sobie.
+Ikona: Sage_Umiejetnosc_2_Lecząca_Kula.jpg
+
+Kula Bariery [Umiejetnosc_specjalna]
+WYPOSAŻ kulę bariery. STRZAŁ umieszcza ścianę, która umacnia się po paru sekundach. ALT. STRZAŁ obraca cel.
+Ikona: Sage_Umiejetnosc_specjalna_Kula_Bariery.jpg
+
+Wskrzeszenie [Ult]
+WYPOSAŻ umiejętność wskrzeszenia. STRZEL, celując w zabitego sojusznika, by rozpocząć jego wskrzeszanie. Po krótkiej chwili wróci on do życia z pełnym zdrowiem.
+Ikona: Sage_Ult_Wskrzeszenie.jpg
+
+
+Skye — Inicjator
+================
+Wilczy Cios [Umiejetnosc_1]
+WYPOSAŻ błyskotkę z tasmańskim tygrysem. STRZEL, aby wypuścić drapieżnika i przejąć nad nim kontrolę. Kontrolując go, STRZEL, aby skoczyć naprzód, wywołując po zderzeniu ogłuszający wybuch i zadając obrażenia bezpośrednio trafionym wrogom.
+Ikona: Skye_Umiejetnosc_1_Wilczy_Cios.jpg
+
+Przewodnie Światło [Umiejetnosc_2]
+WYPOSAŻ błyskotkę z jastrzębiem. STRZEL, aby wysłać go do walki. PRZYTRZYMAJ STRZAŁ, aby skierować jastrzębia w kierunku wskazanym przez twój celownik. UŻYJ PONOWNIE jastrzębia podczas jego lotu, aby zmienił się w błysk. Błysk osiąga pełną moc po krótkim czasie podczas lotu jastrzębia.
+Ikona: Skye_Umiejetnosc_2_Przewodnie_Światło.jpg
+
+Regeneracja [Umiejetnosc_specjalna]
+WYPOSAŻ błyskotkę leczenia. PRZYTRZYMAJ STRZAŁ, aby uleczyć sojuszników, którzy są w zasięgu i w polu widzenia. Leczenia można używać do momentu wyczerpania specjalnej puli. Skye nie może leczyć samej siebie.
+Ikona: Skye_Umiejetnosc_specjalna_Regeneracja.jpg
+
+Szperacze [Ult]
+WYPOSAŻ błyskotkę Szperaczy. STRZEL, aby wysłać trzech Szperaczy, którzy wytropią trzech najbliższych wrogów. Trafienie wroga przez Szperacza wywoła krótkowzroczność i spowolni cel. Wrogowie mogą zniszczyć Szperacze.
+Ikona: Skye_Ult_Szperacze.jpg
+
+
+Sova — Inicjator
+================
+Strzała-piorun [Umiejetnosc_1]
+WYPOSAŻ łuk ze strzałą-piorunem. STRZEL, by wypuścić wybuchową strzałę, która w momencie trafienia eksploduje i zadaje obrażenia pobliskim graczom. PRZYTRZYMAJ STRZAŁ, by zwiększyć zasięg pocisku. Przycisk ALT. STRZAŁU pozwala zwiększyć liczbę odbić strzały o maksymalnie dwa.
+Ikona: Sova_Umiejetnosc_1_Strzała-piorun.jpg
+
+Strzała Zwiadowcza [Umiejetnosc_2]
+WYPOSAŻ łuk ze strzałą zwiadowczą. STRZEL, by posłać przed siebie strzałę zwiadowczą, która w momencie trafienia aktywuje się i ujawnia miejsce pobytu przeciwników będących w polu działania strzały. Wrogowie mogą ją zniszczyć. PRZYTRZYMAJ STRZAŁ, by zwiększyć zasięg pocisku. Przycisk ALT. STRZAŁU pozwala zwiększyć liczbę odbić strzały o maksymalnie dwa.
+Ikona: Sova_Umiejetnosc_2_Strzała_Zwiadowcza.jpg
+
+Sowi Dron [Umiejetnosc_specjalna]
+WYPOSAŻ sowi dron. STRZEL, by wypuścić drona i przejąć nad nim kontrolę. Sterując nim, STRZEL, by wypuścić lotkę oznaczającą. Ujawni ona miejsce pobytu każdego trafionego nią gracza. Wrogowie mogą zniszczyć Sowiego Drona.
+Ikona: Sova_Umiejetnosc_specjalna_Sowi_Dron.jpg
+
+Furia Łowcy [Ult]
+WYPOSAŻ łuk z trzema eksplozjami energii dalekiego zasięgu, przebijającymi ściany. STRZEL, by wypuścić eksplozję energii lecącą na wprost Sovy, zadającą obrażenia i ujawniającą miejsce pobytu przeciwników w jej polu działania. Można jej UŻYĆ PONOWNIE do dwóch razy, dopóki licznik umiejętności jest aktywny.
+Ikona: Sova_Ult_Furia_Łowcy.jpg
+
+Sokole Oko [Passive]
+Specjalny łuk Sovy wypuszcza strzały, które odbijają się od otoczenia. Przytrzymanie przycisku strzału zwiększa moc łuku, a jego zwolnienie powoduje wypuszczenie strzały. Przycisk alt. strzału zmienia liczbę odbić. Twoje strzały potrafią się odbijać od otoczenia. Przytrzymanie LPM zwiększa zasięg strzał. PPM pozwala zmienić liczbę odbić od otoczenia. Strzała zostaje wypuszczona po zwolnieniu LPM.
+Ikona: brak
+
+
+Tejo — Inicjator
+================
+Salwa Naprowadzana [Umiejetnosc_2]
+WYPOSAŻ system obierania za cel korzystający z RR. STRZEL, by wybrać do dwóch miejsc docelowych na mapie. ALT. STRZAŁ wystrzeliwuje pociski, które samodzielnie kierują się w stronę miejsc docelowych, a po dotarciu wielokrotnie wybuchają, zadając obrażenia.
+Ikona: Tejo_Umiejetnosc_2_Salwa_Naprowadzana.jpg
+
+Przesyłka Specjalna [Umiejetnosc_1]
+WYPOSAŻ lepki granat. STRZEL, by nim rzucić. Granat przylepia się do pierwszej trafionej powierzchni i eksploduje, ogłuszając każdy cel, który znajdzie się w promieniu wybuchu, i zadając mu obrażenia. ALT. STRZAŁ wyrzuca granat, który odbije się jeden raz.
+Ikona: Tejo_Umiejetnosc_1_Przesyłka_Specjalna.jpg
+
+Armagedon [Ult]
+WYPOSAŻ mapę do oznaczania uderzeń taktycznych. STRZEL, aby wybrać punkt początkowy uderzenia. STRZEL ponownie, aby określić punkt końcowy i rozpocząć atak, uwalniając wzdłuż wyznaczonej ścieżki falę eksplozji zadających zabójcze obrażenia. ALT. STRZAŁ podczas oznaczania na mapie anuluje punkt początkowy.
+Ikona: Tejo_Ult_Armagedon.jpg
+
+Skrytodron [Umiejetnosc_specjalna]
+WYPOSAŻ maskującego się drona. STRZEL, by cisnąć dronem w przód i przejąć bezpośrednią kontrolę nad nim. STRZEL ponownie, aby aktywować puls, który tłumi i ujawnia trafionych wrogów.
+Ikona: Tejo_Umiejetnosc_specjalna_Skrytodron.jpg
+
+
+Veto — Strażnik
+===============
+Interceptor [Umiejetnosc_2]
+WYPOSAŻ Interceptor. STRZEL, aby umieścić Interceptor we wskazanym miejscu. Po umieszczeniu UŻYJ PONOWNIE, by go aktywować. Po aktywacji zniszczy każdy przedmiot użytkowy, który ODBIŁBY się od gracza lub został normalnie zniszczony przez ostrzał. Wrogowie mogą zniszczyć ten Interceptor.
+Ikona: Veto_Umiejetnosc_2_Interceptor.jpg
+
+Skrót [Umiejetnosc_specjalna]
+WYPOSAŻ Wir. STRZEL, by umieścić go na ziemi. AKTYWUJ, będąc w zasięgu i patrząc na Wir, by się do niego teleportować. Podczas FAZY ZAKUPÓW można odzyskać Wir, co pozwoli go UŻYĆ PONOWNIE.
+Ikona: Veto_Umiejetnosc_specjalna_Skrót.jpg
+
+Ewolucja [Ult]
+NATYCHMIAST przechodzi pełną mutację, zyskując stymulant bitewny, regenerację oraz ODPORNOŚĆ na wszystkie formy osłabień.
+Ikona: Veto_Ult_Ewolucja.jpg
+
+Przyduszenie [Umiejetnosc_1]
+WYPOSAŻ lepki fragment swojej mutacji. STRZEL, by rzucić. Fragment rozstawia się w momencie trafienia w ziemię, tworząc pułapkę, która zatrzymuje wrogów. Zatrzymani wrogowie zostają ogłuszeni i ulegają rozpadowi. Wrogowie mogą zniszczyć pułapkę, zanim w nią wejdą.
+Ikona: Veto_Umiejetnosc_1_Przyduszenie.jpg
+
+
+Viper — Kontroler
+=================
+Toksyczna Chmura [Umiejetnosc_1]
+WYPOSAŻ emiter gazu. STRZEL, by rzucić emiter, który można wykorzystywać przez całą rundę. Naciśnij ALT. STRZAŁ, by cisnąć. UŻYJ PONOWNIE tej umiejętności, by stworzyć chmurę toksycznego gazu, która wykorzystuje paliwo i powoduje rozpad objętych wrogów. Można podnieść i PONOWNIE ROZŁOŻYĆ przed rozpoczęciem rundy. Można UŻYĆ PONOWNIE więcej niż raz w trakcie rundy.
+Ikona: Viper_Umiejetnosc_1_Toksyczna_Chmura.jpg
+
+Toksyczna Zasłona [Umiejetnosc_2]
+WYPOSAŻ wyrzutnię emitera gazu przebijającą otoczenie. STRZEL, by wypuścić długą linię emiterów gazu. UŻYJ PONOWNIE umiejętności, by stworzyć wysoką ścianę toksycznego gazu, która kosztem paliwa powoduje rozpad przekraczających ją przeciwników. Tej umiejętności można UŻYĆ PONOWNIE więcej niż raz.
+Ikona: Viper_Umiejetnosc_2_Toksyczna_Zasłona.jpg
+
+Jadowite Ukąszenie [Umiejetnosc_specjalna]
+WYPOSAŻ wyrzutnię chemikaliów. STRZEL, by odpalić kanister, który rozbija się po kontakcie z ziemią. W wyniku tego powstaje tymczasowa chemiczna strefa, która zadaje obrażenia i powoduje podatność.
+Ikona: Viper_Umiejetnosc_specjalna_Jadowite_Ukąszenie.jpg
+
+Gniazdo Żmij [Ult]
+WYPOSAŻ rozpylacz chemikaliów. STRZEL, by rozpylić wokół Viper chemiczną chmurę, tworząc spory obłok, który wywołuje krótkowzroczność u graczy i powoduje rozpad zdrowia wrogów na obszarze jego działania. PRZYTRZYMAJ przycisk umiejętności, by wcześniej rozproszyć chmurę.
+Ikona: Viper_Ult_Gniazdo_Żmij.jpg
+
+Toksyczna [Passive]
+Z czasem generujesz i uzupełniasz toksynę, która napędza twoje umiejętności.  Przeciwnicy, którzy przejdą przez Toksyczną Chmurę, Toksyczną Zasłonę lub Gniazdo Żmij Viper, natychmiast otrzymają minimum 30 pkt. rozpadu. Im dłużej przebywają w zasięgu działania toksyn, tym większy staje się ich poziom rozpadu.
+Ikona: brak
+
+
+Vyse — Strażnik
+===============
+Ścięcie [Umiejetnosc_1]
+WYPOSAŻ włókna ciekłego metalu. STRZEL, by umieścić ukrytą ścianę-pułapkę. Kiedy wróg przejdzie obok jednej z nich, z ziemi za nim wyrośnie niezniszczalna ściana. Ściana utrzymuje się przez krótki czas, po czym znika.
+Ikona: Vyse_Umiejetnosc_1_Ścięcie.jpg
+
+Łukowa Róża [Umiejetnosc_2]
+WYPOSAŻ Łukową Różę. Wyceluj w powierzchnię i STRZEL, aby umieścić na niej ukrytą Łukową Różę – lub wykonaj ALT. STRZAŁ, by umieścić Łukową Różę po jej drugiej stronie. UŻYJ PONOWNIE, by oślepić wszystkich patrzących na nią graczy. Można ją podnieść i UŻYĆ PONOWNIE.
+Ikona: Vyse_Umiejetnosc_2_Łukowa_Róża.jpg
+
+Cierniste Pnącze [Umiejetnosc_specjalna]
+WYPOSAŻ gniazdo ciekłego metalu. STRZEL, by je wyrzucić. Po wylądowaniu gniazdo staje się niewidoczne. Po AKTYWACJI rozrośnie się w duże gniazdo ostrych jak brzytwa pnączy, spowalniając i zadając obrażenia wszystkim graczom, którzy przez nie przejdą.
+Ikona: Vyse_Umiejetnosc_specjalna_Cierniste_Pnącze.jpg
+
+Stalowy Ogród [Ult]
+WYPOSAŻ cierń ciekłego metalu. STRZEL, aby metal wyleciał z ciebie w postaci strumienia metalowych kolców, ZACINAJĄC bronie podstawowe wrogów po krótkim czasie.
+Ikona: Vyse_Ult_Stalowy_Ogród.jpg
+
+
+Waylay — Szturmowiec
+====================
+Refrakcja [Umiejetnosc_2]
+NATYCHMIAST tworzy promień światła na podłożu. AKTYWUJ PONOWNIE, aby wrócić do promienia jako drobina czystego światła. Podczas podróży nie można cię zranić. Refrakcja odświeża się co dwa zabójstwa.
+Ikona: Waylay_Umiejetnosc_2_Refrakcja.jpg
+
+Nasycenie [Umiejetnosc_specjalna]
+WYPOSAŻ skupisko światła. STRZEL, by rzuć skupisko, które eksploduje po kontakcie z ziemią i ogranicza pobliskich graczy potężnym spowolnieniem ruchu i broni.
+Ikona: Waylay_Umiejetnosc_specjalna_Nasycenie.jpg
+
+Prędkość Światła [Umiejetnosc_1]
+WYPOSAŻ, aby przygotować się na przypływ szybkości. STRZEL, aby wykonać podwójny doskok w przód. ALT. STRZAŁ, aby wykonać pojedynczy doskok. Tylko pierwszy doskok może wyrzucić cię w górę.
+Ikona: Waylay_Umiejetnosc_1_Prędkość_Światła.jpg
+
+Zbieżne Ścieżki [Ult]
+WYPOSAŻ, aby skoncentrować moc pryzmatyczną. WYSTRZEL, aby stworzyć swoją poświatę, wystrzeliwującą promień światła. Po krótkim opóźnieniu zyskasz potężną premię szybkości, a promień się rozszerzy, ograniczając innych graczy w pobliżu.
+Ikona: Waylay_Ult_Zbieżne_Ścieżki.jpg
+
+
+Yoru — Szturmowiec
+==================
+Zmyłka [Umiejetnosc_specjalna]
+WYPOSAŻ echo, które zmienia się w odbicie lustrzane Yoru po aktywacji. STRZEL, aby natychmiast aktywować odbicie lustrzane i posłać je przed siebie. ALT. STRZAŁ umieszcza nieaktywne echo w miejscu. UŻYJ, aby zmienić nieaktywne echo w lustrzane odbicie i posłać je przed siebie.  Lustrzane odbicia wybuchają z oślepiającym błyskiem po zniszczeniu ich przez wrogów.
+Ikona: Yoru_Umiejetnosc_specjalna_Zmyłka.jpg
+
+Ślepy Wymiar [Umiejetnosc_1]
+WYPOSAŻ, by wyrwać niestabilny fragment wymiaru z rzeczywistości. STRZEL, aby rzucić fragmentem i aktywować błysk, który zadziała po kontakcie z twardym elementem otoczenia.
+Ikona: Yoru_Umiejetnosc_1_Ślepy_Wymiar.jpg
+
+Wtargnięcie [Umiejetnosc_2]
+WYPOSAŻ uprząż wymiarową. STRZEL, aby wypuścić uprząż przed siebie. ALT. STRZAŁ mocuje uprząż w miejscu. AKTYWUJ ją, by teleportować się w dane miejsce. UŻYJ, aby uruchomić fałszywy teleport. WTARGNIĘCIE odświeża się co dwa zabójstwa.
+Ikona: Yoru_Umiejetnosc_2_Wtargnięcie.jpg
+
+Drift Przez Wymiary [Ult]
+WYPOSAŻ maskę, która pozwala widzieć między wymiarami. STRZEL, aby przenieść się do wymiaru Yoru, w którym wrogowie z zewnątrz nie mogą go zobaczyć ani na niego wpłynąć. REAKTYWUJ, aby wyjść z wymiaru Yoru wcześniej.
+Ikona: Yoru_Ult_Drift_Przez_Wymiary.jpg
+
