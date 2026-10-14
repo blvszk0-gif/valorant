@@ -45,5 +45,13 @@
     <div class="dialog-top"><span class="dialog-kicker" id="dialog-kicker">SPRAWDŹ SIĘ</span><button class="close-button" id="close-dialog" aria-label="Zamknij">×</button></div>
     <div class="dialog-scroll"><h2 id="dialog-title"></h2><div id="quiz-prompt"></div><div class="quiz" id="quiz"><div class="quiz-heading"><span id="quiz-label">✳ PYTANIE</span><span id="quiz-counter"></span></div><h3 id="quiz-question"></h3><div id="quiz-media"></div><div id="quiz-options" class="quiz-options"></div><div class="quiz-feedback" id="quiz-feedback" aria-live="polite"></div><button class="primary-button quiz-next" id="quiz-next" disabled>SPRAWDŹ ODPOWIEDŹ <span>↗</span></button></div></div>
   </dialog>
+  <dialog class="lesson-dialog weapon-dialog" id="weapon-dialog" aria-labelledby="weapon-detail-title">
+    <div class="dialog-top"><span class="dialog-kicker" id="weapon-detail-kicker">ARSENAŁ</span><button class="close-button" id="close-weapon-dialog" aria-label="Zamknij">×</button></div>
+    <div class="dialog-scroll weapon-detail-scroll"><div class="weapon-detail-heading"><img id="weapon-detail-image" alt=""><div><h2 id="weapon-detail-title"></h2><p>Cena: <b id="weapon-detail-cost"></b></p></div></div>
+      <div class="weapon-detail-meta"><div><span>SZYBKOSTRZELNOŚĆ</span><b id="weapon-detail-fire-rate"></b></div><div><span>MAGAZYNEK</span><b id="weapon-detail-magazine"></b></div></div>
+      <h3>Obrażenia według dystansu</h3><div class="weapon-damage-scroll"><table class="weapon-damage-table"><thead><tr><th>Dystans</th><th>Głowa</th><th>Tułów</th><th>Nogi</th></tr></thead><tbody id="weapon-damage-rows"></tbody></table></div>
+      <p class="weapon-detail-note">Wartości pochodzą z danych gry udostępnianych przez Valorant API. Rzeczywiste obrażenia mogą zależeć od przebicia przez ściany i innych modyfikatorów.</p>
+    </div>
+  </dialog>
 </body>
 </html>

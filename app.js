@@ -180,7 +180,7 @@ async function loadWeaponCatalog() {
   if (!weaponCatalogPromise) weaponCatalogPromise = fetch('https://valorant-api.com/v1/weapons?language=en-US')
     .then(response => { if (!response.ok) throw new Error('Nie udało się pobrać arsenału.'); return response.json(); })
     .then(payload => (payload.data || []).filter(item => item.displayName && (item.displayIcon || item.killStreamIcon))
-      .map(item => ({ id: item.uuid, name: item.displayName, category: String(item.category || 'Weapon').split('::').pop(), image: item.displayIcon || item.killStreamIcon }))
+      .map(item => ({ id: item.uuid, name: item.displayName, category: String(item.category || 'Weapon').split('::').pop(), image: item.displayIcon || item.killStreamIcon, cost: item.shopData?.cost ?? null, damageRanges: item.weaponStats?.damageRanges || [], magazineSize: item.weaponStats?.magazineSize ?? null, fireRate: item.weaponStats?.fireRate ?? null }))
       .sort((a,b) => a.category.localeCompare(b.category, 'en') || a.name.localeCompare(b.name, 'en')))
     .catch(error => { weaponCatalogPromise = null; throw error; });
   return weaponCatalogPromise;
@@ -201,7 +201,8 @@ async function renderWeapons() {
       const query = normalize(search.value.trim());
       const filtered = weapons.filter(item => normalize(`${item.name} ${item.category}`).includes(query));
       count.textContent = `${filtered.length} / ${weapons.length} broni`;
-      grid.innerHTML = filtered.length ? filtered.map(item => `<article class="weapon-card"><div class="weapon-art"><img src="${esc(item.image)}" alt="${esc(item.name)}" loading="lazy"></div><div class="weapon-card-copy"><span>${esc(item.category)}</span><h2>${esc(item.name)}</h2></div></article>`).join('') : '<p class="empty-state">Nie znaleziono broni.</p>';
+      grid.innerHTML = filtered.length ? filtered.map(item => `<button type="button" class="weapon-card" data-weapon-id="${esc(item.id)}" aria-label="Zobacz statystyki: ${esc(item.name)}"><span class="weapon-art"><img src="${esc(item.image)}" alt="" loading="lazy"></span><span class="weapon-card-copy"><span>${esc(item.category)}</span><h2>${esc(item.name)}</h2><small>ZOBACZ STATYSTYKI ↗</small></span></button>`).join('') : '<p class="empty-state">Nie znaleziono broni.</p>';
+      grid.querySelectorAll('[data-weapon-id]').forEach(card => card.addEventListener('click', () => showWeaponDetails(weapons.find(item => item.id === card.dataset.weaponId))));
     };
     search.addEventListener('input', update);
     update();
@@ -209,6 +210,22 @@ async function renderWeapons() {
     const loading = root.querySelector('.map-loading');
     if (loading) loading.textContent = 'Nie udało się pobrać arsenału. Sprawdź połączenie z internetem i spróbuj ponownie.';
   }
+}
+function showWeaponDetails(weapon) {
+  if (!weapon) return;
+  const dialog = document.querySelector('#weapon-dialog');
+  const number = value => Number.isFinite(Number(value)) ? Number(value).toLocaleString('pl-PL', { maximumFractionDigits: 1 }) : '—';
+  const distance = range => `${number(range.rangeStartMeters)}–${number(range.rangeEndMeters)} m`;
+  document.querySelector('#weapon-detail-kicker').textContent = weapon.category.toLocaleUpperCase('pl');
+  document.querySelector('#weapon-detail-title').textContent = weapon.name;
+  document.querySelector('#weapon-detail-image').src = weapon.image;
+  document.querySelector('#weapon-detail-image').alt = weapon.name;
+  document.querySelector('#weapon-detail-cost').textContent = weapon.cost === null ? 'Brak danych' : `${number(weapon.cost)} kredytów`;
+  document.querySelector('#weapon-detail-fire-rate').textContent = weapon.fireRate === null ? '—' : `${number(weapon.fireRate)} strz./s`;
+  document.querySelector('#weapon-detail-magazine').textContent = weapon.magazineSize === null ? '—' : `${number(weapon.magazineSize)} nabojów`;
+  const body = document.querySelector('#weapon-damage-rows');
+  body.innerHTML = weapon.damageRanges.length ? weapon.damageRanges.map(range => `<tr><th scope="row">${esc(distance(range))}</th><td>${esc(number(range.headDamage))}</td><td>${esc(number(range.bodyDamage))}</td><td>${esc(number(range.legDamage))}</td></tr>`).join('') : '<tr><td colspan="4" class="weapon-no-damage">Dla tej broni API nie udostępnia tabeli obrażeń.</td></tr>';
+  dialog.showModal();
 }
 function renderPractice() {
   root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> POWTÓRKA W FORMIE GRY</div><h1>ZGADNIJ, <em>KTO TO?</em></h1><p>Krótki trening w stylu zgadywanki: portret agenta, ikonka umiejętności, broń albo przypisanie do roli. Każde pytanie ma cztery odpowiedzi.</p></section><div class="practice-grid"><article class="practice-card"><div class="practice-symbol portrait-practice"><img src="${esc(agents.find(a=>a.name==='Sova')?.portrait || agents[0].portrait)}" alt=""></div><div class="eyebrow small"><span></span> ROZPOZNAWANIE</div><h2>Kto to <em>jest?</em></h2><p>Rozpoznaj agentów po ich portretach. 10 pytań, cztery odpowiedzi.</p><button class="primary-button" data-quiz="portrait">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol skill-practice"><img src="${esc(agents.flatMap(a=>a.abilities).find(x=>x.icon)?.icon || '')}" alt=""></div><div class="eyebrow small"><span></span> IKONY UMIEJĘTNOŚCI</div><h2>Czyja to <em>umiejętność?</em></h2><p>Spójrz na ikonkę i wybierz agenta, do którego należy.</p><button class="primary-button" data-quiz="ability">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol roles-practice"><div>4</div></div><div class="eyebrow small"><span></span> ROLE AGENTÓW</div><h2>Jaka to <em>rola?</em></h2><p>Wskaż rolę agenta na podstawie jego portretu.</p><button class="primary-button" data-quiz="role">ZAGRAJ <span>↗</span></button></article><article class="practice-card map-practice-card"><div class="practice-symbol map-practice-symbol"><span>MAPY</span><b>A</b><b>B</b></div><div class="eyebrow small"><span></span> SPRAWDŹ SIĘ</div><h2>Callouty <em>map.</em></h2><p>Uzupełnij puste punkty z pamięci i sprawdź wynik. Każda runda losuje kolejne miejsca.</p><button class="primary-button" data-go="map-practice">WYBIERZ MAPĘ <span>↗</span></button></article><article class="practice-card weapon-practice-card"><div class="practice-symbol weapon-practice-symbol"><span>ARSENAŁ</span><b>V</b></div><div class="eyebrow small"><span></span> ROZPOZNAWANIE</div><h2>Jaka to <em>broń?</em></h2><p>Rozpoznaj broń na obrazku i wybierz jej nazwę spośród czterech odpowiedzi.</p><button class="primary-button" data-quiz="weapon">ZAGRAJ <span>↗</span></button></article></div><p class="practice-footnote">Postęp lekcji zapisuje się w tej przeglądarce na tym urządzeniu.</p>`;
@@ -493,6 +510,8 @@ quizNext.addEventListener('click', () => {
 });
 document.querySelector('#close-dialog').addEventListener('click', () => { quizNext.onclick = null; document.querySelector('#quiz-dialog').close(); });
 document.querySelector('#quiz-dialog').addEventListener('click', event => { if (event.target === event.currentTarget) { quizNext.onclick = null; event.currentTarget.close(); } });
+document.querySelector('#close-weapon-dialog').addEventListener('click', () => document.querySelector('#weapon-dialog').close());
+document.querySelector('#weapon-dialog').addEventListener('click', event => { if (event.target === event.currentTarget) event.currentTarget.close(); });
 navButtons.forEach(button => button.addEventListener('click', () => showScreen(button.dataset.nav)));
 document.querySelector('.brand').addEventListener('click', event => { event.preventDefault(); showScreen('overview'); });
 showScreen('overview');
