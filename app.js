@@ -161,10 +161,15 @@ async function renderMapsLesson() {
   try {
     const maps = await loadMapCatalog();
     if (activeScreen !== 'maps') return;
-    root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> LEKCJA 03 · MAPY</div><h1>WYBIERZ <em>MAPĘ.</em></h1><p>Otwórz mapę nauki, aby zobaczyć komplet oznaczeń i legendę ze wszystkimi calloutami.</p></section><div class="map-lesson-grid">${maps.map(map => `<article class="map-lesson-card"><img src="${esc(map.image)}" alt="Minimapa ${esc(map.name)}" loading="lazy"><div class="map-lesson-copy"><div class="eyebrow small"><span></span> ${map.callouts.length} MIEJSC</div><h2>${esc(map.name)}</h2><button class="primary-button" data-map-id="${esc(map.id)}">UCZ SIĘ TEJ MAPY <span>↗</span></button></div></article>`).join('')}</div>`;
-    root.querySelectorAll('[data-map-id]').forEach(button => button.addEventListener('click', () => {
-      const map = maps.find(item => item.id === button.dataset.mapId);
+    root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> LEKCJA 03 · MAPY</div><h1>WYBIERZ <em>MAPĘ.</em></h1><p>Dla każdej mapy wybierz jeden z dwóch widoków: kompletną mapę z nazwami albo pusty quiz do uzupełnienia z pamięci.</p></section><div class="map-lesson-grid">${maps.map(map => `<article class="map-lesson-card"><img src="${esc(map.image)}" alt="Minimapa ${esc(map.name)}" loading="lazy"><div class="map-lesson-copy"><div class="eyebrow small"><span></span> ${map.callouts.length} MIEJSC</div><h2>${esc(map.name)}</h2><div class="map-mode-actions"><button class="primary-button" data-map-study="${esc(map.id)}">PEŁNA MAPA</button><button class="secondary-button" data-map-quiz="${esc(map.id)}">PUSTY QUIZ</button></div></div></article>`).join('')}</div>`;
+    root.querySelectorAll('[data-map-study]').forEach(button => button.addEventListener('click', () => {
+      const map = maps.find(item => item.id === button.dataset.mapStudy);
       renderMapStudy(map);
+    }));
+    root.querySelectorAll('[data-map-quiz]').forEach(button => button.addEventListener('click', () => {
+      const map = maps.find(item => item.id === button.dataset.mapQuiz);
+      if (map) mapRoundPools.set(map.id, shuffle(map.callouts));
+      renderMapPuzzle(map);
     }));
   } catch (error) {
     const loading = root.querySelector('.map-loading');
@@ -174,7 +179,7 @@ async function renderMapsLesson() {
 function renderMapStudy(map) {
   if (!map) return;
   updateNav('maps');
-  root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> LEKCJA 03 · NAUKA MAPY</div><h1>${esc(map.name).toLocaleUpperCase('pl')} <em>CALLOUTY.</em></h1><p>Zapamiętuj punkty według numerów na minimapie i odpowiadających im nazw na liście. Potem sprawdź się bez podpowiedzi.</p></section><section class="map-study-layout"><div class="map-study-board"><div class="map-study-map"><img src="${esc(map.image)}" alt="Minimapa ${esc(map.name)} z oznaczonymi calloutami" draggable="false">${map.callouts.map((spot,index)=>`<span class="map-study-marker" style="left:${spot.x}%;top:${spot.y}%" aria-label="${index+1}: ${esc(spot.label)}">${index+1}</span>`).join('')}</div></div><aside class="map-study-legend"><div class="eyebrow small"><span></span> WSZYSTKIE MIEJSCA · ${map.callouts.length}</div><ol>${map.callouts.map((spot,index)=>`<li><b>${index+1}</b><span>${esc(spot.label)}</span></li>`).join('')}</ol></aside></section><div class="map-study-actions"><button class="secondary-button" id="map-study-back">← WSZYSTKIE MAPY</button><button class="primary-button" id="map-study-practice">SPRAWDŹ SIĘ Z TEJ MAPY <span>↗</span></button></div>`;
+  root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> LEKCJA 03 · NAUKA MAPY</div><h1>${esc(map.name).toLocaleUpperCase('pl')} <em>CALLOUTY.</em></h1><p>To jest pełna mapa — wszystkie callouty są podpisane bezpośrednio przy swoich lokalizacjach. Lista obok pomaga odszukać nazwy.</p></section><section class="map-study-layout"><div class="map-study-board"><div class="map-study-map"><img src="${esc(map.image)}" alt="Minimapa ${esc(map.name)} z oznaczonymi calloutami" draggable="false">${map.callouts.map((spot,index)=>`<span class="map-study-marker" style="left:${spot.x}%;top:${spot.y}%" title="${esc(spot.label)}"><b>${index+1}</b>${esc(spot.label)}</span>`).join('')}</div></div><aside class="map-study-legend"><div class="eyebrow small"><span></span> WSZYSTKIE MIEJSCA · ${map.callouts.length}</div><ol>${map.callouts.map((spot,index)=>`<li><b>${index+1}</b><span>${esc(spot.label)}</span></li>`).join('')}</ol></aside></section><div class="map-study-actions"><button class="secondary-button" id="map-study-back">← WSZYSTKIE MAPY</button><button class="primary-button" id="map-study-practice">OTWÓRZ PUSTY QUIZ <span>↗</span></button></div>`;
   root.querySelector('#map-study-back').addEventListener('click', renderMapsLesson);
   root.querySelector('#map-study-practice').addEventListener('click', () => {
     mapRoundPools.set(map.id, shuffle(map.callouts));
