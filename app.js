@@ -158,12 +158,21 @@ function makeQuestions(type) {
   }
   if (type === 'ability') {
     const pool = agents.flatMap(agent => agent.abilities.filter(ability => ability.icon).map(ability => ({ agent, ability })));
-    return shuffle(pool).slice(0, 10).map(({agent,ability}) => {
+    const iconQuestions = shuffle(pool).slice(0, 5).map(({agent,ability}) => {
       const wrong = shuffle(agents.filter(other => other.id !== agent.id)).slice(0, 3).map(other => other.name);
       const options = shuffle([agent.name, ...wrong]);
       const short = ability.description.length > 220 ? `${ability.description.slice(0, 217).trim()}…` : ability.description;
       return { prompt: 'Czyja to umiejętność?', image: ability.icon, alt: `Ikona umiejętności ${ability.name}`, options, correct: options.indexOf(agent.name), why: `${ability.name} to umiejętność agenta ${agent.name}. ${short}` };
     });
+    const clipPool = window.COURSE_SKILL_CLIPS || [];
+    const videoQuestions = shuffle(clipPool).slice(0, 5).map(clip => {
+      const agent = agents.find(item => item.name === clip.agent);
+      if (!agent) return null;
+      const wrong = shuffle(agents.filter(other => other.id !== agent.id)).slice(0, 3).map(other => other.name);
+      const options = shuffle([agent.name, ...wrong]);
+      return { prompt: 'Czyja to umiejętność?', videoId: clip.id, alt: `Film pokazujący umiejętność ${clip.title} agenta ${agent.name}`, options, correct: options.indexOf(agent.name), why: `${clip.title} to umiejętność agenta ${agent.name}.` };
+    }).filter(Boolean);
+    return shuffle([...iconQuestions, ...videoQuestions]);
   }
   if (type === 'portrait') {
     return shuffle(agents).slice(0, 10).map(agent => {
@@ -192,7 +201,10 @@ function renderQuestion() {
   selectedAnswer = null; answered = false;
   document.querySelector('#quiz-counter').textContent = `${questionIndex + 1} / ${questionSet.length}`;
   document.querySelector('#quiz-question').textContent = question.prompt;
-  document.querySelector('#quiz-media').innerHTML = `<div class="question-art ${activeQuiz.type === 'ability' ? 'question-icon-art' : ''}"><img src="${esc(question.image)}" alt="${esc(question.alt)}"></div>`;
+  const quizMedia = question.videoId
+    ? `<div class="question-art question-video-art"><iframe src="https://drive.google.com/file/d/${encodeURIComponent(question.videoId)}/preview" title="${esc(question.alt)}" loading="lazy" allow="autoplay; fullscreen" allowfullscreen></iframe></div>`
+    : `<div class="question-art ${activeQuiz.type === 'ability' ? 'question-icon-art' : ''}"><img src="${esc(question.image)}" alt="${esc(question.alt)}"></div>`;
+  document.querySelector('#quiz-media').innerHTML = quizMedia;
   document.querySelector('#quiz-feedback').textContent = '';
   const options = document.querySelector('#quiz-options');
   options.innerHTML = question.options.map((answer,i)=>`<button class="quiz-option" data-answer="${i}"><span class="answer-letter">${String.fromCharCode(65+i)}.</span> ${esc(answer)}</button>`).join('');
