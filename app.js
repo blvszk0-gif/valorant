@@ -62,8 +62,9 @@ function saveProgress() {
 }
 function updateNav(screen) {
   activeScreen = screen;
-  navButtons.forEach(button => button.classList.toggle('active', button.dataset.nav === screen));
-  const names = { overview: 'START', roles: 'LEKCJA 1 / ROLE', agents: 'LEKCJA 2 / AGENCI', maps: 'LEKCJA 3 / MAPY', practice: 'TRENING', extras: 'DODATKOWE LEKCJE' };
+  const navScreen = screen === 'map-practice' ? 'practice' : screen;
+  navButtons.forEach(button => button.classList.toggle('active', button.dataset.nav === navScreen));
+  const names = { overview: 'START', roles: 'LEKCJA 1 / ROLE', agents: 'LEKCJA 2 / AGENCI', maps: 'LEKCJA 3 / MAPY', practice: 'TRENING', 'map-practice': 'TRENING / MAPY', extras: 'DODATKOWE LEKCJE' };
   document.querySelector('#crumb').textContent = names[screen] || 'START';
 }
 function videoMarkup(path, title, poster = '') {
@@ -81,12 +82,12 @@ function progressMarkup() {
 }
 function renderOverview() {
   root.innerHTML = `
-    <section class="hero"><div class="hero-copy"><div class="eyebrow"><span></span> KURS DLA POCZĄTKUJĄCYCH <span class="eyebrow-line"></span></div><h1>OGARNIJ<br><em>VALORANTA.</em></h1><p>Dwie główne lekcje, Twoje nagrania i krótkie quizy, które pomogą zapamiętać role, agentów oraz ich umiejętności.</p><button class="primary-button" data-go="roles">ZACZNIJ OD RÓL <span>↗</span></button><div class="hero-meta"><span>◷ W TWOIM TEMPIE</span><span>✳ 29 AGENTÓW</span><span>⌁ QUIZY 4-ODPOWIEDZIOWE</span></div></div><div class="hero-art" aria-hidden="true"><div class="art-grid"></div><div class="crosshair">+</div><div class="orbital orbital-one"></div><div class="orbital orbital-two"></div><div class="art-ring"><div class="art-core"><span class="core-top">SPIKE</span><span class="core-glyph">S</span><span class="core-bottom">TRAINING</span></div></div><div class="art-tag tag-top">TACTICAL <b>5v5</b></div><div class="art-tag tag-bottom"><span class="pulse"></span> READY WHEN YOU ARE</div><div class="art-corner"></div></div><div class="hero-side-label">TRAINING PROTOCOL <span>///</span> 001</div></section>
+    <section class="hero"><div class="hero-copy"><div class="eyebrow"><span></span> KURS DLA POCZĄTKUJĄCYCH <span class="eyebrow-line"></span></div><h1>OGARNIJ<br><em>VALORANTA.</em></h1><p>Trzy lekcje, Twoje nagrania i krótkie quizy, które pomogą zapamiętać role, agentów i callouty map.</p><button class="primary-button" data-go="roles">ZACZNIJ OD RÓL <span>↗</span></button><div class="hero-meta"><span>◷ W TWOIM TEMPIE</span><span>✳ 29 AGENTÓW</span><span>⌁ QUIZY 4-ODPOWIEDZIOWE</span></div></div><div class="hero-art" aria-hidden="true"><div class="art-grid"></div><div class="crosshair">+</div><div class="orbital orbital-one"></div><div class="orbital orbital-two"></div><div class="art-ring"><div class="art-core"><span class="core-top">SPIKE</span><span class="core-glyph">S</span><span class="core-bottom">TRAINING</span></div></div><div class="art-tag tag-top">TACTICAL <b>5v5</b></div><div class="art-tag tag-bottom"><span class="pulse"></span> READY WHEN YOU ARE</div><div class="art-corner"></div></div><div class="hero-side-label">TRAINING PROTOCOL <span>///</span> 001</div></section>
     ${progressMarkup()}
     <section class="course-section"><div class="section-head"><div><div class="eyebrow small"><span></span> TWOJA ŚCIEŻKA</div><h2>Zacznij od <em>podstaw.</em></h2></div><span class="section-count">01 — 03</span></div><div class="course-cards">
       <button class="course-card role-course" data-go="roles"><span class="course-number">LEKCJA 01</span><img src="valorant_role_jpg/Inicjator_rola.jpg" alt="" class="course-symbol"><span class="course-card-copy"><b>Role agentów</b><small>Poznaj cztery role i sprawdź się w quizie.</small></span><span class="course-arrow">↗</span></button>
       <button class="course-card agent-course" data-go="agents"><span class="course-number">LEKCJA 02</span><img src="valorant_portrety_agentow_jpg/Gekko_portret.jpg" alt="" class="course-symbol portrait-symbol"><span class="course-card-copy"><b>Agenci i umiejętności</b><small>29 nagrań, atlas postaci i quiz rozpoznawania umiejętności.</small></span><span class="course-arrow">↗</span></button>
-      <button class="course-card map-course" data-go="maps"><span class="course-number">LEKCJA 03</span><span class="course-symbol map-course-symbol">⌖</span><span class="course-card-copy"><b>Mapy i callouty</b><small>Poznaj mapy, ich miejsca i ułóż nazwy na minimapie.</small></span><span class="course-arrow">↗</span></button>
+      <button class="course-card map-course" data-go="maps"><span class="course-number">LEKCJA 03</span><span class="course-symbol map-course-symbol">⌖</span><span class="course-card-copy"><b>Mapy i callouty</b><small>Naucz się wszystkich miejsc na mapach, a potem sprawdź pamięć w quizie.</small></span><span class="course-arrow">↗</span></button>
     </div></section>
     <section class="home-bottom"><div class="home-panel"><div class="eyebrow small"><span></span> POWTÓRKA</div><h2>Krótki trening <em>pamięci.</em></h2><p>Rozpoznawaj agentów po portretach albo zgaduj, kto ma pokazaną umiejętność.</p><button class="secondary-button" data-go="practice">OTWÓRZ TRENING <span>↗</span></button></div><div class="home-panel extra-home"><div class="eyebrow small"><span></span> DODATKOWY MATERIAŁ</div><h2>Broń, mapy <em>i rozgrywka.</em></h2><p>Twoje nagrania z kolejnych części szkolenia są dostępne jako dodatkowe lekcje.</p><button class="secondary-button" data-go="extras">ZOBACZ 13 NAGRAŃ <span>↗</span></button></div></section>`;
   bindScreenActions();
@@ -137,7 +138,7 @@ function renderExtras() {
   root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> DODATKOWA NAUKA</div><h1>WIEDZA Z <em>ROZGRYWKI.</em></h1><p>Po rolach i agentach możesz przejść do zakupów, broni, interfejsu i przykładów gry na mapie.</p></section><div class="extras-groups">${groups.map(group => `<section class="extra-group"><div class="section-head"><div><div class="eyebrow small"><span></span> ${esc(group)}</div><h2>${group.includes('BRONIE') ? 'Broń i <em>pancerz.</em>' : 'Poznaj <em>mecz.</em>'}</h2></div><span class="section-count">${extraLessons.filter(x => x.group === group).length} NAGRAŃ</span></div><div class="extra-list">${extraLessons.filter(x => x.group === group).map(item => `<details class="extra-video-card"><summary><span class="extra-number">${esc(item.id)}</span><span class="extra-title"><b>${esc(item.title)}</b><small>${esc(item.note)}</small></span><span class="extra-play">▶</span></summary><div class="extra-player">${videoMarkup(`edytowane/${item.file}`,`${item.id} — ${item.title}`)}</div></details>`).join('')}</div></section>`).join('')}</div>`;
 }
 function renderPractice() {
-  root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> POWTÓRKA W FORMIE GRY</div><h1>ZGADNIJ, <em>KTO TO?</em></h1><p>Krótki trening w stylu zgadywanki: portret agenta, ikonka umiejętności albo przypisanie do roli. Każde pytanie ma cztery odpowiedzi.</p></section><div class="practice-grid"><article class="practice-card"><div class="practice-symbol portrait-practice"><img src="${esc(agents.find(a=>a.name==='Sova')?.portrait || agents[0].portrait)}" alt=""></div><div class="eyebrow small"><span></span> ROZPOZNAWANIE</div><h2>Kto to <em>jest?</em></h2><p>Rozpoznaj agentów po ich portretach. 10 pytań, cztery odpowiedzi.</p><button class="primary-button" data-quiz="portrait">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol skill-practice"><img src="${esc(agents.flatMap(a=>a.abilities).find(x=>x.icon)?.icon || '')}" alt=""></div><div class="eyebrow small"><span></span> IKONY UMIEJĘTNOŚCI</div><h2>Czyja to <em>umiejętność?</em></h2><p>Spójrz na ikonkę i wybierz agenta, do którego należy.</p><button class="primary-button" data-quiz="ability">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol roles-practice"><div>4</div></div><div class="eyebrow small"><span></span> ROLE AGENTÓW</div><h2>Jaka to <em>rola?</em></h2><p>Wskaż rolę agenta na podstawie jego portretu.</p><button class="primary-button" data-quiz="role">ZAGRAJ <span>↗</span></button></article><article class="practice-card map-practice-card"><div class="practice-symbol map-practice-symbol"><span>MAPY</span><b>A</b><b>B</b></div><div class="eyebrow small"><span></span> CALL-OUTY MAPY</div><h2>Ułóż <em>miejsca.</em></h2><p>Trenuj nazwy pozycji na wszystkich mapach. Wybierz mapę w lekcji map.</p><button class="primary-button" data-go="maps">OTWÓRZ LEKCJĘ <span>↗</span></button></article></div><p class="practice-footnote">Postęp lekcji zapisuje się w tej przeglądarce na tym urządzeniu.</p>`;
+  root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> POWTÓRKA W FORMIE GRY</div><h1>ZGADNIJ, <em>KTO TO?</em></h1><p>Krótki trening w stylu zgadywanki: portret agenta, ikonka umiejętności albo przypisanie do roli. Każde pytanie ma cztery odpowiedzi.</p></section><div class="practice-grid"><article class="practice-card"><div class="practice-symbol portrait-practice"><img src="${esc(agents.find(a=>a.name==='Sova')?.portrait || agents[0].portrait)}" alt=""></div><div class="eyebrow small"><span></span> ROZPOZNAWANIE</div><h2>Kto to <em>jest?</em></h2><p>Rozpoznaj agentów po ich portretach. 10 pytań, cztery odpowiedzi.</p><button class="primary-button" data-quiz="portrait">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol skill-practice"><img src="${esc(agents.flatMap(a=>a.abilities).find(x=>x.icon)?.icon || '')}" alt=""></div><div class="eyebrow small"><span></span> IKONY UMIEJĘTNOŚCI</div><h2>Czyja to <em>umiejętność?</em></h2><p>Spójrz na ikonkę i wybierz agenta, do którego należy.</p><button class="primary-button" data-quiz="ability">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol roles-practice"><div>4</div></div><div class="eyebrow small"><span></span> ROLE AGENTÓW</div><h2>Jaka to <em>rola?</em></h2><p>Wskaż rolę agenta na podstawie jego portretu.</p><button class="primary-button" data-quiz="role">ZAGRAJ <span>↗</span></button></article><article class="practice-card map-practice-card"><div class="practice-symbol map-practice-symbol"><span>MAPY</span><b>A</b><b>B</b></div><div class="eyebrow small"><span></span> SPRAWDŹ SIĘ</div><h2>Callouty <em>map.</em></h2><p>Uzupełnij puste punkty z pamięci i sprawdź wynik. Każda runda losuje kolejne miejsca.</p><button class="primary-button" data-go="map-practice">WYBIERZ MAPĘ <span>↗</span></button></article></div><p class="practice-footnote">Postęp lekcji zapisuje się w tej przeglądarce na tym urządzeniu.</p>`;
   bindScreenActions();
 }
 async function loadMapCatalog() {
@@ -151,27 +152,55 @@ async function loadMapCatalog() {
           x: Math.max(2, Math.min(98, ((spot?.location?.y ?? NaN) * map.xMultiplier + map.xScalarToAdd) * 100)),
           y: Math.max(2, Math.min(98, ((spot?.location?.x ?? NaN) * map.yMultiplier + map.yScalarToAdd) * 100))
         })).filter(spot => spot.label && Number.isFinite(spot.x) && Number.isFinite(spot.y))
-      })).filter(map => map.callouts.length > 3));
+      })).filter(map => map.callouts.length > 3)).catch(error => { mapCatalogPromise = null; throw error; });
   return mapCatalogPromise;
 }
 async function renderMapsLesson() {
   updateNav('maps');
-  root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> LEKCJA 03 · MAPY</div><h1>POZNAJ <em>MAPY.</em></h1><p>Przejrzyj nazwy miejsc na mapach, a potem dopasuj callouty do ich położenia. Jedna runda losuje osiem miejsc; kolejne rundy obejmują pozostałe nazwy.</p></section><p class="map-loading">Ładowanie map i calloutów…</p>`;
+  root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> LEKCJA 03 · MAPY</div><h1>POZNAJ <em>MAPY.</em></h1><p>Wybierz mapę, aby zobaczyć wszystkie callouty oznaczone na minimapie i na liście. Gdy je zapamiętasz, przejdź do treningu i uzupełnij puste punkty.</p></section><p class="map-loading">Ładowanie map i calloutów…</p>`;
   try {
     const maps = await loadMapCatalog();
     if (activeScreen !== 'maps') return;
-    root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> LEKCJA 03 · MAPY</div><h1>POZNAJ <em>MAPY.</em></h1><p>Każda mapa zawiera listę dostępnych calloutów. Wybierz ją, aby ułożyć osiem losowych nazw na minimapie; nowe rundy losują kolejne miejsca.</p></section><div class="map-lesson-grid">${maps.map(map => `<article class="map-lesson-card"><img src="${esc(map.image)}" alt="Minimapa ${esc(map.name)}" loading="lazy"><div class="map-lesson-copy"><div class="eyebrow small"><span></span> ${map.callouts.length} MIEJSC</div><h2>${esc(map.name)}</h2><details><summary>Pokaż wszystkie callouty</summary><p>${map.callouts.map(item => esc(item.label)).join(' · ')}</p></details><button class="primary-button" data-map-id="${esc(map.id)}">ĆWICZ TĘ MAPĘ <span>↗</span></button></div></article>`).join('')}</div>`;
+    root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> LEKCJA 03 · MAPY</div><h1>WYBIERZ <em>MAPĘ.</em></h1><p>Otwórz mapę nauki, aby zobaczyć komplet oznaczeń i legendę ze wszystkimi calloutami.</p></section><div class="map-lesson-grid">${maps.map(map => `<article class="map-lesson-card"><img src="${esc(map.image)}" alt="Minimapa ${esc(map.name)}" loading="lazy"><div class="map-lesson-copy"><div class="eyebrow small"><span></span> ${map.callouts.length} MIEJSC</div><h2>${esc(map.name)}</h2><button class="primary-button" data-map-id="${esc(map.id)}">UCZ SIĘ TEJ MAPY <span>↗</span></button></div></article>`).join('')}</div>`;
+    root.querySelectorAll('[data-map-id]').forEach(button => button.addEventListener('click', () => {
+      const map = maps.find(item => item.id === button.dataset.mapId);
+      renderMapStudy(map);
+    }));
+  } catch (error) {
+    const loading = root.querySelector('.map-loading');
+    if (loading) loading.textContent = 'Nie udało się pobrać listy map. Sprawdź połączenie z internetem i spróbuj ponownie.';
+  }
+}
+function renderMapStudy(map) {
+  if (!map) return;
+  updateNav('maps');
+  root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> LEKCJA 03 · NAUKA MAPY</div><h1>${esc(map.name).toLocaleUpperCase('pl')} <em>CALLOUTY.</em></h1><p>Zapamiętuj punkty według numerów na minimapie i odpowiadających im nazw na liście. Potem sprawdź się bez podpowiedzi.</p></section><section class="map-study-layout"><div class="map-study-board"><div class="map-study-map"><img src="${esc(map.image)}" alt="Minimapa ${esc(map.name)} z oznaczonymi calloutami" draggable="false">${map.callouts.map((spot,index)=>`<span class="map-study-marker" style="left:${spot.x}%;top:${spot.y}%" aria-label="${index+1}: ${esc(spot.label)}">${index+1}</span>`).join('')}</div></div><aside class="map-study-legend"><div class="eyebrow small"><span></span> WSZYSTKIE MIEJSCA · ${map.callouts.length}</div><ol>${map.callouts.map((spot,index)=>`<li><b>${index+1}</b><span>${esc(spot.label)}</span></li>`).join('')}</ol></aside></section><div class="map-study-actions"><button class="secondary-button" id="map-study-back">← WSZYSTKIE MAPY</button><button class="primary-button" id="map-study-practice">SPRAWDŹ SIĘ Z TEJ MAPY <span>↗</span></button></div>`;
+  root.querySelector('#map-study-back').addEventListener('click', renderMapsLesson);
+  root.querySelector('#map-study-practice').addEventListener('click', () => {
+    mapRoundPools.set(map.id, shuffle(map.callouts));
+    renderMapPuzzle(map);
+  });
+}
+async function renderMapPracticeSelection() {
+  updateNav('map-practice');
+  root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> TRENING · CALLOUTY</div><h1>SPRAWDŹ <em>PAMIĘĆ.</em></h1><p>Wybierz mapę, uzupełnij puste punkty z pamięci i sprawdź poprawne odpowiedzi.</p></section><p class="map-loading">Ładowanie map…</p>`;
+  try {
+    const maps = await loadMapCatalog();
+    if (activeScreen !== 'map-practice') return;
+    root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> TRENING · CALL-OUTY</div><h1>WYBIERZ <em>MAPĘ.</em></h1><p>Quiz pokaże puste punkty i pomieszane nazwy. Rozmieść je z pamięci; odpowiedzi zobaczysz po sprawdzeniu.</p></section><div class="map-lesson-grid">${maps.map(map => `<article class="map-lesson-card"><img src="${esc(map.image)}" alt="Minimapa ${esc(map.name)}" loading="lazy"><div class="map-lesson-copy"><div class="eyebrow small"><span></span> ${map.callouts.length} MIEJSC W PULI</div><h2>${esc(map.name)}</h2><button class="primary-button" data-map-id="${esc(map.id)}">ROZPOCZNIJ QUIZ <span>↗</span></button></div></article>`).join('')}</div>`;
     root.querySelectorAll('[data-map-id]').forEach(button => button.addEventListener('click', () => {
       const map = maps.find(item => item.id === button.dataset.mapId);
       if (map) mapRoundPools.set(map.id, shuffle(map.callouts));
       renderMapPuzzle(map);
     }));
   } catch (error) {
-    root.querySelector('.map-loading').textContent = 'Nie udało się pobrać listy map. Sprawdź połączenie z internetem i spróbuj ponownie.';
+    const loading = root.querySelector('.map-loading');
+    if (loading) loading.textContent = 'Nie udało się pobrać listy map. Sprawdź połączenie z internetem i spróbuj ponownie.';
   }
 }
 function renderMapPuzzle(map) {
   if (!map) return;
+  updateNav('map-practice');
   selectedMapTile = null;
   mapPuzzleChecked = false;
   activeMap = map;
@@ -239,7 +268,7 @@ function renderMapPuzzle(map) {
     check.disabled = true;
   });
   root.querySelector('#map-reset').addEventListener('click', () => renderMapPuzzle(map));
-  root.querySelector('#map-back').addEventListener('click', renderMapsLesson);
+  root.querySelector('#map-back').addEventListener('click', renderMapPracticeSelection);
 }
 function bindScreenActions() {
   root.querySelectorAll('[data-go]').forEach(button => button.addEventListener('click', () => showScreen(button.dataset.go)));
@@ -253,6 +282,7 @@ function showScreen(screen) {
   if (screen === 'roles') renderRoles();
   else if (screen === 'agents') renderAgents();
   else if (screen === 'maps') renderMapsLesson();
+  else if (screen === 'map-practice') renderMapPracticeSelection();
   else if (screen === 'practice') renderPractice();
   else if (screen === 'extras') renderExtras();
   else renderOverview();

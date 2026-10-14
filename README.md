@@ -38,4 +38,4 @@ To jest strona statyczna HTML/CSS/JS, więc nie potrzebuje komendy budowania. Re
 
 ## Lekcja map i trening calloutów
 
-Sekcja **Lekcja 3 · Mapy** pobiera listę map i ich calloutów z [Valorant API](https://valorant-api.com/v1/maps). Karta każdej mapy pokazuje pełną listę nazw; runda quizu losuje osiem punktów do dopasowania na minimapie. Kolejna runda losuje nowy zestaw. Na komputerze można przeciągać nazwy, a na telefonie stuknąć nazwę i pole. Do pobrania minimap używane są grafiki udostępniane przez API.
+Sekcja **Lekcja 3 · Mapy** pobiera listę map i ich calloutów z [Valorant API](https://valorant-api.com/v1/maps). W lekcji wybiera się mapę i dostaje pełną minimapę z ponumerowanymi punktami oraz legendę wszystkich nazw. W sekcji **Trening** wybiera się mapę ponownie i uzupełnia pustą minimapę z pamięci. Quiz losuje do ośmiu miejsc na rundę i przechodzi przez całą pulę, zanim zacznie losować od nowa. Na komputerze można przeciągać nazwy, a na telefonie stuknąć nazwę i pole.
