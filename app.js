@@ -37,6 +37,7 @@ let activeQuiz = null;
 let selectedMapTile = null;
 let mapPuzzleChecked = false;
 let mapCatalogPromise;
+let weaponCatalogPromise;
 let activeMap = null;
 let activeMapRound = [];
 const mapRoundPools = new Map();
@@ -60,11 +61,19 @@ function shuffle(items) {
 function saveProgress() {
   localStorage.setItem(storageKey, JSON.stringify({ completed: [...completed], bestGuess: saved.bestGuess || 0 }));
 }
+function showToast(message) {
+  document.querySelector('.toast')?.remove();
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  document.body.append(toast);
+  window.setTimeout(() => toast.remove(), 3000);
+}
 function updateNav(screen) {
   activeScreen = screen;
   const navScreen = screen === 'map-practice' ? 'practice' : screen;
   navButtons.forEach(button => button.classList.toggle('active', button.dataset.nav === navScreen));
-  const names = { overview: 'START', roles: 'LEKCJA 1 / ROLE', agents: 'LEKCJA 2 / AGENCI', maps: 'LEKCJA 3 / MAPY', practice: 'TRENING', 'map-practice': 'TRENING / MAPY', extras: 'DODATKOWE LEKCJE', glossary: 'SŁOWNIK' };
+  const names = { overview: 'START', roles: 'LEKCJA 1 / ROLE', agents: 'LEKCJA 2 / AGENCI', maps: 'LEKCJA 3 / MAPY', weapons: 'ARSENAŁ', practice: 'TRENING', 'map-practice': 'TRENING / MAPY', extras: 'DODATKOWE LEKCJE', glossary: 'SŁOWNIK' };
   document.querySelector('#crumb').textContent = names[screen] || 'START';
 }
 function videoMarkup(path, title, poster = '') {
@@ -167,8 +176,42 @@ function renderGlossary() {
   }));
   updateResults();
 }
+async function loadWeaponCatalog() {
+  if (!weaponCatalogPromise) weaponCatalogPromise = fetch('https://valorant-api.com/v1/weapons?language=en-US')
+    .then(response => { if (!response.ok) throw new Error('Nie udało się pobrać arsenału.'); return response.json(); })
+    .then(payload => (payload.data || []).filter(item => item.displayName && (item.displayIcon || item.killStreamIcon))
+      .map(item => ({ id: item.uuid, name: item.displayName, category: String(item.category || 'Weapon').split('::').pop(), image: item.displayIcon || item.killStreamIcon }))
+      .sort((a,b) => a.category.localeCompare(b.category, 'en') || a.name.localeCompare(b.name, 'en')))
+    .catch(error => { weaponCatalogPromise = null; throw error; });
+  return weaponCatalogPromise;
+}
+async function renderWeapons() {
+  updateNav('weapons');
+  root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> ATLAS SPRZĘTU</div><h1>ARSENAŁ <em>VALORANTA.</em></h1><p>Przejrzyj obrazki broni i ich nazwy, a potem sprawdź się w quizie rozpoznawania.</p></section><p class="map-loading">Ładowanie broni…</p>`;
+  try {
+    const weapons = await loadWeaponCatalog();
+    if (activeScreen !== 'weapons') return;
+    root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> ATLAS SPRZĘTU</div><h1>ARSENAŁ <em>VALORANTA.</em></h1><p>Obrazki i nazwy broni, uporządkowane według kategorii. Gdy je poznasz, sprawdź się w quizie.</p><button class="primary-button" data-quiz="weapon">QUIZ: JAKA TO BROŃ? <span>↗</span></button></section><div class="weapon-tools"><input id="weapon-search" type="search" placeholder="Szukaj broni lub kategorii…" aria-label="Szukaj broni"><span id="weapon-count"></span></div><div class="weapon-grid" id="weapon-grid"></div><p class="glossary-source">Grafiki i nazwy pochodzą z <a href="https://valorant-api.com/v1/weapons" target="_blank" rel="noreferrer">Valorant API ↗</a>.</p>`;
+    bindQuizButtons(root);
+    const search = root.querySelector('#weapon-search');
+    const grid = root.querySelector('#weapon-grid');
+    const count = root.querySelector('#weapon-count');
+    const normalize = value => String(value).toLocaleLowerCase('pl').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const update = () => {
+      const query = normalize(search.value.trim());
+      const filtered = weapons.filter(item => normalize(`${item.name} ${item.category}`).includes(query));
+      count.textContent = `${filtered.length} / ${weapons.length} broni`;
+      grid.innerHTML = filtered.length ? filtered.map(item => `<article class="weapon-card"><div class="weapon-art"><img src="${esc(item.image)}" alt="${esc(item.name)}" loading="lazy"></div><div class="weapon-card-copy"><span>${esc(item.category)}</span><h2>${esc(item.name)}</h2></div></article>`).join('') : '<p class="empty-state">Nie znaleziono broni.</p>';
+    };
+    search.addEventListener('input', update);
+    update();
+  } catch (error) {
+    const loading = root.querySelector('.map-loading');
+    if (loading) loading.textContent = 'Nie udało się pobrać arsenału. Sprawdź połączenie z internetem i spróbuj ponownie.';
+  }
+}
 function renderPractice() {
-  root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> POWTÓRKA W FORMIE GRY</div><h1>ZGADNIJ, <em>KTO TO?</em></h1><p>Krótki trening w stylu zgadywanki: portret agenta, ikonka umiejętności albo przypisanie do roli. Każde pytanie ma cztery odpowiedzi.</p></section><div class="practice-grid"><article class="practice-card"><div class="practice-symbol portrait-practice"><img src="${esc(agents.find(a=>a.name==='Sova')?.portrait || agents[0].portrait)}" alt=""></div><div class="eyebrow small"><span></span> ROZPOZNAWANIE</div><h2>Kto to <em>jest?</em></h2><p>Rozpoznaj agentów po ich portretach. 10 pytań, cztery odpowiedzi.</p><button class="primary-button" data-quiz="portrait">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol skill-practice"><img src="${esc(agents.flatMap(a=>a.abilities).find(x=>x.icon)?.icon || '')}" alt=""></div><div class="eyebrow small"><span></span> IKONY UMIEJĘTNOŚCI</div><h2>Czyja to <em>umiejętność?</em></h2><p>Spójrz na ikonkę i wybierz agenta, do którego należy.</p><button class="primary-button" data-quiz="ability">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol roles-practice"><div>4</div></div><div class="eyebrow small"><span></span> ROLE AGENTÓW</div><h2>Jaka to <em>rola?</em></h2><p>Wskaż rolę agenta na podstawie jego portretu.</p><button class="primary-button" data-quiz="role">ZAGRAJ <span>↗</span></button></article><article class="practice-card map-practice-card"><div class="practice-symbol map-practice-symbol"><span>MAPY</span><b>A</b><b>B</b></div><div class="eyebrow small"><span></span> SPRAWDŹ SIĘ</div><h2>Callouty <em>map.</em></h2><p>Uzupełnij puste punkty z pamięci i sprawdź wynik. Każda runda losuje kolejne miejsca.</p><button class="primary-button" data-go="map-practice">WYBIERZ MAPĘ <span>↗</span></button></article></div><p class="practice-footnote">Postęp lekcji zapisuje się w tej przeglądarce na tym urządzeniu.</p>`;
+  root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> POWTÓRKA W FORMIE GRY</div><h1>ZGADNIJ, <em>KTO TO?</em></h1><p>Krótki trening w stylu zgadywanki: portret agenta, ikonka umiejętności, broń albo przypisanie do roli. Każde pytanie ma cztery odpowiedzi.</p></section><div class="practice-grid"><article class="practice-card"><div class="practice-symbol portrait-practice"><img src="${esc(agents.find(a=>a.name==='Sova')?.portrait || agents[0].portrait)}" alt=""></div><div class="eyebrow small"><span></span> ROZPOZNAWANIE</div><h2>Kto to <em>jest?</em></h2><p>Rozpoznaj agentów po ich portretach. 10 pytań, cztery odpowiedzi.</p><button class="primary-button" data-quiz="portrait">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol skill-practice"><img src="${esc(agents.flatMap(a=>a.abilities).find(x=>x.icon)?.icon || '')}" alt=""></div><div class="eyebrow small"><span></span> IKONY UMIEJĘTNOŚCI</div><h2>Czyja to <em>umiejętność?</em></h2><p>Spójrz na ikonkę i wybierz agenta, do którego należy.</p><button class="primary-button" data-quiz="ability">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol roles-practice"><div>4</div></div><div class="eyebrow small"><span></span> ROLE AGENTÓW</div><h2>Jaka to <em>rola?</em></h2><p>Wskaż rolę agenta na podstawie jego portretu.</p><button class="primary-button" data-quiz="role">ZAGRAJ <span>↗</span></button></article><article class="practice-card map-practice-card"><div class="practice-symbol map-practice-symbol"><span>MAPY</span><b>A</b><b>B</b></div><div class="eyebrow small"><span></span> SPRAWDŹ SIĘ</div><h2>Callouty <em>map.</em></h2><p>Uzupełnij puste punkty z pamięci i sprawdź wynik. Każda runda losuje kolejne miejsca.</p><button class="primary-button" data-go="map-practice">WYBIERZ MAPĘ <span>↗</span></button></article><article class="practice-card weapon-practice-card"><div class="practice-symbol weapon-practice-symbol"><span>ARSENAŁ</span><b>V</b></div><div class="eyebrow small"><span></span> ROZPOZNAWANIE</div><h2>Jaka to <em>broń?</em></h2><p>Rozpoznaj broń na obrazku i wybierz jej nazwę spośród czterech odpowiedzi.</p><button class="primary-button" data-quiz="weapon">ZAGRAJ <span>↗</span></button></article></div><p class="practice-footnote">Postęp lekcji zapisuje się w tej przeglądarce na tym urządzeniu.</p>`;
   bindScreenActions();
 }
 async function loadMapCatalog() {
@@ -317,6 +360,7 @@ function showScreen(screen) {
   if (screen === 'roles') renderRoles();
   else if (screen === 'agents') renderAgents();
   else if (screen === 'maps') renderMapsLesson();
+  else if (screen === 'weapons') renderWeapons();
   else if (screen === 'map-practice') renderMapPracticeSelection();
   else if (screen === 'practice') renderPractice();
   else if (screen === 'extras') renderExtras();
@@ -358,12 +402,28 @@ function makeQuestions(type) {
   }
   return [];
 }
-function startQuiz(type) {
+function makeWeaponQuestions(weapons) {
+  return shuffle(weapons).slice(0, Math.min(10, weapons.length)).map(weapon => {
+    const wrong = shuffle(weapons.filter(item => item.id !== weapon.id)).slice(0, 3).map(item => item.name);
+    const options = shuffle([weapon.name, ...wrong]);
+    return { prompt: 'Jak nazywa się ta broń?', image: weapon.image, alt: `Obraz broni ${weapon.name}`, options, correct: options.indexOf(weapon.name), why: `${weapon.name} · ${weapon.category}.` };
+  });
+}
+async function startQuiz(type) {
+  let questions;
+  if (type === 'weapon') {
+    try {
+      const weapons = await loadWeaponCatalog();
+      if (weapons.length < 4) { showToast('Brakuje danych broni do przygotowania quizu.'); return; }
+      questions = makeWeaponQuestions(weapons);
+    }
+    catch (error) { showToast('Nie udało się załadować broni. Sprawdź połączenie z internetem i spróbuj ponownie.'); return; }
+  }
   const dialog = document.querySelector('#quiz-dialog');
-  const labels = { role: ['QUIZ · ROLE', 'Dopasuj agenta do roli', 'role'], ability: ['QUIZ · UMIEJĘTNOŚCI', 'Czyja to umiejętność?', 'agents'], portrait: ['TRENING · PORTRETY', 'Rozpoznaj agenta', null] };
+  const labels = { role: ['QUIZ · ROLE', 'Dopasuj agenta do roli', 'role'], ability: ['QUIZ · UMIEJĘTNOŚCI', 'Czyja to umiejętność?', 'agents'], portrait: ['TRENING · PORTRETY', 'Rozpoznaj agenta', null], weapon: ['QUIZ · ARSENAŁ', 'Rozpoznaj broń', null] };
   const [label,title,progressId] = labels[type] || labels.role;
   activeQuiz = { type, progressId };
-  questionSet = makeQuestions(type); questionIndex = 0; score = 0; selectedAnswer = null; answered = false;
+  questionSet = questions || makeQuestions(type); questionIndex = 0; score = 0; selectedAnswer = null; answered = false;
   document.querySelector('#dialog-kicker').textContent = label;
   document.querySelector('#dialog-title').textContent = title;
   document.querySelector('#quiz-label').textContent = '✳ PYTANIE';
@@ -378,7 +438,7 @@ function renderQuestion() {
   document.querySelector('#quiz-question').textContent = question.prompt;
   const quizMedia = question.videoId
     ? `<div class="question-art question-video-art"><iframe src="https://drive.google.com/file/d/${encodeURIComponent(question.videoId)}/preview" title="${esc(question.alt)}" loading="lazy" allow="autoplay; fullscreen" allowfullscreen></iframe></div>`
-    : `<div class="question-art ${activeQuiz.type === 'ability' ? 'question-icon-art' : ''}"><img src="${esc(question.image)}" alt="${esc(question.alt)}"></div>`;
+    : `<div class="question-art ${activeQuiz.type === 'ability' ? 'question-icon-art' : ''} ${activeQuiz.type === 'weapon' ? 'question-weapon-art' : ''}"><img src="${esc(question.image)}" alt="${esc(question.alt)}"></div>`;
   document.querySelector('#quiz-media').innerHTML = quizMedia;
   document.querySelector('#quiz-feedback').textContent = '';
   const options = document.querySelector('#quiz-options');
