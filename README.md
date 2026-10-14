@@ -35,3 +35,7 @@ Grafiki agentów, ikony umiejętności i portrety są lokalnymi plikami projektu
 8. Kolejne zmiany publikujesz przez GitHub Desktop: wpisz opis w **Summary**, kliknij **Commit to master/main**, a potem **Push origin**. Render wdroży nową wersję po pushu.
 
 To jest strona statyczna HTML/CSS/JS, więc nie potrzebuje komendy budowania. Render udostępnia statyczne strony przez CDN i przydziela adres `onrender.com`; szczegóły mogą zależeć od aktualnego planu konta. [Dokumentacja Render: Static Sites](https://render.com/docs/static-sites), [pierwsze wdrożenie](https://render.com/docs/your-first-deploy).
+
+## Lekcja map i trening calloutów
+
+Sekcja **Lekcja 3 · Mapy** pobiera listę map i ich calloutów z [Valorant API](https://valorant-api.com/v1/maps). Karta każdej mapy pokazuje pełną listę nazw; runda quizu losuje osiem punktów do dopasowania na minimapie. Kolejna runda losuje nowy zestaw. Na komputerze można przeciągać nazwy, a na telefonie stuknąć nazwę i pole. Do pobrania minimap używane są grafiki udostępniane przez API.
