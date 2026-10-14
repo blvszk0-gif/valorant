@@ -38,6 +38,7 @@ let selectedMapTile = null;
 let mapPuzzleChecked = false;
 let mapCatalogPromise;
 let weaponCatalogPromise;
+let abilityEnglishNamesPromise;
 let activeMap = null;
 let activeMapRound = [];
 const mapRoundPools = new Map();
@@ -127,18 +128,37 @@ function renderAgentDetail() {
   const box = document.querySelector('#agent-detail');
   if (!box || !selectedAgent) return;
   const a = selectedAgent;
-  const skills = a.abilities.map(ability => `<article class="ability-card"><div class="ability-icon-wrap">${ability.icon ? `<img src="${esc(ability.icon)}" alt="Ikona ${esc(ability.name)}">` : '<span class="passive-icon">PASSIVE</span>'}</div><div><div class="ability-slot">${esc(slotName(ability.slot))}</div><h3>${esc(ability.name)}</h3><p>${esc(ability.description)}</p></div></article>`).join('');
+  const skills = a.abilities.map(ability => `<article class="ability-card"><div class="ability-icon-wrap">${ability.icon ? `<img src="${esc(ability.icon)}" alt="Ikona ${esc(ability.name)}">` : '<span class="passive-icon">PASSIVE</span>'}</div><div><div class="ability-slot">${esc(slotName(ability.slot))}</div><h3>${esc(abilityDisplayName(ability))}</h3><p>${esc(ability.description)}</p></div></article>`).join('');
   box.innerHTML = `<div class="agent-detail-head"><div><div class="eyebrow small"><span></span> ${esc(a.role)}</div><h2>${esc(a.name)}</h2><p>${esc(a.description)}</p></div><img class="agent-detail-portrait" src="${esc(a.portrait)}" alt="Portret agenta ${esc(a.name)}"></div><div class="agent-detail-video">${videoMarkup(a.video,`Lekcja agenta — ${a.name}`,a.portrait)}</div><div class="section-head ability-heading"><div><div class="eyebrow small"><span></span> ZESTAW UMIEJĘTNOŚCI</div><h2>Co potrafi <em>${esc(a.name)}?</em></h2></div><button class="secondary-button" data-quiz="ability">QUIZ UMIEJĘTNOŚCI ↗</button></div><div class="ability-grid">${skills}</div>`;
   bindQuizButtons(box);
 }
 function slotName(slot) {
   return ({ Ability1: 'UMIEJĘTNOŚĆ 1', Ability2: 'UMIEJĘTNOŚĆ 2', Grenade: 'UMIEJĘTNOŚĆ POD Z', Ultimate: 'ULTIMATE', Passive: 'PASYWNA' })[slot] || slot.toUpperCase();
 }
+function abilityDisplayName(ability) {
+  return ability.englishName && ability.englishName.toLocaleLowerCase('en') !== ability.name.toLocaleLowerCase('en')
+    ? `${ability.name} / ${ability.englishName}` : ability.name;
+}
+function applyAbilityEnglishNames(nameMap) {
+  agents.forEach(agent => {
+    const names = nameMap.get(agent.name.toLocaleLowerCase('en'));
+    if (!names) return;
+    agent.abilities.forEach(ability => { ability.englishName = names.get(ability.slot) || ability.englishName || ''; });
+  });
+}
+function loadAbilityEnglishNames() {
+  if (!abilityEnglishNamesPromise) abilityEnglishNamesPromise = fetch('https://valorant-api.com/v1/agents?language=en-US&isPlayableCharacter=true')
+    .then(response => { if (!response.ok) throw new Error('Nie udało się pobrać angielskich nazw umiejętności.'); return response.json(); })
+    .then(payload => new Map((payload.data || []).map(agent => [agent.displayName.toLocaleLowerCase('en'), new Map((agent.abilities || []).filter(ability => ability.slot && ability.displayName).map(ability => [ability.slot, ability.displayName]))])))
+    .catch(error => { abilityEnglishNamesPromise = null; throw error; });
+  return abilityEnglishNamesPromise;
+}
 function renderAgents() {
   if (!selectedAgent) selectedAgent = agents[0];
   root.innerHTML = `<section class="page-intro agent-intro"><div><div class="eyebrow"><span></span> LEKCJA 02 · AGENCI</div><h1>POZNAJ <em>AGENTÓW.</em></h1><p>Wybierz postać, obejrzyj Twoje nagranie i zobacz jej zestaw umiejętności. Na końcu rozpoznaj umiejętności po ikonce.</p></div><button class="primary-button" data-quiz="ability">QUIZ: CZYJA TO UMIEJĘTNOŚĆ? <span>↗</span></button></section><div class="agent-browser"><section class="agent-list-panel"><div class="agent-list-head"><h2>ATLAS AGENTÓW <span>${agents.length}</span></h2><input id="agent-search" type="search" placeholder="Szukaj agenta lub roli" aria-label="Szukaj agenta lub roli"></div><div id="agent-grid" class="agent-grid"></div></section><section id="agent-detail" class="agent-detail-panel"></section></div>`;
   renderAgentGrid();
   renderAgentDetail();
+  loadAbilityEnglishNames().then(applyAbilityEnglishNames).then(() => { if (activeScreen === 'agents') renderAgentDetail(); }).catch(() => {});
   document.querySelector('#agent-search').addEventListener('input', event => renderAgentGrid(event.target.value));
   bindScreenActions();
 }
@@ -151,7 +171,7 @@ function renderGlossary() {
   const entries = [...(window.VALORANT_GLOSSARY || [])];
   agents.forEach(agent => {
     entries.push({ term: agent.name, category: 'Agenci i umiejętności', also: agent.role, definition: agent.description || `Agent z rolą ${agent.role}.` });
-    (agent.abilities || []).forEach(ability => entries.push({ term: ability.name, category: 'Agenci i umiejętności', also: agent.name, definition: `${agent.name} · ${slotName(ability.slot || 'Ability')}. ${ability.description || 'Umiejętność agenta.'}` }));
+    (agent.abilities || []).forEach(ability => entries.push({ term: abilityDisplayName(ability), category: 'Agenci i umiejętności', also: agent.name, definition: `${agent.name} · ${slotName(ability.slot || 'Ability')}. ${ability.description || 'Umiejętność agenta.'}` }));
   });
   entries.sort((a,b) => a.term.localeCompare(b.term, 'pl'));
   const categories = ['Wszystkie', ...new Set(entries.map(item => item.category).sort((a,b) => a.localeCompare(b, 'pl')))];
@@ -391,7 +411,7 @@ function makeQuestions(type) {
     const glossary = [...(window.VALORANT_GLOSSARY || [])];
     agents.forEach(agent => {
       glossary.push({ term: agent.name, definition: agent.description || `Agent z rolą ${agent.role}.` });
-      (agent.abilities || []).forEach(ability => glossary.push({ term: ability.name, definition: `${agent.name} · ${slotName(ability.slot || 'Ability')}. ${ability.description || 'Umiejętność agenta.'}` }));
+      (agent.abilities || []).forEach(ability => glossary.push({ term: abilityDisplayName(ability), definition: `${agent.name} · ${slotName(ability.slot || 'Ability')}. ${ability.description || 'Umiejętność agenta.'}` }));
     });
     const entries = [...new Map(glossary.filter(item => item.term && item.definition).map(item => [item.term, item])).values()];
     if (entries.length < 4) return [];
@@ -450,6 +470,9 @@ async function startQuiz(type) {
       questions = makeWeaponQuestions(weapons);
     }
     catch (error) { showToast('Nie udało się załadować broni. Sprawdź połączenie z internetem i spróbuj ponownie.'); return; }
+  }
+  if (type === 'glossary') {
+    try { applyAbilityEnglishNames(await loadAbilityEnglishNames()); } catch (error) { /* Keep the Polish names available if the API is offline. */ }
   }
   const dialog = document.querySelector('#quiz-dialog');
   const labels = { role: ['QUIZ · ROLE', 'Dopasuj agenta do roli', 'role'], ability: ['QUIZ · UMIEJĘTNOŚCI', 'Czyja to umiejętność?', 'agents'], portrait: ['TRENING · PORTRETY', 'Rozpoznaj agenta', null], weapon: ['QUIZ · ARSENAŁ', 'Rozpoznaj broń', null] };
