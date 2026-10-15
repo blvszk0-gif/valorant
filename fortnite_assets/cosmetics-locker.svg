@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Szafka kosmetyków</title>
+  <desc id="desc">Stylizowana szafka z postacią, kilofem, emotką i muzyczną nutą na ciemnym, turkusowym tle.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#193743"/><stop offset=".55" stop-color="#101719"/><stop offset="1" stop-color="#0d1112"/></linearGradient>
+    <linearGradient id="panel" x2="0" y2="1"><stop stop-color="#263e46"/><stop offset="1" stop-color="#151d20"/></linearGradient>
+    <linearGradient id="cyan" x2="1" y2="1"><stop stop-color="#9cecff"/><stop offset="1" stop-color="#38bce8"/></linearGradient>
+    <linearGradient id="pink" x2="0" y2="1"><stop stop-color="#ff9ca4"/><stop offset="1" stop-color="#a52e53"/></linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="24" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1100" cy="430" r="300" fill="#39c8f2" opacity=".08"/>
+  <path d="M0 700 540 520l420 160 640-230v450H0z" fill="#0b1012" opacity=".75"/>
+  <g opacity=".3" stroke="#5b7d86" stroke-width="2"><path d="M0 150h1600M0 250h1600M0 350h1600M0 450h1600M0 550h1600M0 650h1600"/><path d="M200 0v900M400 0v900M600 0v900M800 0v900M1000 0v900M1200 0v900M1400 0v900"/></g>
+  <g transform="translate(140 115)">
+    <rect x="0" y="0" width="790" height="650" rx="25" fill="#0b1012" stroke="#4f7580" stroke-width="5"/>
+    <rect x="25" y="25" width="740" height="600" rx="17" fill="url(#panel)"/>
+    <path d="M75 92h640" stroke="#76dafa" stroke-width="4" opacity=".8"/>
+    <text x="75" y="70" fill="#93e6fa" font-family="Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="7">LOCKER / SZAFKA</text>
+    <rect x="75" y="135" width="410" height="420" rx="15" fill="#111719" stroke="#3b5d66" stroke-width="3"/>
+    <circle cx="280" cy="274" r="105" fill="#39c8f2" opacity=".1" filter="url(#glow)"/>
+    <path d="M212 259c0-48 29-78 68-78s68 30 68 78v25H212z" fill="#15252a" stroke="url(#cyan)" stroke-width="8"/>
+    <path d="M227 277h106l50 153-24 76H201l-24-76z" fill="#263b41" stroke="#79def5" stroke-width="8"/>
+    <path d="m237 303 43 41 43-41" fill="none" stroke="#c0f5ff" stroke-width="9"/>
+    <path d="m218 433-31 77m158-77 31 77" stroke="#79def5" stroke-width="17" stroke-linecap="round"/>
+    <path d="M201 523h161" stroke="#17262b" stroke-width="26" stroke-linecap="round"/>
+    <rect x="520" y="135" width="195" height="190" rx="15" fill="#182529" stroke="#3b5d66" stroke-width="3"/>
+    <path d="M615 178c-41 0-74 33-74 74v28h148v-28c0-41-33-74-74-74z" fill="url(#pink)"/>
+    <circle cx="590" cy="245" r="7" fill="#201418"/><circle cx="640" cy="245" r="7" fill="#201418"/><path d="M594 271q21 19 42 0" fill="none" stroke="#201418" stroke-width="7" stroke-linecap="round"/>
+    <text x="617" y="306" fill="#d6e4e7" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" letter-spacing="3">EMOTKA</text>
+    <rect x="520" y="350" width="195" height="205" rx="15" fill="#182529" stroke="#3b5d66" stroke-width="3"/>
+    <path d="M589 397v92a26 26 0 1 1-17-24v-76l75-18v89a26 26 0 1 1-17-24v-55z" fill="url(#cyan)"/>
+    <text x="617" y="535" fill="#d6e4e7" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" letter-spacing="3">MUZYKA</text>
+    <circle cx="40" cy="320" r="8" fill="#79def5"/><circle cx="750" cy="320" r="8" fill="#79def5"/>
+  </g>
+  <g transform="translate(1040 185)">
+    <path d="M155 70 205 280 183 300 125 96z" fill="#c5f5ff" stroke="#79def5" stroke-width="8"/>
+    <path d="m132 105-35-68 65 33 42-31-9 76z" fill="#d9f8ff" stroke="#79def5" stroke-width="7"/>
+    <path d="m195 285 69 14-69 20-44-24z" fill="#58c7e8"/>
+    <text x="105" y="385" fill="#a9efff" font-family="Arial,sans-serif" font-size="20" font-weight="700" letter-spacing="5">KILOF</text>
+  </g>
+  <g transform="translate(1135 585)">
+    <rect x="0" y="0" width="305" height="145" rx="16" fill="#172327" stroke="#69d7f3" stroke-width="3"/>
+    <rect x="18" y="18" width="269" height="15" rx="7" fill="#283b40"/><rect x="18" y="18" width="185" height="15" rx="7" fill="#55cfff"/>
+    <text x="26" y="75" fill="#e9f7fa" font-family="Arial,sans-serif" font-size="21" font-weight="700" letter-spacing="3">BATTLE PASS</text>
+    <text x="26" y="112" fill="#91aeb5" font-family="Arial,sans-serif" font-size="17" letter-spacing="2">XP → NAGRODY</text>
+  </g>
+  <text x="112" y="835" fill="#9eb4b9" font-family="Arial,sans-serif" font-size="18" letter-spacing="5">WYGLĄD. STYL. TWOJA SZAFKA.</text>
+</svg>
