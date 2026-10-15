@@ -307,7 +307,7 @@ function renderGameHub(gameId) {
   const quizLength = Math.min(10, game.questions.length);
   const glossaryCallout = game.id === 'fortnite' ? `<section class="game-quiz-callout fortnite-glossary-callout"><div><div class="eyebrow small"><span></span> SŁOWNICZEK · ${game.glossary.length} HASEŁ</div><h2>Poznaj język <em>Fortnite.</em></h2><p>Wyszukuj pojęcia, filtruj kategorie i utrwalaj angielskie nazwy w quizie.</p></div><div class="fortnite-glossary-actions"><button class="secondary-button" data-go="fortnite-glossary">OTWÓRZ SŁOWNIK ↗</button><button class="primary-button" data-quiz="fortnite-glossary">QUIZ ZE SŁOWNIKA ↗</button></div></section>` : '';
   const lessonCards = game.id === 'fortnite'
-    ? game.lessons.map((lesson,index) => `<article class="fortnite-topic-card"><div class="fortnite-topic-image"><img src="${esc(lesson.image)}" alt="${esc(lesson.imageAlt)}" loading="lazy"></div><div class="fortnite-topic-copy"><div class="eyebrow small"><span></span> ${esc(lesson.label)}</div><h3>${esc(lesson.title)}</h3><p>${esc(lesson.text)}</p>${index === 0 ? '<button class="primary-button fortnite-open-lesson" data-go="fortnite-weapons">OTWÓRZ LEKCJĘ <span>↗</span></button>' : index === 1 ? '<button class="primary-button fortnite-open-lesson" data-go="fortnite-cosmetics">OTWÓRZ LEKCJĘ <span>↗</span></button>' : ''}<div class="fortnite-topic-tip"><b>Wskazówka</b><span>${esc(lesson.tip)}</span></div><a class="fortnite-image-source" href="${esc(lesson.imageUrl)}" target="_blank" rel="noreferrer">${index === 1 ? 'Zobacz sklep' : 'Zdjęcie: ' + esc(lesson.imageSource)} ↗</a></div></article>`).join('')
+    ? game.lessons.map((lesson,index) => `<article class="fortnite-topic-card"><div class="fortnite-topic-image"><img src="${esc(lesson.image)}" alt="${esc(lesson.imageAlt)}" loading="lazy"></div><div class="fortnite-topic-copy"><div class="eyebrow small"><span></span> ${esc(lesson.label)}</div><h3>${esc(lesson.title)}</h3><p>${esc(lesson.text)}</p>${index === 0 ? '<button class="primary-button fortnite-open-lesson" data-go="fortnite-weapons">OTWÓRZ LEKCJĘ <span>↗</span></button>' : index === 1 ? '<button class="primary-button fortnite-open-lesson" data-go="fortnite-cosmetics">OTWÓRZ LEKCJĘ <span>↗</span></button>' : index === 2 ? '<button class="primary-button fortnite-open-lesson" data-go="fortnite-loot">OTWÓRZ LEKCJĘ <span>↗</span></button>' : ''}<div class="fortnite-topic-tip"><b>Wskazówka</b><span>${esc(lesson.tip)}</span></div><a class="fortnite-image-source" href="${esc(lesson.imageUrl)}" target="_blank" rel="noreferrer">${index === 1 ? 'Zobacz sklep' : 'Zdjęcie: ' + esc(lesson.imageSource)} ↗</a></div></article>`).join('')
     : game.lessons.map((lesson,index) => `<details class="game-lesson" ${index === 0 ? 'open' : ''}><summary><span class="game-lesson-label">${esc(lesson.label)}</span><b>${esc(lesson.title)}</b><span class="game-lesson-toggle">＋</span></summary><div class="game-lesson-content"><p>${esc(lesson.text)}</p><div><b>Wskazówka</b><span>${esc(lesson.tip)}</span></div></div></details>`).join('');
   root.innerHTML = `<section class="game-course-page" data-game-course="${esc(game.id)}"><section class="game-course-hero"><div class="game-course-mark">${esc(game.logo).replace(/\n/g, '<br>')}</div><div class="game-course-copy"><div class="eyebrow"><span></span> ${esc(game.eyebrow)}</div><h1>POZNAJ <em>${esc(game.name)}.</em></h1><p>${esc(game.intro)}</p><button class="primary-button" data-quiz="${esc(game.id)}">QUIZ NA START · ${quizLength} PYTAŃ <span>↗</span></button></div></section><section class="game-learning-section"><div class="section-head"><div><div class="eyebrow small"><span></span> PODSTAWY GRY</div><h2>Ucz się <em>krok po kroku.</em></h2></div><span class="section-count">${String(game.lessons.length).padStart(2, '0')} LEKCJI</span></div><div class="game-lesson-grid ${game.id === 'fortnite' ? 'fortnite-topic-grid' : ''}">${lessonCards}</div></section>${glossaryCallout}<section class="game-quiz-callout"><div><div class="eyebrow small"><span></span> SPRAWDŹ SIĘ</div><h2>Zapamiętałeś <em>podstawy?</em></h2><p>Odpowiedz na ${quizLength} losowanych pytań. Każde ma cztery odpowiedzi.</p></div><button class="primary-button" data-quiz="${esc(game.id)}">ROZPOCZNIJ QUIZ <span>↗</span></button></section><p class="game-source-list">Źródła oficjalne: ${game.sources.map(source => `<a href="${esc(source.url)}" target="_blank" rel="noreferrer">${esc(source.label)} ↗</a>`).join(' · ')}</p></section>`;
   bindScreenActions();
@@ -352,6 +352,46 @@ function fortniteWikiImage(file) {
     'Rockets - Ammo - Fortnite.png': 'https://static.wikia.nocookie.net/fortnite/images/c/cd/Rockets_-_Ammo_-_Fortnite.png/revision/latest/scale-to-width-down/75?cb=20201221213910'
   };
   return images[file] || '';
+}
+function renderFortniteLootLesson() {
+  const images = {
+    chest: 'https://static.wikia.nocookie.net/fortnite/images/a/aa/Chest_%28v23.00%29_-_Container_-_Fortnite.png/revision/latest?cb=20240727194152',
+    rareChest: 'https://static.wikia.nocookie.net/fortnite/images/d/db/Rare_Chest_%28v23.00%29_-_Container_-_Fortnite.png/revision/latest?cb=20240727194234',
+    ammo: 'https://static.wikia.nocookie.net/fortnite/images/5/50/Ammo_Box_%28v23.00%29_-_Container_-_Fortnite.png/revision/latest?cb=20221205153230',
+    produce: 'https://static.wikia.nocookie.net/fortnite/images/a/a3/Produce_Box_%28v23.00%29_-_Container_-_Fortnite.png/revision/latest?cb=20221205154327',
+    cooler: 'https://static.wikia.nocookie.net/fortnite/images/9/9e/Cooler_-_Container_-_Fortnite.png/revision/latest?cb=20211211170818',
+    vending: 'https://static.wikia.nocookie.net/fortnite/images/a/a5/Vending_Machine_%28Better%29_-_Fortnite.png/revision/latest/scale-to-width-down/268?cb=20250330214716',
+    bars: 'https://static.wikia.nocookie.net/fortnite/images/7/7f/Bars_%28Small%29_-_Currency_-_Fortnite.png/revision/latest/scale-to-width-down/268?cb=20211211204821',
+    wood: 'https://static.wikia.nocookie.net/fortnite/images/b/b2/Wood_-_Material_-_Fortnite.png/revision/latest?cb=20170806015411',
+    metal: 'https://static.wikia.nocookie.net/fortnite/images/d/d2/Metal_-_Material_-_Fortnite.png/revision/latest?cb=20170806014803',
+    brick: 'https://static.wikia.nocookie.net/fortnite/images/2/24/Stone_-_Material_-_Fortnite.png/revision/latest?cb=20170806015537'
+  };
+  const containers = [
+    ['Skrzynia', 'Losowo: broń, amunicja oraz różne przedmioty użytkowe lub leczące. Czasem trafiają się też materiały i sztabki. Nie ma gwarancji konkretnego przedmiotu.', images.chest],
+    ['Rzadka skrzynia', 'Wyróżnia ją złoty kolor. Zwykle oferuje broń z wyższej półki rzadkości oraz dodatkowy losowy łup. Konkretna zawartość zależy od aktualnej puli przedmiotów.', images.rareChest],
+    ['Skrzynka z amunicją', 'Daje amunicję do broni dostępnych w danym trybie. Rodzaj i ilość nabojów są losowe — sprawdź stan amunicji przed walką.', images.ammo],
+    ['Skrzynka z produktami', 'Może zawierać owoce i warzywa do zebrania, na przykład przedmioty odnawiające zdrowie. Lista produktów zależy od sezonu i trybu.', images.produce],
+    ['Lodówka', 'Można w niej znaleźć ryby i inne jedzenie lub przedmioty użytkowe z bieżącej puli łupu. Zawartość nie jest stała.', images.cooler],
+    ['Automat — Vending Machine', 'Pozwala kupić oferowany przedmiot za walutę wskazaną na ekranie automatu. Oferta, koszt i rodzaj automatu zmieniają się między sezonami i trybami.', images.vending],
+    ['Sztabki — Bars', 'Waluta zbierana w trakcie meczu. W Battle Royale saldo zaczyna się od zera i resetuje między meczami. Służy do zakupów u postaci lub w automatach, jeśli są dostępne w danym sezonie.', images.bars]
+  ];
+  const materials = [
+    ['Drewno', 'Zbierane przez niszczenie drzew i drewnianych obiektów. Buduje się szybko, ale świeżo postawiona konstrukcja jest mniej wytrzymała.', images.wood],
+    ['Cegła / kamień', 'Pozyskiwana z kamiennych obiektów. Daje kompromis między szybkością budowania a wytrzymałością.', images.brick],
+    ['Metal', 'Zbierany z metalowych obiektów. Konstrukcje powstają wolniej, ale po zbudowaniu są wytrzymałe.', images.metal]
+  ];
+  const imageCard = ([title,description,url],index,type) => `<article class="fortnite-info-card"><div class="fortnite-loot-art" data-fallback="${esc(title)}"><img data-loot-art src="${esc(url)}" alt="${esc(title)} — grafika Fortnite" referrerpolicy="no-referrer" loading="lazy"><span>${esc(title)}</span></div><span class="fortnite-info-number">${String(index+1).padStart(2,'0')} · ${type}</span><h3>${esc(title)}</h3><p>${esc(description)}</p></article>`;
+  const rarities = [
+    ['Zwykła · Common','#b8bec3','Szara. Podstawowa odmiana.'],
+    ['Niepospolita · Uncommon','#65bd63','Zielona. Wyższy poziom niż zwykła.'],
+    ['Rzadka · Rare','#4a9de6','Niebieska.'],
+    ['Epicka · Epic','#b46be2','Fioletowa.'],
+    ['Legendarna · Legendary','#efa13b','Pomarańczowa.'],
+    ['Mityczna · Mythic','#f3ca39','Złota. Zwykle specjalna broń lub wariant.'],
+    ['Egzotyczna · Exotic','#51d3cc','Turkusowa. Często ma wyjątkową właściwość.']
+  ];
+  root.innerHTML = `<section class="game-course-page fortnite-detail-page fortnite-loot-page"><button class="secondary-button fortnite-back-button" data-return-fortnite>← WRÓĆ DO LEKCJI FORTNITE</button><section class="page-intro"><div class="eyebrow"><span></span> FORTNITE · LEKCJA 03</div><h1>SKRZYNKI <em>I ŁUP.</em></h1><p>Dowiedz się, co można znaleźć w pojemnikach, jak odczytać kolory broni i do czego służą surowce oraz sztabki.</p></section><div class="fortnite-topic-tip fortnite-rotation-note"><b>Ważne</b><span>To typowe przykłady zawartości. Łup, automaty, statystyki i dostępność pojemników zmieniają się zależnie od sezonu, trybu i aktualnej puli przedmiotów. Wskazówki przy automacie i w HUD pokazują bieżące zasady.</span></div><section class="game-learning-section"><div class="section-head"><div><div class="eyebrow small"><span></span> POJEMNIKI I ZAKUPY</div><h2>Gdzie szukać <em>wyposażenia?</em></h2></div><span class="section-count">07 PRZYKŁADÓW</span></div><div class="fortnite-info-grid fortnite-loot-grid">${containers.map((item,index)=>imageCard(item,index,'ŁUP')).join('')}</div></section><section class="game-learning-section"><div class="section-head"><div><div class="eyebrow small"><span></span> KOLOR BRONI</div><h2>Poziomy <em>rzadkości.</em></h2></div></div><p class="fortnite-footnote fortnite-rarity-intro">Kolor ułatwia rozpoznanie poziomu przedmiotu. Porównuj przede wszystkim ten sam typ/model broni — wyższa rzadkość nie oznacza automatycznie, że każda broń będzie lepsza od każdej innej.</p><div class="fortnite-rarity-grid">${rarities.map(([name,color,description],index)=>`<article class="fortnite-rarity-card" style="--rarity-color:${color}"><span>${String(index+1).padStart(2,'0')}</span><div><b>${esc(name)}</b><p>${esc(description)}</p></div></article>`).join('')}</div></section><section class="game-learning-section"><div class="section-head"><div><div class="eyebrow small"><span></span> MATERIAŁY DO BUDOWANIA</div><h2>Zbieraj i <em>stawiaj.</em></h2></div><span class="section-count">LIMIT: 500 KAŻDEGO</span></div><div class="fortnite-topic-tip fortnite-material-limit"><b>Limit</b><span>W standardowym Battle Royale z budowaniem można zwykle nosić do 500 sztuk drewna, cegły i metalu (łącznie 1 500). Zero Build nie korzysta z budowania, a wyspy kreatywne mogą ustawiać własne limity.</span></div><div class="fortnite-info-grid fortnite-material-grid">${materials.map((item,index)=>imageCard(item,index,'SUROWIEC')).join('')}</div></section><p class="game-source-list">Źródła: <a href="https://fortnite.fandom.com/wiki/Chest" target="_blank" rel="noreferrer">Fortnite Wiki · skrzynie i łup ↗</a> · <a href="https://dev.epicgames.com/documentation/fortnite/rarity-component-in-fortnite?lang=en-US" target="_blank" rel="noreferrer">Epic Games · poziomy rzadkości ↗</a> · <a href="https://dev.epicgames.com/documentation/fortnite/fortnite-weapons-primer?lang=en-US" target="_blank" rel="noreferrer">Epic Games · przewodnik po broniach ↗</a> · <a href="https://www.epicgames.com/help/c-34254770/c-33726977/a12589538" target="_blank" rel="noreferrer">Epic Games · sztabki ↗</a></p></section>`;
+  bindScreenActions();
 }
 function renderFortniteCosmeticsLesson() {
   const game = window.EXTRA_GAME_COURSES?.fortnite;
@@ -601,6 +641,10 @@ function bindScreenActions() {
     image.closest('.fortnite-pass-art, .fortnite-vbucks-mark')?.classList.add('image-missing');
     image.remove();
   }, { once: true }));
+  root.querySelectorAll('img[data-loot-art]').forEach(image => image.addEventListener('error', () => {
+    image.closest('.fortnite-loot-art')?.classList.add('image-missing');
+    image.remove();
+  }, { once: true }));
   bindQuizButtons(root);
 }
 function bindQuizButtons(scope) {
@@ -609,6 +653,7 @@ function bindQuizButtons(scope) {
 function showScreen(screen) {
   if (screen === 'fortnite-weapons') { renderFortniteWeaponsLesson(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
   if (screen === 'fortnite-cosmetics') { renderFortniteCosmeticsLesson(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+  if (screen === 'fortnite-loot') { renderFortniteLootLesson(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
   updateNav(screen);
   if (screen === 'roles') renderRoles();
   else if (screen === 'agents') renderAgents();
