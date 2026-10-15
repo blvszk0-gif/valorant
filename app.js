@@ -1,6 +1,9 @@
 const agents = window.VALORANT_DATA || [];
 const root = document.querySelector('#screen-root');
 const navButtons = [...document.querySelectorAll('[data-nav]')];
+const gameTabs = [...document.querySelectorAll('[data-game]')];
+const appShell = document.querySelector('.app-shell');
+let activeGame = 'valorant';
 const roles = ['Inicjator', 'Szturmowiec', 'Strażnik', 'Kontroler'];
 const roleEnglishNames = { Inicjator: 'Initiator', Szturmowiec: 'Duelist', Strażnik: 'Sentinel', Kontroler: 'Controller' };
 function roleDisplayName(role) { return `${role} / ${roleEnglishNames[role] || role}`; }
@@ -268,6 +271,42 @@ function renderPractice() {
   root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> POWTÓRKA W FORMIE GRY</div><h1>ZGADNIJ, <em>KTO TO?</em></h1><p>Krótki trening w stylu zgadywanki: portret agenta, ikonka umiejętności, odznaka rangi, broń, pojęcia ze słowniczka albo przypisanie do roli. Każde pytanie ma cztery odpowiedzi.</p></section><div class="practice-grid"><article class="practice-card"><div class="practice-symbol portrait-practice"><img src="${esc(agents.find(a=>a.name==='Sova')?.portrait || agents[0].portrait)}" alt=""></div><div class="eyebrow small"><span></span> ROZPOZNAWANIE</div><h2>Kto to <em>jest?</em></h2><p>Rozpoznaj agentów po ich portretach. 10 pytań, cztery odpowiedzi.</p><button class="primary-button" data-quiz="portrait">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol skill-practice"><img src="${esc(agents.flatMap(a=>a.abilities).find(x=>x.icon)?.icon || '')}" alt=""></div><div class="eyebrow small"><span></span> IKONY UMIEJĘTNOŚCI</div><h2>Czyja to <em>umiejętność?</em></h2><p>Spójrz na ikonkę i wybierz agenta, do którego należy.</p><button class="primary-button" data-quiz="ability">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol roles-practice"><div>4</div></div><div class="eyebrow small"><span></span> ROLE AGENTÓW</div><h2>Jaka to <em>rola?</em></h2><p>Wskaż rolę agenta na podstawie jego portretu.</p><button class="primary-button" data-quiz="role">ZAGRAJ <span>↗</span></button></article><article class="practice-card map-practice-card"><div class="practice-symbol map-practice-symbol"><span>MAPY</span><b>A</b><b>B</b></div><div class="eyebrow small"><span></span> SPRAWDŹ SIĘ</div><h2>Callouty <em>map.</em></h2><p>Uzupełnij puste punkty z pamięci i sprawdź wynik. Każda runda losuje kolejne miejsca.</p><button class="primary-button" data-go="map-practice">WYBIERZ MAPĘ <span>↗</span></button></article><article class="practice-card weapon-practice-card"><div class="practice-symbol weapon-practice-symbol"><span>ARSENAŁ</span><b>V</b></div><div class="eyebrow small"><span></span> ROZPOZNAWANIE</div><h2>Jaka to <em>broń?</em></h2><p>Rozpoznaj broń na obrazku i wybierz jej nazwę spośród czterech odpowiedzi.</p><button class="primary-button" data-quiz="weapon">ZAGRAJ <span>↗</span></button></article><article class="practice-card glossary-practice-card"><div class="practice-symbol glossary-practice-symbol"><span>GG</span><b>ABC</b></div><div class="eyebrow small"><span></span> SŁOWNICZEK</div><h2>Co to za <em>pojęcie?</em></h2><p>Przeczytaj definicję i wybierz pasujące hasło spośród czterech odpowiedzi.</p><button class="primary-button" data-quiz="glossary">ZAGRAJ <span>↗</span></button></article><article class="practice-card rank-practice-card"><div class="practice-symbol rank-practice-symbol"><span>RANK</span><b>★</b></div><div class="eyebrow small"><span></span> ODCZYTYWANIE ODZNAK</div><h2>Jaka to <em>ranga?</em></h2><p>Najpierw poznaj stopnie i zasady RR, potem sprawdź pamięć w quizie.</p><button class="secondary-button rank-study-button" data-go="ranks">POZNAJ RANGI</button><button class="primary-button" data-quiz="rank">ZAGRAJ <span>↗</span></button></article></div><p class="practice-footnote">Postęp lekcji zapisuje się w tej przeglądarce na tym urządzeniu.</p>`;
   bindScreenActions();
 }
+function renderGameHub(gameId) {
+  const game = window.EXTRA_GAME_COURSES?.[gameId];
+  if (!game) return;
+  activeScreen = 'game-hub';
+  document.querySelector('#crumb').textContent = `${game.name.toLocaleUpperCase('pl')} / NAUKA`;
+  root.innerHTML = `<section class="game-course-page" data-game-course="${esc(game.id)}"><section class="game-course-hero"><div class="game-course-mark">${esc(game.logo).replace(/\n/g, '<br>')}</div><div class="game-course-copy"><div class="eyebrow"><span></span> ${esc(game.eyebrow)}</div><h1>POZNAJ <em>${esc(game.name)}.</em></h1><p>${esc(game.intro)}</p><button class="primary-button" data-quiz="${esc(game.id)}">QUIZ NA START · ${game.questions.length} PYTAŃ <span>↗</span></button></div></section><section class="game-learning-section"><div class="section-head"><div><div class="eyebrow small"><span></span> PODSTAWY GRY</div><h2>Ucz się <em>krok po kroku.</em></h2></div><span class="section-count">${String(game.lessons.length).padStart(2, '0')} LEKCJI</span></div><div class="game-lesson-grid">${game.lessons.map((lesson,index) => `<details class="game-lesson" ${index === 0 ? 'open' : ''}><summary><span class="game-lesson-label">${esc(lesson.label)}</span><b>${esc(lesson.title)}</b><span class="game-lesson-toggle">＋</span></summary><div class="game-lesson-content"><p>${esc(lesson.text)}</p><div><b>Wskazówka</b><span>${esc(lesson.tip)}</span></div></div></details>`).join('')}</div></section><section class="game-quiz-callout"><div><div class="eyebrow small"><span></span> SPRAWDŹ SIĘ</div><h2>Zapamiętałeś <em>podstawy?</em></h2><p>Odpowiedz na ${game.questions.length} losowanych pytań. Każde ma cztery odpowiedzi.</p></div><button class="primary-button" data-quiz="${esc(game.id)}">ROZPOCZNIJ QUIZ <span>↗</span></button></section><p class="game-source-list">Źródła oficjalne: ${game.sources.map(source => `<a href="${esc(source.url)}" target="_blank" rel="noreferrer">${esc(source.label)} ↗</a>`).join(' · ')}</p></section>`;
+  bindScreenActions();
+}
+function switchGame(gameId) {
+  const game = window.EXTRA_GAME_COURSES?.[gameId];
+  activeGame = game ? gameId : 'valorant';
+  appShell.dataset.currentGame = activeGame;
+  gameTabs.forEach(button => {
+    const selected = button.dataset.game === activeGame;
+    button.classList.toggle('is-active', selected);
+    button.setAttribute('aria-pressed', String(selected));
+  });
+  const gameLabel = document.querySelector('#game-label');
+  const breadcrumb = document.querySelector('#crumb');
+  const sourceLink = document.querySelector('#game-source-link');
+  if (activeGame === 'valorant') {
+    gameLabel.textContent = 'KURS VALORANT';
+    breadcrumb.textContent = 'START';
+    sourceLink.href = 'https://playvalorant.com/pl-pl/agents/';
+    sourceLink.textContent = 'AGENTI VALORANT ↗';
+    showScreen('overview');
+  } else {
+    gameLabel.textContent = game.name.toLocaleUpperCase('pl');
+    breadcrumb.textContent = `KURS / ${game.name.toLocaleUpperCase('pl')}`;
+    sourceLink.href = game.sources[0].url;
+    sourceLink.textContent = `${game.name.toLocaleUpperCase('pl')} · ŹRÓDŁO ↗`;
+    navButtons.forEach(button => button.classList.remove('active'));
+    renderGameHub(activeGame);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
 async function renderRanks() {
   updateNav('ranks');
   root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> LEKCJA 04 · SYSTEM RANG</div><h1>WSPINAJ SIĘ <em>WYŻEJ.</em></h1><p>Rangi pokazują postęp w trybie rankingowym. Do Immortala awansujesz przez kolejne dywizje i punkty RR, a Radiant wymaga też miejsca w regionalnej czołówce.</p></section><section class="rank-rules"><article class="rank-rule-card"><span class="rank-rule-number">01</span><div class="eyebrow small"><span></span> IRON — ASCENDANT</div><h2>Każda ranga ma <em>3 dywizje.</em></h2><p>Iron, Bronze, Silver, Gold, Platinum, Diamond i Ascendant mają poziomy 1, 2 i 3. W tych rangach awansujesz po zdobyciu 100 RR.</p></article><article class="rank-rule-card"><span class="rank-rule-number">02</span><div class="eyebrow small"><span></span> IMMORTAL</div><h2>Liczy się <em>RR.</em></h2><p>Immortal również dzieli się na Immortal 1, 2 i 3. Od Immortal 1 punkty RR nie zatrzymują się na 100; przejście wyżej wymaga osiągnięcia progów ustalanych dla regionu.</p></article><article class="rank-rule-card radiant-rule"><span class="rank-rule-number">03</span><div class="eyebrow small"><span></span> RADIANT</div><h2>Top 500 <em>na region.</em></h2><p>Sam próg RR nie wystarczy. Trzeba jednocześnie osiągnąć regionalne minimum RR i znaleźć się wśród 500 najlepszych graczy regionu.</p></article></section><section class="rank-eu-threshold"><div><div class="eyebrow small"><span></span> REGION EUROPE · PROGI RR</div><h2>Droga od <em>Immortala 1.</em></h2><p>Według aktualnej tabeli Riot próg dla EU wynosi 100 RR dla Immortal 2, 200 RR dla Immortal 3 i 500 RR dla Radianta. Radiant wymaga dodatkowo miejsca w top 500 EU.</p></div><div class="rank-thresholds"><div><b>100</b><span>RR · IMMORTAL 2</span></div><div><b>200</b><span>RR · IMMORTAL 3</span></div><div><b>500</b><span>RR · RADIANT + TOP 500</span></div></div></section><section class="rank-cycle-section"><div class="section-head"><div><div class="eyebrow small"><span></span> KALENDARZ RANKINGOWY</div><h2>Sezon, <em>akty i placementy.</em></h2></div></div><div class="rank-cycle-intro"><span class="rank-cycle-mark">6×</span><p><b>Sezon</b> trwa cały rok i składa się z sześciu aktów. Jeden akt to okres rankingowy trwający przeciętnie około dwóch miesięcy; dokładny harmonogram może się różnić. Co akt zmienia się m.in. pula map i rozpoczyna się nowy zapis Rangi Aktu. Od 2025 roku Riot nie używa już dawnego podziału na Epizody/Odcinki — zastąpił go roczny sezon.</p></div><div class="rank-cycle-grid"><article class="rank-cycle-card"><div class="eyebrow small"><span></span> SEZON · AKT I I IV</div><h3>5 meczów <em>rozstawiających.</em></h3><p>Na początku sezonu (Akt I) oraz w jego połowie (Akt IV) rozgrywasz po 5 placementów. To dwa momenty ponownego ustalenia rangi w roku.</p></article><article class="rank-cycle-card"><div class="eyebrow small"><span></span> AKTY II, III, V I VI</div><h3>1 mecz, by <em>zaktualizować rangę.</em></h3><p>W pozostałych aktach wystarczy 1 placement, jeśli masz już ustaloną rangę. Sam początek nowego aktu nie obniża rangi automatycznie, ale wynik placementu może ją zmienić.</p></article><article class="rank-cycle-card"><div class="eyebrow small"><span></span> POSTĘP I NAGRODY</div><h3>Nowa <em>Ranga Aktu.</em></h3><p>W każdym akcie zapisuje się postęp, a Ranga Aktu bazuje na najwyższej randze, na której wygrasz mecz. Do odznaki i nagród rankingowych potrzeba co najmniej 9 wygranych meczów rankingowych w akcie. Talizman za rangę Riot przyznaje w połowie sezonu i na jego koniec.</p></article></div><p class="rank-cycle-note">„Placement” nie oznacza, że za każdym razem zaczynasz od zera. W skrócie: co akt zmienia się pula map i postęp Rangi Aktu; co sezon rozpoczyna się nowy roczny cykl, a pięć placementów rozgrywasz na początku sezonu i w jego połowie (Akt IV). W pozostałych aktach wystarczy jeden mecz aktualizujący rangę.</p></section><section class="rank-catalog-section"><div class="section-head"><div><div class="eyebrow small"><span></span> PEŁNA DRABINKA</div><h2>Poznaj <em>odznaki rang.</em></h2></div><button class="secondary-button" data-quiz="rank">QUIZ RANG ↗</button></div><div class="rank-catalog" id="rank-catalog"><p class="map-loading">Ładowanie odznak rang…</p></div></section><p class="glossary-source">Zasady RR, placementów i nagród: <a href="https://support.riotgames.com/en-us/valorant/rewards/act-ranks-and-rewards" target="_blank" rel="noreferrer">Riot — Rangi Aktu i nagrody ↗</a> oraz <a href="https://playvalorant.com/pl-pl/news/game-updates/valorant-patch-notes-10-00/" target="_blank" rel="noreferrer">opis patcha 10.00 ↗</a>. Progi punktowe mogą się zmieniać. Odznaki pobierane są z <a href="https://valorant-api.com/v1/competitivetiers" target="_blank" rel="noreferrer">Valorant API ↗</a>.</p>`;
@@ -497,8 +536,17 @@ function makeRankQuestions(ranks) {
     return { prompt: 'Jak nazywa się ta ranga?', image: rank.image, alt: `Odznaka rangi ${rank.name}`, options, correct: options.indexOf(rank.name), why: `To ${rank.name}.` };
   });
 }
+function makeExtraGameQuestions(game) {
+  return shuffle(game.questions).slice(0, Math.min(10, game.questions.length)).map(question => {
+    const orderedOptions = shuffle(question.options.map((answer,index) => ({ answer, index })));
+    return { prompt: question.prompt, options: orderedOptions.map(item => item.answer), correct: orderedOptions.findIndex(item => item.index === question.correct), why: question.why };
+  });
+}
 async function startQuiz(type) {
   let questions;
+  if (window.EXTRA_GAME_COURSES?.[type]) {
+    questions = makeExtraGameQuestions(window.EXTRA_GAME_COURSES[type]);
+  }
   if (type === 'weapon') {
     try {
       const weapons = await loadWeaponCatalog();
@@ -520,7 +568,8 @@ async function startQuiz(type) {
   }
   const dialog = document.querySelector('#quiz-dialog');
   const labels = { role: ['QUIZ · ROLE', 'Dopasuj agenta do roli', 'role'], ability: ['QUIZ · UMIEJĘTNOŚCI', 'Czyja to umiejętność?', 'agents'], portrait: ['TRENING · PORTRETY', 'Rozpoznaj agenta', null], weapon: ['QUIZ · ARSENAŁ', 'Rozpoznaj broń', null], rank: ['QUIZ · RANGI', 'Rozpoznaj rangę', 'ranks'] };
-  const allLabels = { ...labels, glossary: ['QUIZ · SŁOWNICZEK', 'Rozpoznaj pojęcie', null] };
+  const gameLabels = Object.fromEntries(Object.entries(window.EXTRA_GAME_COURSES || {}).map(([id,game]) => [id, [`QUIZ · ${game.name.toLocaleUpperCase('pl')}`, `Podstawy: ${game.name}`, null]]));
+  const allLabels = { ...labels, ...gameLabels, glossary: ['QUIZ · SŁOWNICZEK', 'Rozpoznaj pojęcie', null] };
   const [label,title,progressId] = allLabels[type] || labels.role;
   activeQuiz = { type, progressId };
   questionSet = questions || makeQuestions(type); questionIndex = 0; score = 0; selectedAnswer = null; answered = false;
@@ -541,7 +590,7 @@ function renderQuestion() {
     ? `<div class="question-art question-definition">${esc(question.definition)}</div>`
     : question.videoId
     ? `<div class="question-art question-video-art"><iframe src="https://drive.google.com/file/d/${encodeURIComponent(question.videoId)}/preview" title="${esc(question.alt)}" loading="lazy" allow="autoplay; fullscreen" allowfullscreen></iframe></div>`
-    : `<div class="question-art ${activeQuiz.type === 'ability' ? 'question-icon-art' : ''} ${activeQuiz.type === 'weapon' ? 'question-weapon-art' : ''} ${activeQuiz.type === 'rank' ? 'question-rank-art' : ''}"><img src="${esc(question.image)}" alt="${esc(question.alt)}"></div>`;
+    : question.image ? `<div class="question-art ${activeQuiz.type === 'ability' ? 'question-icon-art' : ''} ${activeQuiz.type === 'weapon' ? 'question-weapon-art' : ''} ${activeQuiz.type === 'rank' ? 'question-rank-art' : ''}"><img src="${esc(question.image)}" alt="${esc(question.alt)}"></div>` : '';
   document.querySelector('#quiz-media').innerHTML = quizMedia;
   document.querySelector('#quiz-feedback').textContent = '';
   const options = document.querySelector('#quiz-options');
@@ -567,7 +616,8 @@ function finishQuiz() {
   document.querySelector('#dialog-title').textContent = `${score} / ${questionSet.length} poprawnych`;
   document.querySelector('#quiz-media').innerHTML = '';
   document.querySelector('#quiz-question').textContent = pct >= 80 ? 'Świetna robota — widać, że kojarzysz temat.' : pct >= 60 ? 'Dobra powtórka. Możesz wrócić do materiału i spróbować ponownie.' : 'Warto jeszcze raz przejrzeć lekcję. Następnym razem pójdzie lepiej.';
-  document.querySelector('#quiz-options').innerHTML = `<div class="lesson-done">${activeQuiz.type === 'portrait' ? `Twój najlepszy wynik w tej przeglądarce: ${saved.bestGuess || score} / 10.` : 'Wynik od 60% zapisuje ukończenie quizu w postępie kursu.'}</div>`;
+  const resultNote = activeQuiz.type === 'portrait' ? `Twój najlepszy wynik w tej przeglądarce: ${saved.bestGuess || score} / 10.` : activeQuiz.progressId ? 'Wynik od 60% zapisuje ukończenie quizu w postępie kursu.' : 'Możesz zamknąć quiz albo zagrać ponownie.';
+  document.querySelector('#quiz-options').innerHTML = `<div class="lesson-done">${resultNote}</div>`;
   document.querySelector('#quiz-feedback').textContent = '';
   const next = document.querySelector('#quiz-next');
   next.disabled = false; next.classList.add('next-mode'); next.innerHTML = 'ZAGRAJ PONOWNIE <span>↻</span>';
@@ -599,6 +649,7 @@ document.querySelector('#quiz-dialog').addEventListener('click', event => { if (
 document.querySelector('#close-weapon-dialog').addEventListener('click', () => document.querySelector('#weapon-dialog').close());
 document.querySelector('#weapon-dialog').addEventListener('click', event => { if (event.target === event.currentTarget) event.currentTarget.close(); });
 navButtons.forEach(button => button.addEventListener('click', () => showScreen(button.dataset.nav)));
-document.querySelector('.brand').addEventListener('click', event => { event.preventDefault(); showScreen('overview'); });
+gameTabs.forEach(button => button.addEventListener('click', () => switchGame(button.dataset.game)));
+document.querySelector('.brand').addEventListener('click', event => { event.preventDefault(); switchGame('valorant'); });
 showScreen('overview');
 

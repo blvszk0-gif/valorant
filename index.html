@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#101112">
-  <meta name="description" content="Interaktywny kurs VALORANT: role, agenci, quizy i dodatkowe lekcje wideo.">
-  <title>Spike School — VALORANT od podstaw</title>
+  <meta name="description" content="Interaktywna nauka VALORANT, Fortnite, Crimson Desert i League of Legends: lekcje oraz quizy.">
+  <title>Spike School — nauka gier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,10 +14,11 @@
   <script src="skill-media-config.js"></script>
   <script src="game-data.js"></script>
   <script src="glossary-data.js"></script>
+  <script src="extra-games.js"></script>
   <script src="app.js" defer></script>
 </head>
 <body>
-  <div class="app-shell">
+  <div class="app-shell" data-current-game="valorant">
     <aside class="sidebar">
       <a class="brand" href="#home" aria-label="Spike School — strona główna"><span class="brand-mark">S<span></span></span><span>SPIKE<span class="brand-light">SCHOOL</span></span></a>
       <div class="side-label">TWOJA ŚCIEŻKA</div>
@@ -36,9 +37,16 @@
     </aside>
 
     <main class="main" id="home">
-      <header class="topbar"><div class="breadcrumb">SPIKE SCHOOL <span>/</span> <b id="crumb">START</b></div><div class="top-right"><span class="status"><i></i> KURS VALORANT</span><div class="avatar">✦</div></div></header>
+      <header class="topbar"><div class="breadcrumb">SPIKE SCHOOL <span>/</span> <b id="crumb">START</b></div><div class="top-right"><span class="status"><i></i> <span id="game-label">KURS VALORANT</span></span><div class="avatar">✦</div></div></header>
+      <nav class="game-switcher" aria-label="Wybierz grę">
+        <span class="game-switcher-label">WYBIERZ GRĘ</span>
+        <button class="game-tab is-active" type="button" data-game="valorant" aria-pressed="true"><span class="game-tab-mark valorant-mark">V</span><span class="game-tab-name">VALORANT</span></button>
+        <button class="game-tab" type="button" data-game="fortnite" aria-pressed="false"><span class="game-tab-mark fortnite-mark">FN</span><span class="game-tab-name">FORTNITE</span></button>
+        <button class="game-tab" type="button" data-game="crimson-desert" aria-pressed="false"><span class="game-tab-mark crimson-mark">CD</span><span class="game-tab-name">CRIMSON<br>DESERT</span></button>
+        <button class="game-tab" type="button" data-game="league-of-legends" aria-pressed="false"><span class="game-tab-mark league-mark">LoL</span><span class="game-tab-name">LEAGUE OF<br>LEGENDS</span></button>
+      </nav>
       <div id="screen-root" aria-live="polite"></div>
-      <footer class="footer"><span>SPIKE SCHOOL <i>///</i> NIEOFICJALNY KURS FANOWSKI</span><a href="https://playvalorant.com/pl-pl/agents/" target="_blank" rel="noreferrer">AGENTI VALORANT ↗</a></footer>
+      <footer class="footer"><span>SPIKE SCHOOL <i>///</i> NIEOFICJALNY KURS FANOWSKI</span><a id="game-source-link" href="https://playvalorant.com/pl-pl/agents/" target="_blank" rel="noreferrer">AGENTI VALORANT ↗</a></footer>
     </main>
   </div>
 
