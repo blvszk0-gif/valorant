@@ -74,3 +74,4 @@
 .fortnite-ammo-tooltip>div>span{font-size:15px}
 .fortnite-weapon-copy{position:relative;z-index:1;flex:1;min-height:74px;padding:13px 14px;border-top:1px solid #293b41}
 @media(max-width:620px){.fortnite-weapon-image{flex-basis:200px;height:200px}.fortnite-weapon-card{min-height:270px}.fortnite-ammo-tooltip{width:min(215px,calc(100% - 18px));height:80px}.fortnite-ammo-tooltip>img{width:58px;height:58px;max-width:58px;max-height:58px;flex-basis:58px}}
+.fortnite-glossary-actions{display:flex;gap:8px;flex:0 0 auto}.fortnite-glossary-actions .primary-button,.fortnite-glossary-actions .secondary-button{white-space:nowrap}.fortnite-glossary-callout{margin-top:17px}.fortnite-glossary-callout h2 em{color:#55cfff}@media(max-width:780px){.fortnite-glossary-actions{width:100%;flex-direction:column}.fortnite-glossary-actions .primary-button,.fortnite-glossary-actions .secondary-button{width:100%}}

@@ -80,7 +80,7 @@ function updateNav(screen) {
   activeScreen = screen;
   const navScreen = screen === 'map-practice' ? 'practice' : screen;
   navButtons.forEach(button => button.classList.toggle('active', button.dataset.nav === navScreen));
-  const names = { overview: 'START', roles: 'LEKCJA 1 / ROLE', agents: 'LEKCJA 2 / AGENCI', maps: 'LEKCJA 3 / MAPY', ranks: 'LEKCJA 4 / RANGI', weapons: 'ARSENAŁ', practice: 'TRENING', 'map-practice': 'TRENING / MAPY', extras: 'DODATKOWE LEKCJE', glossary: 'SŁOWNIK' };
+  const names = { overview: 'START', roles: 'LEKCJA 1 / ROLE', agents: 'LEKCJA 2 / AGENCI', maps: 'LEKCJA 3 / MAPY', ranks: 'LEKCJA 4 / RANGI', weapons: 'ARSENAŁ', practice: 'TRENING', 'map-practice': 'TRENING / MAPY', extras: 'DODATKOWE LEKCJE', glossary: 'SŁOWNIK', 'fortnite-glossary': 'FORTNITE / SŁOWNIK' };
   document.querySelector('#crumb').textContent = names[screen] || 'START';
 }
 function videoMarkup(path, title, poster = '') {
@@ -204,6 +204,34 @@ function renderGlossary() {
   }));
   updateResults();
 }
+function renderFortniteGlossary() {
+  const glossary = window.EXTRA_GAME_COURSES?.fortnite?.glossary || [];
+  updateNav('fortnite-glossary');
+  const entries = [...glossary].sort((a,b) => a.term.localeCompare(b.term, 'en'));
+  const categories = ['Wszystkie', ...new Set(entries.map(item => item.category).sort((a,b) => a.localeCompare(b, 'pl')))];
+  const game = window.EXTRA_GAME_COURSES.fortnite;
+  root.innerHTML = `<section class="page-intro"><div><div class="eyebrow"><span></span> MATERIAŁ POMOCNICZY · FORTNITE</div><h1>SŁOWNIK <em>FORTNITE.</em></h1><p>Angielskie nazwy, skróty i określenia używane w Fortnite — z krótkimi objaśnieniami po polsku. Wpisz hasło albo wybierz kategorię.</p></div><button class="primary-button" data-quiz="fortnite-glossary">QUIZ ZE SŁOWNIKA <span>↗</span></button></section><section class="glossary-tools"><label class="glossary-search-wrap"><span>⌕</span><input id="glossary-search" type="search" placeholder="Szukaj hasła, skrótu lub opisu…" aria-label="Szukaj w słowniku Fortnite"></label><div class="glossary-categories" role="group" aria-label="Kategorie słownika Fortnite">${categories.map((category,index)=>`<button class="glossary-filter ${index===0?'active':''}" data-category="${esc(category)}">${esc(category)}</button>`).join('')}</div><p class="glossary-count" id="glossary-count" aria-live="polite"></p><div class="glossary-list" id="glossary-list"></div></section><p class="glossary-source">To praktyczny słownik podstawowych i często używanych pojęć. Dostępność trybów, przedmiotów i części zasad może zmieniać się między sezonami. Źródła oficjalne: ${game.sources.map(source => `<a href="${esc(source.url)}" target="_blank" rel="noreferrer">${esc(source.label)} ↗</a>`).join(' · ')}.</p><button class="secondary-button" data-return-fortnite>← WRÓĆ DO FORTNITE</button>`;
+  bindScreenActions();
+  const search = root.querySelector('#glossary-search');
+  const list = root.querySelector('#glossary-list');
+  const count = root.querySelector('#glossary-count');
+  const normalize = value => String(value).toLocaleLowerCase('pl').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  let selectedCategory = 'Wszystkie';
+  const updateResults = () => {
+    const query = normalize(search.value.trim());
+    const visible = entries.filter(item => (selectedCategory === 'Wszystkie' || item.category === selectedCategory)
+      && normalize(`${item.term} ${item.also || ''} ${item.definition}`).includes(query));
+    count.textContent = `${visible.length} ${visible.length === 1 ? 'hasło' : 'haseł'}`;
+    list.innerHTML = visible.length ? visible.map(item => `<article class="glossary-entry"><div class="glossary-entry-head"><h2>${esc(item.term)}</h2><span>${esc(item.category)}</span></div>${item.also ? `<div class="glossary-also">${esc(item.also)}</div>` : ''}<p>${esc(item.definition)}</p></article>`).join('') : '<p class="empty-state">Nie znaleziono takiego hasła.</p>';
+  };
+  search.addEventListener('input', updateResults);
+  root.querySelectorAll('[data-category]').forEach(button => button.addEventListener('click', () => {
+    selectedCategory = button.dataset.category;
+    root.querySelectorAll('[data-category]').forEach(filter => filter.classList.toggle('active', filter === button));
+    updateResults();
+  }));
+  updateResults();
+}
 async function loadWeaponCatalog() {
   if (!weaponCatalogPromise) weaponCatalogPromise = fetch('https://valorant-api.com/v1/weapons?language=en-US')
     .then(response => { if (!response.ok) throw new Error('Nie udało się pobrać arsenału.'); return response.json(); })
@@ -277,10 +305,11 @@ function renderGameHub(gameId) {
   activeScreen = 'game-hub';
   document.querySelector('#crumb').textContent = `${game.name.toLocaleUpperCase('pl')} / NAUKA`;
   const quizLength = Math.min(10, game.questions.length);
+  const glossaryCallout = game.id === 'fortnite' ? `<section class="game-quiz-callout fortnite-glossary-callout"><div><div class="eyebrow small"><span></span> SŁOWNICZEK · ${game.glossary.length} HASEŁ</div><h2>Poznaj język <em>Fortnite.</em></h2><p>Wyszukuj pojęcia, filtruj kategorie i utrwalaj angielskie nazwy w quizie.</p></div><div class="fortnite-glossary-actions"><button class="secondary-button" data-go="fortnite-glossary">OTWÓRZ SŁOWNIK ↗</button><button class="primary-button" data-quiz="fortnite-glossary">QUIZ ZE SŁOWNIKA ↗</button></div></section>` : '';
   const lessonCards = game.id === 'fortnite'
     ? game.lessons.map((lesson,index) => `<article class="fortnite-topic-card"><div class="fortnite-topic-image"><img src="${esc(lesson.image)}" alt="${esc(lesson.imageAlt)}" loading="lazy"></div><div class="fortnite-topic-copy"><div class="eyebrow small"><span></span> ${esc(lesson.label)}</div><h3>${esc(lesson.title)}</h3><p>${esc(lesson.text)}</p>${index === 0 ? '<button class="primary-button fortnite-open-lesson" data-go="fortnite-weapons">OTWÓRZ LEKCJĘ <span>↗</span></button>' : ''}<div class="fortnite-topic-tip"><b>Wskazówka</b><span>${esc(lesson.tip)}</span></div><a class="fortnite-image-source" href="${esc(lesson.imageUrl)}" target="_blank" rel="noreferrer">Zdjęcie: ${esc(lesson.imageSource)} ↗</a></div></article>`).join('')
     : game.lessons.map((lesson,index) => `<details class="game-lesson" ${index === 0 ? 'open' : ''}><summary><span class="game-lesson-label">${esc(lesson.label)}</span><b>${esc(lesson.title)}</b><span class="game-lesson-toggle">＋</span></summary><div class="game-lesson-content"><p>${esc(lesson.text)}</p><div><b>Wskazówka</b><span>${esc(lesson.tip)}</span></div></div></details>`).join('');
-  root.innerHTML = `<section class="game-course-page" data-game-course="${esc(game.id)}"><section class="game-course-hero"><div class="game-course-mark">${esc(game.logo).replace(/\n/g, '<br>')}</div><div class="game-course-copy"><div class="eyebrow"><span></span> ${esc(game.eyebrow)}</div><h1>POZNAJ <em>${esc(game.name)}.</em></h1><p>${esc(game.intro)}</p><button class="primary-button" data-quiz="${esc(game.id)}">QUIZ NA START · ${quizLength} PYTAŃ <span>↗</span></button></div></section><section class="game-learning-section"><div class="section-head"><div><div class="eyebrow small"><span></span> PODSTAWY GRY</div><h2>Ucz się <em>krok po kroku.</em></h2></div><span class="section-count">${String(game.lessons.length).padStart(2, '0')} LEKCJI</span></div><div class="game-lesson-grid ${game.id === 'fortnite' ? 'fortnite-topic-grid' : ''}">${lessonCards}</div></section><section class="game-quiz-callout"><div><div class="eyebrow small"><span></span> SPRAWDŹ SIĘ</div><h2>Zapamiętałeś <em>podstawy?</em></h2><p>Odpowiedz na ${quizLength} losowanych pytań. Każde ma cztery odpowiedzi.</p></div><button class="primary-button" data-quiz="${esc(game.id)}">ROZPOCZNIJ QUIZ <span>↗</span></button></section><p class="game-source-list">Źródła oficjalne: ${game.sources.map(source => `<a href="${esc(source.url)}" target="_blank" rel="noreferrer">${esc(source.label)} ↗</a>`).join(' · ')}</p></section>`;
+  root.innerHTML = `<section class="game-course-page" data-game-course="${esc(game.id)}"><section class="game-course-hero"><div class="game-course-mark">${esc(game.logo).replace(/\n/g, '<br>')}</div><div class="game-course-copy"><div class="eyebrow"><span></span> ${esc(game.eyebrow)}</div><h1>POZNAJ <em>${esc(game.name)}.</em></h1><p>${esc(game.intro)}</p><button class="primary-button" data-quiz="${esc(game.id)}">QUIZ NA START · ${quizLength} PYTAŃ <span>↗</span></button></div></section><section class="game-learning-section"><div class="section-head"><div><div class="eyebrow small"><span></span> PODSTAWY GRY</div><h2>Ucz się <em>krok po kroku.</em></h2></div><span class="section-count">${String(game.lessons.length).padStart(2, '0')} LEKCJI</span></div><div class="game-lesson-grid ${game.id === 'fortnite' ? 'fortnite-topic-grid' : ''}">${lessonCards}</div></section>${glossaryCallout}<section class="game-quiz-callout"><div><div class="eyebrow small"><span></span> SPRAWDŹ SIĘ</div><h2>Zapamiętałeś <em>podstawy?</em></h2><p>Odpowiedz na ${quizLength} losowanych pytań. Każde ma cztery odpowiedzi.</p></div><button class="primary-button" data-quiz="${esc(game.id)}">ROZPOCZNIJ QUIZ <span>↗</span></button></section><p class="game-source-list">Źródła oficjalne: ${game.sources.map(source => `<a href="${esc(source.url)}" target="_blank" rel="noreferrer">${esc(source.label)} ↗</a>`).join(' · ')}</p></section>`;
   bindScreenActions();
 }
 function fortniteIllustration(kind) {
@@ -557,10 +586,20 @@ function showScreen(screen) {
   else if (screen === 'practice') renderPractice();
   else if (screen === 'extras') renderExtras();
   else if (screen === 'glossary') renderGlossary();
+  else if (screen === 'fortnite-glossary') renderFortniteGlossary();
   else renderOverview();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function makeQuestions(type) {
+  if (type === 'fortnite-glossary') {
+    const entries = window.EXTRA_GAME_COURSES?.fortnite?.glossary || [];
+    if (entries.length < 4) return [];
+    return shuffle(entries).slice(0, Math.min(10, entries.length)).map(item => {
+      const wrong = shuffle(entries.filter(other => other.term !== item.term)).slice(0, 3).map(other => other.term);
+      const options = shuffle([item.term, ...wrong]);
+      return { prompt: 'Jakie hasło pasuje do tej definicji?', definition: `${item.also ? `${item.also}. ` : ''}${item.definition}`, options, correct: options.indexOf(item.term), why: `${item.term}: ${item.definition}` };
+    });
+  }
   if (type === 'glossary') {
     const glossary = [...(window.VALORANT_GLOSSARY || [])];
     agents.forEach(agent => {
@@ -655,7 +694,7 @@ async function startQuiz(type) {
   const dialog = document.querySelector('#quiz-dialog');
   const labels = { role: ['QUIZ · ROLE', 'Dopasuj agenta do roli', 'role'], ability: ['QUIZ · UMIEJĘTNOŚCI', 'Czyja to umiejętność?', 'agents'], portrait: ['TRENING · PORTRETY', 'Rozpoznaj agenta', null], weapon: ['QUIZ · ARSENAŁ', 'Rozpoznaj broń', null], rank: ['QUIZ · RANGI', 'Rozpoznaj rangę', 'ranks'] };
   const gameLabels = Object.fromEntries(Object.entries(window.EXTRA_GAME_COURSES || {}).map(([id,game]) => [id, [`QUIZ · ${game.name.toLocaleUpperCase('pl')}`, `Podstawy: ${game.name}`, null]]));
-  const allLabels = { ...labels, ...gameLabels, glossary: ['QUIZ · SŁOWNICZEK', 'Rozpoznaj pojęcie', null] };
+  const allLabels = { ...labels, ...gameLabels, glossary: ['QUIZ · SŁOWNICZEK', 'Rozpoznaj pojęcie', null], 'fortnite-glossary': ['QUIZ · SŁOWNICZEK FORTNITE', 'Rozpoznaj pojęcie', null] };
   const [label,title,progressId] = allLabels[type] || labels.role;
   activeQuiz = { type, progressId };
   questionSet = questions || makeQuestions(type); questionIndex = 0; score = 0; selectedAnswer = null; answered = false;
