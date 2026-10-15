@@ -646,12 +646,17 @@ function bindScreenActions() {
     image.src = fortniteIllustration(image.dataset.fortniteFallback);
     image.closest('.fortnite-weapon-image, .fortnite-item-art')?.classList.add('is-fallback');
   }, { once: true }));
-  root.querySelectorAll('img[data-fortnite-topic-fallback]').forEach(image => image.addEventListener('error', () => {
-    if (image.dataset.fallbackUsed) return;
-    image.dataset.fallbackUsed = '1';
-    image.src = fortniteIllustration(image.dataset.fortniteTopicFallback);
-    image.closest('.fortnite-topic-image')?.classList.add('is-fallback');
-  }, { once: true }));
+  root.querySelectorAll('img[data-fortnite-topic-fallback]').forEach(image => {
+    const showFallback = () => {
+      if (image.dataset.fallbackUsed) return;
+      image.dataset.fallbackUsed = '1';
+      image.src = fortniteIllustration(image.dataset.fortniteTopicFallback);
+      image.closest('.fortnite-topic-image')?.classList.add('is-fallback');
+    };
+    image.addEventListener('error', showFallback);
+    // Cached failures can finish before listeners are attached after innerHTML.
+    if (image.complete && image.naturalWidth === 0) showFallback();
+  });
   root.querySelectorAll('img[data-cosmetics-art]').forEach(image => image.addEventListener('error', () => {
     image.closest('.fortnite-pass-art, .fortnite-vbucks-mark')?.classList.add('image-missing');
     image.remove();
