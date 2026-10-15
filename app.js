@@ -304,15 +304,15 @@ function renderGameHub(gameId) {
   if (!game) return;
   activeScreen = 'game-hub';
   document.querySelector('#crumb').textContent = `${game.name.toLocaleUpperCase('pl')} / NAUKA`;
-  const quizLength = Math.min(10, game.questions.length);
+  const quizLength = game.generalQuiz?.length || Math.min(10, game.questions.length);
   const glossaryCallout = game.id === 'fortnite' ? `<section class="game-quiz-callout fortnite-glossary-callout"><div><div class="eyebrow small"><span></span> SŁOWNICZEK · ${game.glossary.length} HASEŁ</div><h2>Poznaj język <em>Fortnite.</em></h2><p>Wyszukuj pojęcia, filtruj kategorie i utrwalaj angielskie nazwy w quizie.</p></div><div class="fortnite-glossary-actions"><button class="secondary-button" data-go="fortnite-glossary">OTWÓRZ SŁOWNIK ↗</button><button class="primary-button" data-quiz="fortnite-glossary">QUIZ ZE SŁOWNIKA ↗</button></div></section>` : '';
   const lessonCards = game.id === 'fortnite'
     ? game.lessons.map((lesson,index) => {
       const fallbackArt = ['rifle', null, 'chest', 'map', 'vehicle'][index];
-      return `<article class="fortnite-topic-card ${index === 2 ? 'fortnite-loot-topic-card' : index === 4 ? 'fortnite-gameplay-topic-card' : ''}"><div class="fortnite-topic-image"><img ${fallbackArt ? `data-fortnite-topic-fallback="${fallbackArt}"` : ''} src="${esc(lesson.image)}" alt="${esc(lesson.imageAlt)}" loading="lazy" referrerpolicy="no-referrer"></div><div class="fortnite-topic-copy"><div class="eyebrow small"><span></span> ${esc(lesson.label)}</div><h3>${esc(lesson.title)}</h3><p>${esc(lesson.text)}</p>${index === 0 ? '<button class="primary-button fortnite-open-lesson" data-go="fortnite-weapons">OTWÓRZ LEKCJĘ <span>↗</span></button>' : index === 1 ? '<button class="primary-button fortnite-open-lesson" data-go="fortnite-cosmetics">OTWÓRZ LEKCJĘ <span>↗</span></button>' : index === 2 ? '<button class="primary-button fortnite-open-lesson" data-go="fortnite-loot">OTWÓRZ LEKCJĘ <span>↗</span></button>' : index === 3 ? '<button class="primary-button fortnite-open-lesson" data-go="fortnite-modes">OTWÓRZ LEKCJĘ <span>↗</span></button>' : index === 4 ? '<button class="primary-button fortnite-open-lesson" data-go="fortnite-gameplay">OTWÓRZ LEKCJĘ <span>↗</span></button>' : ''}<div class="fortnite-topic-tip"><b>Wskazówka</b><span>${esc(lesson.tip)}</span></div><a class="fortnite-image-source" href="${esc(lesson.imageUrl)}" target="_blank" rel="noreferrer">${index === 1 ? 'Zobacz sklep' : 'Zdjęcie: ' + esc(lesson.imageSource)} ↗</a></div></article>`;
+      return `<article class="fortnite-topic-card ${index === 2 ? 'fortnite-loot-topic-card' : index === 4 ? 'fortnite-gameplay-topic-card' : ''}"><div class="fortnite-topic-image"><img ${fallbackArt ? `data-fortnite-topic-fallback="${fallbackArt}"` : ''} src="${esc(lesson.image)}" alt="${esc(lesson.imageAlt)}" loading="lazy" referrerpolicy="no-referrer"></div><div class="fortnite-topic-copy"><div class="eyebrow small"><span></span> ${esc(lesson.label)}</div><h3>${esc(lesson.title)}</h3><p>${esc(lesson.text)}</p>${index === 0 ? '<button class="primary-button fortnite-open-lesson" data-go="fortnite-weapons">OTWÓRZ LEKCJĘ <span>↗</span></button>' : index === 1 ? '<button class="primary-button fortnite-open-lesson" data-go="fortnite-cosmetics">OTWÓRZ LEKCJĘ <span>↗</span></button>' : index === 2 ? '<button class="primary-button fortnite-open-lesson" data-go="fortnite-loot">OTWÓRZ LEKCJĘ <span>↗</span></button>' : index === 3 ? '<button class="primary-button fortnite-open-lesson" data-go="fortnite-modes">OTWÓRZ LEKCJĘ <span>↗</span></button>' : index === 4 ? '<button class="primary-button fortnite-open-lesson" data-go="fortnite-gameplay">OTWÓRZ LEKCJĘ <span>↗</span></button>' : ''}${index < 5 ? `<button class="secondary-button fortnite-lesson-quiz" data-quiz="fortnite-lesson-${index}">QUIZ Z LEKCJI ↗</button>` : ''}<div class="fortnite-topic-tip"><b>Wskazówka</b><span>${esc(lesson.tip)}</span></div><a class="fortnite-image-source" href="${esc(lesson.imageUrl)}" target="_blank" rel="noreferrer">${index === 1 ? 'Zobacz sklep' : 'Zdjęcie: ' + esc(lesson.imageSource)} ↗</a></div></article>`;
     }).join('')
     : game.lessons.map((lesson,index) => `<details class="game-lesson" ${index === 0 ? 'open' : ''}><summary><span class="game-lesson-label">${esc(lesson.label)}</span><b>${esc(lesson.title)}</b><span class="game-lesson-toggle">＋</span></summary><div class="game-lesson-content"><p>${esc(lesson.text)}</p><div><b>Wskazówka</b><span>${esc(lesson.tip)}</span></div></div></details>`).join('');
-  root.innerHTML = `<section class="game-course-page" data-game-course="${esc(game.id)}"><section class="game-course-hero"><div class="game-course-mark">${esc(game.logo).replace(/\n/g, '<br>')}</div><div class="game-course-copy"><div class="eyebrow"><span></span> ${esc(game.eyebrow)}</div><h1>POZNAJ <em>${esc(game.name)}.</em></h1><p>${esc(game.intro)}</p><button class="primary-button" data-quiz="${esc(game.id)}">QUIZ NA START · ${quizLength} PYTAŃ <span>↗</span></button></div></section><section class="game-learning-section"><div class="section-head"><div><div class="eyebrow small"><span></span> PODSTAWY GRY</div><h2>Ucz się <em>krok po kroku.</em></h2></div><span class="section-count">${String(game.lessons.length).padStart(2, '0')} LEKCJI</span></div><div class="game-lesson-grid ${game.id === 'fortnite' ? 'fortnite-topic-grid' : ''}">${lessonCards}</div></section>${glossaryCallout}<section class="game-quiz-callout"><div><div class="eyebrow small"><span></span> SPRAWDŹ SIĘ</div><h2>Zapamiętałeś <em>podstawy?</em></h2><p>Odpowiedz na ${quizLength} losowanych pytań. Każde ma cztery odpowiedzi.</p></div><button class="primary-button" data-quiz="${esc(game.id)}">ROZPOCZNIJ QUIZ <span>↗</span></button></section><p class="game-source-list">Źródła oficjalne: ${game.sources.map(source => `<a href="${esc(source.url)}" target="_blank" rel="noreferrer">${esc(source.label)} ↗</a>`).join(' · ')}</p></section>`;
+  root.innerHTML = `<section class="game-course-page" data-game-course="${esc(game.id)}"><section class="game-course-hero"><div class="game-course-mark">${esc(game.logo).replace(/\n/g, '<br>')}</div><div class="game-course-copy"><div class="eyebrow"><span></span> ${esc(game.eyebrow)}</div><h1>POZNAJ <em>${esc(game.name)}.</em></h1><p>${esc(game.intro)}</p><button class="primary-button" data-quiz="${esc(game.id)}">QUIZ OGÓLNY · ${quizLength} PYTAŃ <span>↗</span></button></div></section><section class="game-learning-section"><div class="section-head"><div><div class="eyebrow small"><span></span> PODSTAWY GRY</div><h2>Ucz się <em>krok po kroku.</em></h2></div><span class="section-count">${String(game.lessons.length).padStart(2, '0')} LEKCJI</span></div><div class="game-lesson-grid ${game.id === 'fortnite' ? 'fortnite-topic-grid' : ''}">${lessonCards}</div></section>${glossaryCallout}<section class="game-quiz-callout"><div><div class="eyebrow small"><span></span> QUIZ OGÓLNY</div><h2>Sprawdź wiedzę <em>z całego kursu.</em></h2><p>Odpowiedz na ${quizLength} pytań z różnych lekcji. Każde ma cztery odpowiedzi.</p></div><button class="primary-button" data-quiz="${esc(game.id)}">QUIZ OGÓLNY <span>↗</span></button></section><p class="game-source-list">Źródła oficjalne: ${game.sources.map(source => `<a href="${esc(source.url)}" target="_blank" rel="noreferrer">${esc(source.label)} ↗</a>`).join(' · ')}</p></section>`;
   bindScreenActions();
 }
 function fortniteIllustration(kind) {
@@ -813,16 +813,23 @@ function makeRankQuestions(ranks) {
     return { prompt: 'Jak nazywa się ta ranga?', image: rank.image, alt: `Odznaka rangi ${rank.name}`, options, correct: options.indexOf(rank.name), why: `To ${rank.name}.` };
   });
 }
-function makeExtraGameQuestions(game) {
-  return shuffle(game.questions).slice(0, Math.min(10, game.questions.length)).map(question => {
+function makeExtraGameQuestions(game, questions = game.questions, limit = 10) {
+  return shuffle(questions).slice(0, Math.min(limit, questions.length)).map(question => {
     const orderedOptions = shuffle(question.options.map((answer,index) => ({ answer, index })));
     return { prompt: question.prompt, options: orderedOptions.map(item => item.answer), correct: orderedOptions.findIndex(item => item.index === question.correct), why: question.why };
   });
 }
 async function startQuiz(type) {
   let questions;
+  const fortniteCourse = window.EXTRA_GAME_COURSES?.fortnite;
   if (window.EXTRA_GAME_COURSES?.[type]) {
-    questions = makeExtraGameQuestions(window.EXTRA_GAME_COURSES[type]);
+    const course = window.EXTRA_GAME_COURSES[type];
+    questions = makeExtraGameQuestions(course, course.generalQuiz || course.questions, course.generalQuiz?.length || 10);
+  } else if (fortniteCourse && type.startsWith('fortnite-lesson-')) {
+    const lessonIndex = Number(type.slice('fortnite-lesson-'.length));
+    const lesson = fortniteCourse.lessons[lessonIndex];
+    const lessonQuestions = fortniteCourse.lessonQuizzes?.[['weapons','cosmetics','loot','modes','gameplay'][lessonIndex]];
+    if (lesson && lessonQuestions?.length) questions = makeExtraGameQuestions(fortniteCourse, lessonQuestions);
   }
   if (type === 'weapon') {
     try {
@@ -845,8 +852,9 @@ async function startQuiz(type) {
   }
   const dialog = document.querySelector('#quiz-dialog');
   const labels = { role: ['QUIZ · ROLE', 'Dopasuj agenta do roli', 'role'], ability: ['QUIZ · UMIEJĘTNOŚCI', 'Czyja to umiejętność?', 'agents'], portrait: ['TRENING · PORTRETY', 'Rozpoznaj agenta', null], weapon: ['QUIZ · ARSENAŁ', 'Rozpoznaj broń', null], rank: ['QUIZ · RANGI', 'Rozpoznaj rangę', 'ranks'] };
-  const gameLabels = Object.fromEntries(Object.entries(window.EXTRA_GAME_COURSES || {}).map(([id,game]) => [id, [`QUIZ · ${game.name.toLocaleUpperCase('pl')}`, `Podstawy: ${game.name}`, null]]));
-  const allLabels = { ...labels, ...gameLabels, glossary: ['QUIZ · SŁOWNICZEK', 'Rozpoznaj pojęcie', null], 'fortnite-glossary': ['QUIZ · SŁOWNICZEK FORTNITE', 'Rozpoznaj pojęcie', null] };
+  const gameLabels = Object.fromEntries(Object.entries(window.EXTRA_GAME_COURSES || {}).map(([id,game]) => [id, [`QUIZ OGÓLNY · ${game.name.toLocaleUpperCase('pl')}`, `Cały kurs: ${game.name}`, null]]));
+  const fortniteLessonLabels = Object.fromEntries((fortniteCourse?.lessons || []).map((lesson,index) => [`fortnite-lesson-${index}`, [`QUIZ · LEKCJA ${String(index+1).padStart(2,'0')}`, lesson.title, null]]));
+  const allLabels = { ...labels, ...gameLabels, ...fortniteLessonLabels, glossary: ['QUIZ · SŁOWNICZEK', 'Rozpoznaj pojęcie', null], 'fortnite-glossary': ['QUIZ · SŁOWNICZEK FORTNITE', 'Rozpoznaj pojęcie', null] };
   const [label,title,progressId] = allLabels[type] || labels.role;
   activeQuiz = { type, progressId };
   questionSet = questions || makeQuestions(type); questionIndex = 0; score = 0; selectedAnswer = null; answered = false;
