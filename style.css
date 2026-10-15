@@ -60,3 +60,17 @@
 .fortnite-weapon-image>span{z-index:1;right:auto;left:9px;bottom:9px}
 .fortnite-ammo-toggle{z-index:2}
 @media(max-width:620px){.fortnite-weapon-card{min-height:285px}.fortnite-weapon-image{flex-basis:210px;height:210px}.fortnite-ammo-tooltip{height:100px}.fortnite-ammo-tooltip>img{width:74px;height:74px;flex-basis:74px}}
+
+/* Keep weapon cutouts inside their image frame and anchor ammo popovers locally. */
+.fortnite-weapon-card{position:relative;display:flex;flex-direction:column;overflow:visible;min-height:300px;transform:none}
+.fortnite-weapon-card:hover,.fortnite-weapon-card:focus-within,.fortnite-weapon-card.show-ammo-tip{z-index:20;transform:none}
+.fortnite-weapon-image{position:relative;display:block;isolation:auto;flex:0 0 230px;width:100%;height:230px;overflow:visible}
+.fortnite-weapon-image>img{position:absolute;inset:0;display:block;width:100%;height:100%;max-width:100%;max-height:100%;padding:12px;object-fit:contain;transform:none!important}
+.fortnite-weapon-image>span{z-index:1}
+.fortnite-ammo-toggle{z-index:5}
+.fortnite-ammo-tooltip{inset:46px 9px auto auto;transform:translateY(-4px);width:min(235px,calc(100% - 18px));height:88px;padding:7px 9px;gap:8px;border:1px solid #55cfff;background:#10191df5;box-shadow:0 8px 24px #000c;opacity:0;visibility:hidden;pointer-events:none}
+.fortnite-weapon-card:hover .fortnite-ammo-tooltip,.fortnite-weapon-card:focus-within .fortnite-ammo-tooltip,.fortnite-weapon-card.show-ammo-tip .fortnite-ammo-tooltip{transform:translateY(0)}
+.fortnite-ammo-tooltip>img{position:static;inset:auto;width:66px;height:66px;max-width:66px;max-height:66px;flex:0 0 66px;padding:0;object-fit:contain;transform:none!important}
+.fortnite-ammo-tooltip>div>span{font-size:15px}
+.fortnite-weapon-copy{position:relative;z-index:1;flex:1;min-height:74px;padding:13px 14px;border-top:1px solid #293b41}
+@media(max-width:620px){.fortnite-weapon-image{flex-basis:200px;height:200px}.fortnite-weapon-card{min-height:270px}.fortnite-ammo-tooltip{width:min(215px,calc(100% - 18px));height:80px}.fortnite-ammo-tooltip>img{width:58px;height:58px;max-width:58px;max-height:58px;flex-basis:58px}}
