@@ -315,7 +315,26 @@ function fortniteIllustration(kind) {
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }
 function fortniteWikiImage(file) {
-  return `https://fortnite.fandom.com/wiki/Special:FilePath/${encodeURIComponent(file)}`;
+  const paths = {
+    'Medium Bullets - Ammo - Fortnite.png': 'b/be',
+    'Light Bullets - Ammo - Fortnite.png': 'f/ff',
+    'Shells - Ammo - Fortnite.png': '2/27',
+    'Heavy Bullets - Ammo - Fortnite.png': 'f/fd',
+    'Bolt-Action Sniper Rifle (High Tier) - Weapon - Fortnite.png': '9/9b',
+    'Bandage - Item - Fortnite.png': '3/39',
+    'Medkit - Item - Fortnite.png': 'b/b1',
+    'Small Shield Potion - Item - Fortnite.png': '8/87',
+    'Shield Potion - Item - Fortnite.png': 'd/d9',
+    'Chug Splash - Item - Fortnite.png': '7/73',
+    'Pizza Slice - Item - Fortnite.png': 'b/b0',
+    'Flopper - Item - Fortnite.png': '9/9f',
+    'Mushroom - Item - Fortnite.png': '4/41',
+    'Apple - Item - Fortnite.png': '1/14'
+  };
+  const path = paths[file];
+  if (!path) return `https://fortnite.fandom.com/wiki/Special:FilePath/${encodeURIComponent(file)}`;
+  const filename = file.replaceAll(' ', '_');
+  return `https://static.wikia.nocookie.net/fortnite/images/${path}/${filename}/revision/latest`;
 }
 function renderFortniteWeaponsLesson() {
   const game = window.EXTRA_GAME_COURSES?.fortnite;

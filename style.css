@@ -45,3 +45,18 @@
 .fortnite-heal-stats{display:block;margin-top:auto;padding-top:10px;color:#55cfff;font-size:10px;line-height:1.4}
 @media(max-width:900px){.fortnite-weapon-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.fortnite-weapon-image{height:200px}.fortnite-ammo-tooltip{gap:6px;padding:40px 7px 8px}.fortnite-ammo-tooltip>div>span{font-size:14px}.fortnite-ammo-toggle{width:34px;height:34px}}
+
+/* Keep the full weapon artwork visible; let the ammo hint float above it. */
+.fortnite-weapon-card{display:flex;flex-direction:column;min-height:310px}
+.fortnite-weapon-image{flex:0 0 245px;width:100%;height:245px;overflow:visible;position:relative;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 65%,#27383d,#101213 72%)}
+.fortnite-weapon-image>img{display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;padding:8px}
+.fortnite-weapon-copy{flex:1;padding:13px 14px;border-top:1px solid #293b41;background:linear-gradient(180deg,#1b1e20,#151718)}
+.fortnite-weapon-copy h3{font-size:19px;line-height:1.15;margin:0 0 7px}
+.fortnite-weapon-copy>p{font-size:11px;line-height:1.55}
+.fortnite-ammo-tooltip{inset:auto auto calc(100% + 9px) 50%;transform:translateY(4px) translateX(-50%);width:min(300px,calc(100vw - 36px));height:112px;padding:8px 12px;gap:12px;box-shadow:0 9px 32px #000d;pointer-events:none}
+.fortnite-weapon-card:hover .fortnite-ammo-tooltip,.fortnite-weapon-card:focus-within .fortnite-ammo-tooltip,.fortnite-weapon-card.show-ammo-tip .fortnite-ammo-tooltip{transform:translateY(0) translateX(-50%)}
+.fortnite-ammo-tooltip>img{width:90px;height:90px;flex:0 0 90px;max-height:none;object-fit:contain}
+.fortnite-ammo-tooltip>div>span{font-size:17px}
+.fortnite-weapon-image>span{z-index:1;right:auto;left:9px;bottom:9px}
+.fortnite-ammo-toggle{z-index:2}
+@media(max-width:620px){.fortnite-weapon-card{min-height:285px}.fortnite-weapon-image{flex-basis:210px;height:210px}.fortnite-ammo-tooltip{height:100px}.fortnite-ammo-tooltip>img{width:74px;height:74px;flex-basis:74px}}
