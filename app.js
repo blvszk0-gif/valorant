@@ -299,9 +299,78 @@ function renderPractice() {
   root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> POWTÓRKA W FORMIE GRY</div><h1>ZGADNIJ, <em>KTO TO?</em></h1><p>Krótki trening w stylu zgadywanki: portret agenta, ikonka umiejętności, odznaka rangi, broń, pojęcia ze słowniczka albo przypisanie do roli. Każde pytanie ma cztery odpowiedzi.</p></section><div class="practice-grid"><article class="practice-card"><div class="practice-symbol portrait-practice"><img src="${esc(agents.find(a=>a.name==='Sova')?.portrait || agents[0].portrait)}" alt=""></div><div class="eyebrow small"><span></span> ROZPOZNAWANIE</div><h2>Kto to <em>jest?</em></h2><p>Rozpoznaj agentów po ich portretach. 10 pytań, cztery odpowiedzi.</p><button class="primary-button" data-quiz="portrait">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol skill-practice"><img src="${esc(agents.flatMap(a=>a.abilities).find(x=>x.icon)?.icon || '')}" alt=""></div><div class="eyebrow small"><span></span> IKONY UMIEJĘTNOŚCI</div><h2>Czyja to <em>umiejętność?</em></h2><p>Spójrz na ikonkę i wybierz agenta, do którego należy.</p><button class="primary-button" data-quiz="ability">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol roles-practice"><div>4</div></div><div class="eyebrow small"><span></span> ROLE AGENTÓW</div><h2>Jaka to <em>rola?</em></h2><p>Wskaż rolę agenta na podstawie jego portretu.</p><button class="primary-button" data-quiz="role">ZAGRAJ <span>↗</span></button></article><article class="practice-card map-practice-card"><div class="practice-symbol map-practice-symbol"><span>MAPY</span><b>A</b><b>B</b></div><div class="eyebrow small"><span></span> SPRAWDŹ SIĘ</div><h2>Callouty <em>map.</em></h2><p>Uzupełnij puste punkty z pamięci i sprawdź wynik. Każda runda losuje kolejne miejsca.</p><button class="primary-button" data-go="map-practice">WYBIERZ MAPĘ <span>↗</span></button></article><article class="practice-card weapon-practice-card"><div class="practice-symbol weapon-practice-symbol"><span>ARSENAŁ</span><b>V</b></div><div class="eyebrow small"><span></span> ROZPOZNAWANIE</div><h2>Jaka to <em>broń?</em></h2><p>Rozpoznaj broń na obrazku i wybierz jej nazwę spośród czterech odpowiedzi.</p><button class="primary-button" data-quiz="weapon">ZAGRAJ <span>↗</span></button></article><article class="practice-card glossary-practice-card"><div class="practice-symbol glossary-practice-symbol"><span>GG</span><b>ABC</b></div><div class="eyebrow small"><span></span> SŁOWNICZEK</div><h2>Co to za <em>pojęcie?</em></h2><p>Przeczytaj definicję i wybierz pasujące hasło spośród czterech odpowiedzi.</p><button class="primary-button" data-quiz="glossary">ZAGRAJ <span>↗</span></button></article><article class="practice-card rank-practice-card"><div class="practice-symbol rank-practice-symbol"><span>RANK</span><b>★</b></div><div class="eyebrow small"><span></span> ODCZYTYWANIE ODZNAK</div><h2>Jaka to <em>ranga?</em></h2><p>Najpierw poznaj stopnie i zasady RR, potem sprawdź pamięć w quizie.</p><button class="secondary-button rank-study-button" data-go="ranks">POZNAJ RANGI</button><button class="primary-button" data-quiz="rank">ZAGRAJ <span>↗</span></button></article></div><p class="practice-footnote">Postęp lekcji zapisuje się w tej przeglądarce na tym urządzeniu.</p>`;
   bindScreenActions();
 }
+function renderLeagueHub() {
+  const game = window.EXTRA_GAME_COURSES['league-of-legends'];
+  const course = window.LEAGUE_COURSE;
+  activeScreen = 'game-hub';
+  document.querySelector('#crumb').textContent = 'LEAGUE OF LEGENDS / NAUKA';
+  const lessonCards = course.sections.map((section,index) => `<article class="league-lesson-card"><div class="league-lesson-art league-art-${esc(section.id)}"><span>${String(index+1).padStart(2,'0')}</span><b>${esc(section.label.split('·')[1].trim())}</b></div><div class="league-lesson-copy"><div class="eyebrow small"><span></span> ${esc(section.label)}</div><h3>${esc(section.title)}</h3><p>${esc(section.summary)}</p><button class="primary-button" data-go="league-${esc(section.id)}">OTWÓRZ LEKCJĘ <span>↗</span></button><button class="secondary-button" data-quiz="league-of-legends-lesson-${esc(section.id)}">QUIZ Z LEKCJI ↗</button></div></article>`).join('');
+  root.innerHTML = `<section class="game-course-page league-course-page" data-game-course="league-of-legends"><section class="game-course-hero"><div class="game-course-mark league-course-mark">LEAGUE<br>OF LEGENDS</div><div class="game-course-copy"><div class="eyebrow"><span></span> SUMMONER’S RIFT · KURS PODSTAW</div><h1>POZNAJ <em>LEAGUE OF LEGENDS.</em></h1><p>Od wyboru pozycji i championa po cele mapy, ranked, sklepy, trening i język gry. Ucz się po kolei albo sprawdź się w quizie.</p><button class="primary-button" data-quiz="league-of-legends">QUIZ OGÓLNY · ${course.sections.reduce((n,section)=>n+course.quizzes[section.id].length,0)} PYTAŃ <span>↗</span></button></div></section><section class="game-learning-section"><div class="section-head"><div><div class="eyebrow small"><span></span> ŚCIEŻKA NAUKI</div><h2>Od podstaw do <em>samodzielnej gry.</em></h2></div><span class="section-count">08 LEKCJI</span></div><div class="league-lesson-grid">${lessonCards}</div></section><section class="game-quiz-callout league-general-quiz"><div><div class="eyebrow small"><span></span> QUIZ OGÓLNY</div><h2>Sprawdź wiedzę <em>z całego kursu.</em></h2><p>Pytania z ról, championów, mapy, rang, sklepów, treningu i słownika.</p></div><button class="primary-button" data-quiz="league-of-legends">ROZPOCZNIJ QUIZ <span>↗</span></button></section><p class="game-source-list">Źródła Riot: ${course.sources.map(([label,url])=>`<a href="${esc(url)}" target="_blank" rel="noreferrer">${esc(label)} ↗</a>`).join(' · ')}</p></section>`;
+  bindScreenActions();
+}
+function renderLeagueLesson(id) {
+  const game = window.EXTRA_GAME_COURSES['league-of-legends'];
+  const course = window.LEAGUE_COURSE;
+  const section = course.sections.find(item => item.id === id);
+  if (!section) return switchGame('league-of-legends');
+  activeScreen = `league-${id}`;
+  updateNav(activeScreen);
+  let special = '';
+  if (id === 'map') special = `<div class="league-map-lanes"><div><b>TOP</b><span>Górna aleja</span></div><div><b>JUNGLE</b><span>Obozy · rzeka · cele</span></div><div><b>MID</b><span>Środkowa aleja</span></div><div><b>BOT</b><span>ADC + Support</span></div><div class="league-map-goal"><b>NEXUS</b><span>Zniszcz bazę przeciwnika</span></div></div>`;
+  if (id === 'champions') special = `<div class="league-champion-tools"><label><span>⌕</span><input id="league-champion-search" type="search" placeholder="Szukaj championa…" aria-label="Szukaj championa"></label><select id="league-champion-filter" aria-label="Filtruj klasy"><option value="">Wszystkie klasy</option><option>Fighter</option><option>Mage</option><option>Assassin</option><option>Marksman</option><option>Tank</option><option>Support</option></select><span id="league-champion-count" aria-live="polite">Ładowanie katalogu…</span></div><div class="league-champion-grid" id="league-champion-grid"></div>`;
+  if (id === 'ranks') special = `<div class="league-rank-grid">${[['IRON','Żelazo','#aa7358'],['BRONZE','Brąz','#c77b50'],['SILVER','Srebro','#a8b8c5'],['GOLD','Złoto','#e8c75a'],['PLATINUM','Platyna','#64d5c4'],['EMERALD','Szmaragd','#56c77d'],['DIAMOND','Diament','#65bbff'],['MASTER','Mistrz','#bd6be8'],['GRANDMASTER','Arcymistrz','#f16c66'],['CHALLENGER','Pretendent','#f5dd86']].map(([name,pl,color],index)=>`<article style="--rank-color:${color}"><span>${String(index+1).padStart(2,'0')}</span><b>${name}</b><small>${pl}</small><p>${index<7?'Dywizje IV · III · II · I':'Liga Apex · LP i pozycja w regionie'}</p></article>`).join('')}</div>`;
+  if (id === 'glossary') special = `<div class="league-glossary-tools"><label><span>⌕</span><input id="league-glossary-search" type="search" placeholder="Szukaj pojęcia lub objaśnienia…" aria-label="Szukaj w słowniku League"></label><span id="league-glossary-count"></span></div><div class="league-glossary-grid" id="league-glossary-grid"></div>`;
+  const cards = section.blocks.map(([title,body],index)=>`<article class="league-info-card"><span>${String(index+1).padStart(2,'0')}</span><h3>${esc(title)}</h3><p>${esc(body)}</p></article>`).join('');
+  const sources = course.sources.slice(0, id==='ranks'?3:course.sources.length).map(([label,url])=>`<a href="${esc(url)}" target="_blank" rel="noreferrer">${esc(label)} ↗</a>`).join(' · ');
+  root.innerHTML = `<section class="game-course-page league-course-page league-lesson-page"><button class="secondary-button league-back-button" data-return-league>← WRÓĆ DO KURSU LEAGUE OF LEGENDS</button><section class="page-intro"><div class="eyebrow"><span></span> LEAGUE OF LEGENDS · ${esc(section.label)}</div><h1>${esc(section.title).toLocaleUpperCase('pl')}</h1><p>${esc(section.summary)}</p></section><div class="league-info-grid">${cards}</div>${special}<section class="league-lesson-check"><div><div class="eyebrow small"><span></span> UTRWAL WIEDZĘ</div><h2>Gotowa na <em>quiz?</em></h2><p>Krótki zestaw pytań z tej lekcji. Każde pytanie ma cztery odpowiedzi.</p></div><button class="primary-button" data-quiz="league-of-legends-lesson-${esc(section.id)}">QUIZ: ${esc(section.title.toLocaleUpperCase('pl'))} ↗</button></section><p class="game-source-list">${sources}</p></section>`;
+  bindScreenActions();
+  if (id === 'champions') loadLeagueChampionCatalog();
+  if (id === 'glossary') bindLeagueGlossary();
+}
+async function loadLeagueChampionCatalog() {
+  const grid = root.querySelector('#league-champion-grid');
+  if (!grid) return;
+  const search = root.querySelector('#league-champion-search');
+  const filter = root.querySelector('#league-champion-filter');
+  const count = root.querySelector('#league-champion-count');
+  try {
+    const versions = await fetch('https://ddragon.leagueoflegends.com/api/versions.json').then(response => { if (!response.ok) throw new Error('versions'); return response.json(); });
+    const version = versions[0];
+    const data = await fetch(`https://ddragon.leagueoflegends.com/cdn/${version}/data/pl_PL/champion.json`).then(response => { if (!response.ok) throw new Error('champions'); return response.json(); });
+    const champions = Object.values(data.data);
+    const render = () => {
+      const query = search.value.trim().toLocaleLowerCase('pl');
+      const tag = filter.value;
+      const shown = champions.filter(champion => (!query || `${champion.name} ${champion.title} ${champion.blurb}`.toLocaleLowerCase('pl').includes(query)) && (!tag || champion.tags.includes(tag)));
+      count.textContent = `${shown.length} / ${champions.length} championów · Data Dragon ${version}`;
+      grid.innerHTML = shown.map(champion => `<article class="league-champion-card"><img src="https://ddragon.leagueoflegends.com/cdn/${esc(version)}/img/champion/${esc(champion.image.full)}" alt="Portret: ${esc(champion.name)}" loading="lazy"><div><h3>${esc(champion.name)}</h3><span>${esc(champion.title)}</span><small>${champion.tags.map(esc).join(' · ')}</small><p>${esc(champion.blurb)}</p></div></article>`).join('') || '<p class="league-empty-state">Nie znaleziono championa. Zmień wyszukiwanie lub filtr.</p>';
+    };
+    search.addEventListener('input', render);
+    filter.addEventListener('change', render);
+    render();
+  } catch (error) {
+    count.textContent = 'Nie udało się pobrać aktualnego katalogu.';
+    grid.innerHTML = '<a class="league-empty-state" href="https://www.leagueoflegends.com/en-us/champions/" target="_blank" rel="noreferrer">Otwórz oficjalną listę championów Riot ↗</a>';
+  }
+}
+function bindLeagueGlossary() {
+  const input = root.querySelector('#league-glossary-search');
+  const grid = root.querySelector('#league-glossary-grid');
+  const count = root.querySelector('#league-glossary-count');
+  const terms = window.LEAGUE_COURSE.glossary;
+  const render = () => {
+    const query = input.value.trim().toLocaleLowerCase('pl');
+    const shown = terms.filter(([term,translation,definition])=>`${term} ${translation} ${definition}`.toLocaleLowerCase('pl').includes(query));
+    count.textContent = `${shown.length} / ${terms.length} pojęć`;
+    grid.innerHTML = shown.map(([term,translation,definition])=>`<article><div><b>${esc(term)}</b><span>${esc(translation)}</span></div><p>${esc(definition)}</p></article>`).join('') || '<p class="league-empty-state">Brak wyników.</p>';
+  };
+  input.addEventListener('input',render);
+  render();
+}
 function renderGameHub(gameId) {
   const game = window.EXTRA_GAME_COURSES?.[gameId];
   if (!game) return;
+  if (gameId === 'league-of-legends' && window.LEAGUE_COURSE) return renderLeagueHub();
   activeScreen = 'game-hub';
   document.querySelector('#crumb').textContent = `${game.name.toLocaleUpperCase('pl')} / NAUKA`;
   const quizLength = game.generalQuiz?.length || Math.min(10, game.questions.length);
@@ -680,6 +749,7 @@ function renderMapPuzzle(map) {
 function bindScreenActions() {
   root.querySelectorAll('[data-go]').forEach(button => button.addEventListener('click', () => showScreen(button.dataset.go)));
   root.querySelectorAll('[data-return-fortnite]').forEach(button => button.addEventListener('click', () => switchGame('fortnite')));
+  root.querySelectorAll('[data-return-league]').forEach(button => button.addEventListener('click', () => switchGame('league-of-legends')));
   root.querySelectorAll('img[data-fortnite-fallback]').forEach(image => image.addEventListener('error', () => {
     if (image.dataset.fallbackUsed) return;
     image.dataset.fallbackUsed = '1';
@@ -740,6 +810,7 @@ function showScreen(screen) {
   if (screen === 'fortnite-modes') { renderFortniteModesLesson(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
   if (screen === 'fortnite-gameplay') { renderFortniteGameplayLesson(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
   if (screen === 'fortnite-lore') { renderFortniteLoreLesson(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+  if (screen.startsWith('league-') && screen !== 'league-of-legends') { renderLeagueLesson(screen.slice('league-'.length)); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
   updateNav(screen);
   if (screen === 'roles') renderRoles();
   else if (screen === 'agents') renderAgents();
@@ -842,6 +913,11 @@ async function startQuiz(type) {
     const lesson = fortniteCourse.lessons[lessonIndex];
     const lessonQuestions = fortniteCourse.lessonQuizzes?.[['weapons','cosmetics','loot','modes','gameplay','lore'][lessonIndex]];
     if (lesson && lessonQuestions?.length) questions = makeExtraGameQuestions(fortniteCourse, lessonQuestions);
+  } else if (type.startsWith('league-of-legends-lesson-')) {
+    const lessonId = type.slice('league-of-legends-lesson-'.length);
+    const course = window.LEAGUE_COURSE;
+    const lessonQuestions = course?.quizzes?.[lessonId];
+    if (lessonQuestions?.length) questions = makeExtraGameQuestions(null, lessonQuestions.map(([prompt,options,correct,why])=>({prompt,options,correct,why})));
   }
   if (type === 'weapon') {
     try {
@@ -866,7 +942,8 @@ async function startQuiz(type) {
   const labels = { role: ['QUIZ · ROLE', 'Dopasuj agenta do roli', 'role'], ability: ['QUIZ · UMIEJĘTNOŚCI', 'Czyja to umiejętność?', 'agents'], portrait: ['TRENING · PORTRETY', 'Rozpoznaj agenta', null], weapon: ['QUIZ · ARSENAŁ', 'Rozpoznaj broń', null], rank: ['QUIZ · RANGI', 'Rozpoznaj rangę', 'ranks'] };
   const gameLabels = Object.fromEntries(Object.entries(window.EXTRA_GAME_COURSES || {}).map(([id,game]) => [id, [`QUIZ OGÓLNY · ${game.name.toLocaleUpperCase('pl')}`, `Cały kurs: ${game.name}`, null]]));
   const fortniteLessonLabels = Object.fromEntries((fortniteCourse?.lessons || []).map((lesson,index) => [`fortnite-lesson-${index}`, [`QUIZ · LEKCJA ${String(index+1).padStart(2,'0')}`, lesson.title, null]]));
-  const allLabels = { ...labels, ...gameLabels, ...fortniteLessonLabels, glossary: ['QUIZ · SŁOWNICZEK', 'Rozpoznaj pojęcie', null], 'fortnite-glossary': ['QUIZ · SŁOWNICZEK FORTNITE', 'Rozpoznaj pojęcie', null] };
+  const leagueLessonLabels = Object.fromEntries((window.LEAGUE_COURSE?.sections || []).map(section => [`league-of-legends-lesson-${section.id}`, [`QUIZ · ${section.label}`, section.title, null]]));
+  const allLabels = { ...labels, ...gameLabels, ...fortniteLessonLabels, ...leagueLessonLabels, glossary: ['QUIZ · SŁOWNICZEK', 'Rozpoznaj pojęcie', null], 'fortnite-glossary': ['QUIZ · SŁOWNICZEK FORTNITE', 'Rozpoznaj pojęcie', null] };
   const [label,title,progressId] = allLabels[type] || labels.role;
   activeQuiz = { type, progressId };
   questionSet = questions || makeQuestions(type); questionIndex = 0; score = 0; selectedAnswer = null; answered = false;
