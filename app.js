@@ -315,13 +315,14 @@ function fortniteIllustration(kind) {
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }
 function fortniteWikiImage(file) {
-  const paths = {
-    'Light Bullets - Ammo - Fortnite.png': ['f/ff', 'Light_Bullets_-_Ammo_-_Fortnite.png'],
-    'Shells - Ammo - Fortnite.png': ['2/27', 'Shells_-_Ammo_-_Fortnite.png'],
-    'Heavy Bullets - Ammo - Fortnite.png': ['f/fd', 'Heavy_Bullets_-_Ammo_-_Fortnite.png']
+  const images = {
+    'Light Bullets - Ammo - Fortnite.png': 'https://static.wikia.nocookie.net/fortnite/images/f/ff/Light_Bullets_-_Ammo_-_Fortnite.png/revision/latest/scale-to-width-down/75?cb=20201221213909',
+    'Medium Bullets - Ammo - Fortnite.png': 'https://static.wikia.nocookie.net/fortnite/images/b/be/Medium_Bullets_-_Ammo_-_Fortnite.png/revision/latest/scale-to-width-down/75?cb=20201221213737',
+    'Heavy Bullets - Ammo - Fortnite.png': 'https://static.wikia.nocookie.net/fortnite/images/f/fd/Heavy_Bullets_-_Ammo_-_Fortnite.png/revision/latest/scale-to-width-down/75?cb=20201221213908',
+    'Shells - Ammo - Fortnite.png': 'https://static.wikia.nocookie.net/fortnite/images/2/27/Shells_-_Ammo_-_Fortnite.png/revision/latest/scale-to-width-down/75?cb=20201221213912',
+    'Rockets - Ammo - Fortnite.png': 'https://static.wikia.nocookie.net/fortnite/images/c/cd/Rockets_-_Ammo_-_Fortnite.png/revision/latest/scale-to-width-down/75?cb=20201221213910'
   };
-  const entry = paths[file];
-  return entry ? `https://static.wikia.nocookie.net/fortnite/images/${entry[0]}/${entry[1]}/revision/latest` : '';
+  return images[file] || '';
 }
 function renderFortniteWeaponsLesson() {
   const game = window.EXTRA_GAME_COURSES?.fortnite;
@@ -330,7 +331,7 @@ function renderFortniteWeaponsLesson() {
   document.querySelector('#crumb').textContent = 'FORTNITE / BROŃ I EKWIPUNEK';
   navButtons.forEach(button => button.classList.remove('active'));
   const weapons = [
-    { name: 'Assault Rifle', type: 'Karabin szturmowy · uniwersalny dystans', ammo: 'Średnie naboje', ammoUrl: 'https://static.wikia.nocookie.net/fortnite/images/b/be/Medium_Bullets_-_Ammo_-_Fortnite.png/revision/latest?cb=20201221213737', ammoArt: 'ammo-medium', image: 'rifle', fallback: true, url: 'https://fortnite.gg/img/weapons/t-icon-weapons-assaultriflemark2tt-l.webp' },
+    { name: 'Assault Rifle', type: 'Karabin szturmowy · uniwersalny dystans', ammo: 'Średnie naboje', ammoFile: 'Medium Bullets - Ammo - Fortnite.png', ammoArt: 'ammo-medium', image: 'rifle', fallback: true, url: 'https://fortnite.gg/img/weapons/t-icon-weapons-assaultriflemark2tt-l.webp' },
     { name: 'Submachine Gun (SMG)', type: 'Pistolet maszynowy · bliski dystans', ammo: 'Lekkie naboje', ammoFile: 'Light Bullets - Ammo - Fortnite.png', ammoArt: 'ammo-light', image: 'smg', fallback: true, url: 'https://fortnite.gg/img/weapons/t_icon_weapons_rifle_bonerattler_ui_l.webp' },
     { name: 'Pistol', type: 'Pistolet · broń krótka', ammo: 'Lekkie naboje*', ammoFile: 'Light Bullets - Ammo - Fortnite.png', ammoArt: 'ammo-light', image: 'pistol', fallback: true, url: 'https://fortnite.gg/img/weapons/t-icon-weapons-cores23pistol-l.webp' },
     { name: 'Pump Shotgun', type: 'Strzelba · bardzo bliski dystans', ammo: 'Naboje do strzelby', ammoFile: 'Shells - Ammo - Fortnite.png', ammoArt: 'ammo-shells', image: 'shotgun', fallback: true, url: 'https://fortnite.gg/img/weapons/t-icon-weapons-pumpshotgunmark2base-l.webp' },
