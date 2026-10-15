@@ -40,6 +40,7 @@ let selectedMapTile = null;
 let mapPuzzleChecked = false;
 let mapCatalogPromise;
 let weaponCatalogPromise;
+let rankCatalogPromise;
 let abilityEnglishNamesPromise;
 let activeMap = null;
 let activeMapRound = [];
@@ -208,6 +209,18 @@ async function loadWeaponCatalog() {
     .catch(error => { weaponCatalogPromise = null; throw error; });
   return weaponCatalogPromise;
 }
+async function loadRankCatalog() {
+  if (!rankCatalogPromise) rankCatalogPromise = fetch('https://valorant-api.com/v1/competitivetiers?language=en-US')
+    .then(response => { if (!response.ok) throw new Error('Nie udało się pobrać rang.'); return response.json(); })
+    .then(payload => {
+      const sets = payload.data || [];
+      const latest = sets[sets.length - 1]?.tiers || [];
+      return latest.filter(tier => tier.tierName && !['Unused', 'Unranked'].includes(tier.tierName) && (tier.largeIcon || tier.smallIcon))
+        .map(tier => ({ id: String(tier.tier), name: tier.tierName, image: tier.largeIcon || tier.smallIcon }));
+    })
+    .catch(error => { rankCatalogPromise = null; throw error; });
+  return rankCatalogPromise;
+}
 async function renderWeapons() {
   updateNav('weapons');
   root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> ATLAS SPRZĘTU</div><h1>ARSENAŁ <em>VALORANTA.</em></h1><p>Przejrzyj obrazki broni i ich nazwy, a potem sprawdź się w quizie rozpoznawania.</p></section><p class="map-loading">Ładowanie broni…</p>`;
@@ -251,7 +264,7 @@ function showWeaponDetails(weapon) {
   dialog.showModal();
 }
 function renderPractice() {
-  root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> POWTÓRKA W FORMIE GRY</div><h1>ZGADNIJ, <em>KTO TO?</em></h1><p>Krótki trening w stylu zgadywanki: portret agenta, ikonka umiejętności, broń, pojęcia ze słowniczka albo przypisanie do roli. Każde pytanie ma cztery odpowiedzi.</p></section><div class="practice-grid"><article class="practice-card"><div class="practice-symbol portrait-practice"><img src="${esc(agents.find(a=>a.name==='Sova')?.portrait || agents[0].portrait)}" alt=""></div><div class="eyebrow small"><span></span> ROZPOZNAWANIE</div><h2>Kto to <em>jest?</em></h2><p>Rozpoznaj agentów po ich portretach. 10 pytań, cztery odpowiedzi.</p><button class="primary-button" data-quiz="portrait">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol skill-practice"><img src="${esc(agents.flatMap(a=>a.abilities).find(x=>x.icon)?.icon || '')}" alt=""></div><div class="eyebrow small"><span></span> IKONY UMIEJĘTNOŚCI</div><h2>Czyja to <em>umiejętność?</em></h2><p>Spójrz na ikonkę i wybierz agenta, do którego należy.</p><button class="primary-button" data-quiz="ability">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol roles-practice"><div>4</div></div><div class="eyebrow small"><span></span> ROLE AGENTÓW</div><h2>Jaka to <em>rola?</em></h2><p>Wskaż rolę agenta na podstawie jego portretu.</p><button class="primary-button" data-quiz="role">ZAGRAJ <span>↗</span></button></article><article class="practice-card map-practice-card"><div class="practice-symbol map-practice-symbol"><span>MAPY</span><b>A</b><b>B</b></div><div class="eyebrow small"><span></span> SPRAWDŹ SIĘ</div><h2>Callouty <em>map.</em></h2><p>Uzupełnij puste punkty z pamięci i sprawdź wynik. Każda runda losuje kolejne miejsca.</p><button class="primary-button" data-go="map-practice">WYBIERZ MAPĘ <span>↗</span></button></article><article class="practice-card weapon-practice-card"><div class="practice-symbol weapon-practice-symbol"><span>ARSENAŁ</span><b>V</b></div><div class="eyebrow small"><span></span> ROZPOZNAWANIE</div><h2>Jaka to <em>broń?</em></h2><p>Rozpoznaj broń na obrazku i wybierz jej nazwę spośród czterech odpowiedzi.</p><button class="primary-button" data-quiz="weapon">ZAGRAJ <span>↗</span></button></article><article class="practice-card glossary-practice-card"><div class="practice-symbol glossary-practice-symbol"><span>GG</span><b>ABC</b></div><div class="eyebrow small"><span></span> SŁOWNICZEK</div><h2>Co to za <em>pojęcie?</em></h2><p>Przeczytaj definicję i wybierz pasujące hasło spośród czterech odpowiedzi.</p><button class="primary-button" data-quiz="glossary">ZAGRAJ <span>↗</span></button></article></div><p class="practice-footnote">Postęp lekcji zapisuje się w tej przeglądarce na tym urządzeniu.</p>`;
+  root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> POWTÓRKA W FORMIE GRY</div><h1>ZGADNIJ, <em>KTO TO?</em></h1><p>Krótki trening w stylu zgadywanki: portret agenta, ikonka umiejętności, odznaka rangi, broń, pojęcia ze słowniczka albo przypisanie do roli. Każde pytanie ma cztery odpowiedzi.</p></section><div class="practice-grid"><article class="practice-card"><div class="practice-symbol portrait-practice"><img src="${esc(agents.find(a=>a.name==='Sova')?.portrait || agents[0].portrait)}" alt=""></div><div class="eyebrow small"><span></span> ROZPOZNAWANIE</div><h2>Kto to <em>jest?</em></h2><p>Rozpoznaj agentów po ich portretach. 10 pytań, cztery odpowiedzi.</p><button class="primary-button" data-quiz="portrait">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol skill-practice"><img src="${esc(agents.flatMap(a=>a.abilities).find(x=>x.icon)?.icon || '')}" alt=""></div><div class="eyebrow small"><span></span> IKONY UMIEJĘTNOŚCI</div><h2>Czyja to <em>umiejętność?</em></h2><p>Spójrz na ikonkę i wybierz agenta, do którego należy.</p><button class="primary-button" data-quiz="ability">ZAGRAJ <span>↗</span></button></article><article class="practice-card"><div class="practice-symbol roles-practice"><div>4</div></div><div class="eyebrow small"><span></span> ROLE AGENTÓW</div><h2>Jaka to <em>rola?</em></h2><p>Wskaż rolę agenta na podstawie jego portretu.</p><button class="primary-button" data-quiz="role">ZAGRAJ <span>↗</span></button></article><article class="practice-card map-practice-card"><div class="practice-symbol map-practice-symbol"><span>MAPY</span><b>A</b><b>B</b></div><div class="eyebrow small"><span></span> SPRAWDŹ SIĘ</div><h2>Callouty <em>map.</em></h2><p>Uzupełnij puste punkty z pamięci i sprawdź wynik. Każda runda losuje kolejne miejsca.</p><button class="primary-button" data-go="map-practice">WYBIERZ MAPĘ <span>↗</span></button></article><article class="practice-card weapon-practice-card"><div class="practice-symbol weapon-practice-symbol"><span>ARSENAŁ</span><b>V</b></div><div class="eyebrow small"><span></span> ROZPOZNAWANIE</div><h2>Jaka to <em>broń?</em></h2><p>Rozpoznaj broń na obrazku i wybierz jej nazwę spośród czterech odpowiedzi.</p><button class="primary-button" data-quiz="weapon">ZAGRAJ <span>↗</span></button></article><article class="practice-card glossary-practice-card"><div class="practice-symbol glossary-practice-symbol"><span>GG</span><b>ABC</b></div><div class="eyebrow small"><span></span> SŁOWNICZEK</div><h2>Co to za <em>pojęcie?</em></h2><p>Przeczytaj definicję i wybierz pasujące hasło spośród czterech odpowiedzi.</p><button class="primary-button" data-quiz="glossary">ZAGRAJ <span>↗</span></button></article><article class="practice-card rank-practice-card"><div class="practice-symbol rank-practice-symbol"><span>RANK</span><b>★</b></div><div class="eyebrow small"><span></span> ODCZYTYWANIE ODZNAK</div><h2>Jaka to <em>ranga?</em></h2><p>Rozpoznaj rangę po ikonie i wybierz jej nazwę spośród czterech odpowiedzi.</p><button class="primary-button" data-quiz="rank">ZAGRAJ <span>↗</span></button></article></div><p class="practice-footnote">Postęp lekcji zapisuje się w tej przeglądarce na tym urządzeniu.</p>`;
   bindScreenActions();
 }
 async function loadMapCatalog() {
@@ -463,6 +476,13 @@ function makeWeaponQuestions(weapons) {
     return { prompt: 'Jak nazywa się ta broń?', image: weapon.image, alt: `Obraz broni ${weapon.name}`, options, correct: options.indexOf(weapon.name), why: `${weapon.name} · ${weapon.category}.` };
   });
 }
+function makeRankQuestions(ranks) {
+  return shuffle(ranks).slice(0, Math.min(10, ranks.length)).map(rank => {
+    const wrong = shuffle(ranks.filter(item => item.id !== rank.id)).slice(0, 3).map(item => item.name);
+    const options = shuffle([rank.name, ...wrong]);
+    return { prompt: 'Jak nazywa się ta ranga?', image: rank.image, alt: `Odznaka rangi ${rank.name}`, options, correct: options.indexOf(rank.name), why: `To ${rank.name}.` };
+  });
+}
 async function startQuiz(type) {
   let questions;
   if (type === 'weapon') {
@@ -473,11 +493,19 @@ async function startQuiz(type) {
     }
     catch (error) { showToast('Nie udało się załadować broni. Sprawdź połączenie z internetem i spróbuj ponownie.'); return; }
   }
+  if (type === 'rank') {
+    try {
+      const ranks = await loadRankCatalog();
+      if (ranks.length < 4) { showToast('Brakuje danych rang do przygotowania quizu.'); return; }
+      questions = makeRankQuestions(ranks);
+    }
+    catch (error) { showToast('Nie udało się załadować rang. Sprawdź połączenie z internetem i spróbuj ponownie.'); return; }
+  }
   if (type === 'glossary') {
     try { applyAbilityEnglishNames(await loadAbilityEnglishNames()); } catch (error) { /* Keep the Polish names available if the API is offline. */ }
   }
   const dialog = document.querySelector('#quiz-dialog');
-  const labels = { role: ['QUIZ · ROLE', 'Dopasuj agenta do roli', 'role'], ability: ['QUIZ · UMIEJĘTNOŚCI', 'Czyja to umiejętność?', 'agents'], portrait: ['TRENING · PORTRETY', 'Rozpoznaj agenta', null], weapon: ['QUIZ · ARSENAŁ', 'Rozpoznaj broń', null] };
+  const labels = { role: ['QUIZ · ROLE', 'Dopasuj agenta do roli', 'role'], ability: ['QUIZ · UMIEJĘTNOŚCI', 'Czyja to umiejętność?', 'agents'], portrait: ['TRENING · PORTRETY', 'Rozpoznaj agenta', null], weapon: ['QUIZ · ARSENAŁ', 'Rozpoznaj broń', null], rank: ['QUIZ · RANGI', 'Rozpoznaj rangę', null] };
   const allLabels = { ...labels, glossary: ['QUIZ · SŁOWNICZEK', 'Rozpoznaj pojęcie', null] };
   const [label,title,progressId] = allLabels[type] || labels.role;
   activeQuiz = { type, progressId };
@@ -499,7 +527,7 @@ function renderQuestion() {
     ? `<div class="question-art question-definition">${esc(question.definition)}</div>`
     : question.videoId
     ? `<div class="question-art question-video-art"><iframe src="https://drive.google.com/file/d/${encodeURIComponent(question.videoId)}/preview" title="${esc(question.alt)}" loading="lazy" allow="autoplay; fullscreen" allowfullscreen></iframe></div>`
-    : `<div class="question-art ${activeQuiz.type === 'ability' ? 'question-icon-art' : ''} ${activeQuiz.type === 'weapon' ? 'question-weapon-art' : ''}"><img src="${esc(question.image)}" alt="${esc(question.alt)}"></div>`;
+    : `<div class="question-art ${activeQuiz.type === 'ability' ? 'question-icon-art' : ''} ${activeQuiz.type === 'weapon' ? 'question-weapon-art' : ''} ${activeQuiz.type === 'rank' ? 'question-rank-art' : ''}"><img src="${esc(question.image)}" alt="${esc(question.alt)}"></div>`;
   document.querySelector('#quiz-media').innerHTML = quizMedia;
   document.querySelector('#quiz-feedback').textContent = '';
   const options = document.querySelector('#quiz-options');
