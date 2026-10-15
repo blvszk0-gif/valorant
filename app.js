@@ -380,7 +380,10 @@ function renderFortniteLootLesson() {
     ['Cegła / kamień', 'Pozyskiwana z kamiennych obiektów. Daje kompromis między szybkością budowania a wytrzymałością.', images.brick],
     ['Metal', 'Zbierany z metalowych obiektów. Konstrukcje powstają wolniej, ale po zbudowaniu są wytrzymałe.', images.metal]
   ];
-  const imageCard = ([title,description,url],index,type) => `<article class="fortnite-info-card"><div class="fortnite-loot-art" data-fallback="${esc(title)}"><img data-loot-art src="${esc(url)}" alt="${esc(title)} — grafika Fortnite" referrerpolicy="no-referrer" loading="lazy"><span>${esc(title)}</span></div><span class="fortnite-info-number">${String(index+1).padStart(2,'0')} · ${type}</span><h3>${esc(title)}</h3><p>${esc(description)}</p></article>`;
+  const imageCard = ([title,description,url],index,type) => {
+    const thumbnailUrl = url.replace('/revision/latest?', '/revision/latest/scale-to-width-down/400?');
+    return `<article class="fortnite-info-card"><div class="fortnite-loot-art" data-fallback="${esc(title)}"><img data-loot-art src="${esc(thumbnailUrl)}" alt="${esc(title)} — grafika Fortnite" referrerpolicy="no-referrer" loading="lazy" decoding="async"><span>${esc(title)}</span></div><span class="fortnite-info-number">${String(index+1).padStart(2,'0')} · ${type}</span><h3>${esc(title)}</h3><p>${esc(description)}</p></article>`;
+  };
   const rarities = [
     ['Zwykła · Common','#b8bec3','Szara. Podstawowa odmiana.'],
     ['Niepospolita · Uncommon','#65bd63','Zielona. Wyższy poziom niż zwykła.'],
@@ -642,9 +645,14 @@ function bindScreenActions() {
     image.remove();
   }, { once: true }));
   root.querySelectorAll('img[data-loot-art]').forEach(image => image.addEventListener('error', () => {
+    if (!image.dataset.retryWithoutCache && image.src.includes('?')) {
+      image.dataset.retryWithoutCache = '1';
+      image.src = image.src.split('?')[0];
+      return;
+    }
     image.closest('.fortnite-loot-art')?.classList.add('image-missing');
     image.remove();
-  }, { once: true }));
+  }));
   bindQuizButtons(root);
 }
 function bindQuizButtons(scope) {
