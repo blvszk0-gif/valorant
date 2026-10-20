@@ -7,6 +7,10 @@ let activeGame = 'valorant';
 const roles = ['Inicjator', 'Szturmowiec', 'Strażnik', 'Kontroler'];
 const roleEnglishNames = { Inicjator: 'Initiator', Szturmowiec: 'Duelist', Strażnik: 'Sentinel', Kontroler: 'Controller' };
 function roleDisplayName(role) { return `${role} / ${roleEnglishNames[role] || role}`; }
+const agentRelationships = {
+  Raze: 'Jest w związku z Killjoy. Ich relacja została potwierdzona w oficjalnej historii VALORANT.',
+  Killjoy: 'Jest w związku z Raze. Ich relacja została potwierdzona w oficjalnej historii VALORANT.'
+};
 const roleInfo = {
   'Inicjator': { icon: 'valorant_role_jpg/Inicjator_rola.jpg', examples: 'Sova · Gekko · Skye' },
   'Szturmowiec': { icon: 'valorant_role_jpg/Szturmowiec_rola.jpg', examples: 'Jett · Raze · Phoenix' },
@@ -88,7 +92,7 @@ function updateNav(screen) {
   activeScreen = screen;
   const navScreen = screen === 'map-practice' ? 'practice' : screen;
   navButtons.forEach(button => button.classList.toggle('active', button.dataset.nav === navScreen));
-  const names = { overview: 'START', roles: 'LEKCJA 1 / ROLE', agents: 'LEKCJA 2 / AGENCI', maps: 'LEKCJA 3 / MAPY', ranks: 'LEKCJA 4 / RANGI', weapons: 'ARSENAŁ', practice: 'TRENING', tactics: 'TAKTYKI', 'map-practice': 'TRENING / MAPY', extras: 'DODATKOWE LEKCJE', glossary: 'SŁOWNIK', 'fortnite-glossary': 'FORTNITE / SŁOWNIK', 'fortnite-lore': 'FORTNITE / HISTORIA' };
+  const names = { overview: 'START', roles: 'LEKCJA 1 / ROLE', agents: 'LEKCJA 2 / AGENCI', 'valorant-lore': 'HISTORIA VALORANT', maps: 'LEKCJA 3 / MAPY', ranks: 'LEKCJA 4 / RANGI', weapons: 'ARSENAŁ', practice: 'TRENING', tactics: 'TAKTYKI', 'map-practice': 'TRENING / MAPY', extras: 'DODATKOWE LEKCJE', glossary: 'SŁOWNIK', 'fortnite-glossary': 'FORTNITE / SŁOWNIK', 'fortnite-lore': 'FORTNITE / HISTORIA' };
   document.querySelector('#crumb').textContent = names[screen] || 'START';
 }
 function videoMarkup(path, title, poster = '') {
@@ -143,8 +147,9 @@ function renderAgentDetail() {
   const box = document.querySelector('#agent-detail');
   if (!box || !selectedAgent) return;
   const a = selectedAgent;
+  const relationship = agentRelationships[a.name] || 'Riot nie potwierdziło publicznie związku romantycznego tej agentki / tego agenta.';
   const skills = a.abilities.map(ability => `<article class="ability-card"><div class="ability-icon-wrap">${ability.icon ? `<img src="${esc(ability.icon)}" alt="Ikona ${esc(ability.name)}">` : '<span class="passive-icon">PASSIVE</span>'}</div><div><div class="ability-slot">${esc(slotName(ability.slot))}</div><h3>${esc(abilityDisplayName(ability))}</h3><p>${esc(ability.description)}</p></div></article>`).join('');
-  box.innerHTML = `<div class="agent-detail-head"><div><div class="eyebrow small"><span></span> ${esc(roleDisplayName(a.role))}</div><h2>${esc(a.name)}</h2><p>${esc(a.description)}</p></div><img class="agent-detail-portrait" src="${esc(a.portrait)}" alt="Portret agenta ${esc(a.name)}"></div><div class="agent-detail-video">${videoMarkup(a.video,`Lekcja agenta — ${a.name}`,a.portrait)}</div><div class="section-head ability-heading"><div><div class="eyebrow small"><span></span> ZESTAW UMIEJĘTNOŚCI</div><h2>Co potrafi <em>${esc(a.name)}?</em></h2></div><button class="secondary-button" data-quiz="ability">QUIZ UMIEJĘTNOŚCI ↗</button></div><div class="ability-grid">${skills}</div>`;
+  box.innerHTML = `<div class="agent-detail-head"><div><div class="eyebrow small"><span></span> ${esc(roleDisplayName(a.role))}</div><h2>${esc(a.name)}</h2><p>${esc(a.description)}</p><div class="agent-relationship"><b>ZWIĄZEK</b><span>${esc(relationship)}</span></div></div><img class="agent-detail-portrait" src="${esc(a.portrait)}" alt="Portret agenta ${esc(a.name)}"></div><div class="agent-detail-video">${videoMarkup(a.video,`Lekcja agenta — ${a.name}`,a.portrait)}</div><div class="section-head ability-heading"><div><div class="eyebrow small"><span></span> ZESTAW UMIEJĘTNOŚCI</div><h2>Co potrafi <em>${esc(a.name)}?</em></h2></div><button class="secondary-button" data-quiz="ability">QUIZ UMIEJĘTNOŚCI ↗</button></div><div class="ability-grid">${skills}</div>`;
   bindQuizButtons(box);
 }
 function slotName(slot) {
@@ -180,6 +185,11 @@ function renderAgents() {
 function renderExtras() {
   const groups = [...new Set(extraLessons.map(x => x.group))];
   root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> DODATKOWA NAUKA</div><h1>WIEDZA Z <em>ROZGRYWKI.</em></h1><p>Po rolach i agentach możesz przejść do zakupów, broni, interfejsu i przykładów gry na mapie.</p></section><div class="extras-groups">${groups.map(group => `<section class="extra-group"><div class="section-head"><div><div class="eyebrow small"><span></span> ${esc(group)}</div><h2>${group.includes('BRONIE') ? 'Broń i <em>pancerz.</em>' : 'Poznaj <em>mecz.</em>'}</h2></div><span class="section-count">${extraLessons.filter(x => x.group === group).length} NAGRAŃ</span></div><div class="extra-list">${extraLessons.filter(x => x.group === group).map(item => `<details class="extra-video-card"><summary><span class="extra-number">${esc(item.id)}</span><span class="extra-title"><b>${esc(item.title)}</b><small>${esc(item.note)}</small></span><span class="extra-play">▶</span></summary><div class="extra-player">${videoMarkup(`edytowane/${item.file}`,`${item.id} — ${item.title}`)}</div></details>`).join('')}</div></section>`).join('')}</div>`;
+}
+function renderValorantLore() {
+  updateNav('valorant-lore');
+  const lore = window.VALORANT_LORE;
+  root.innerHTML = `<section class="page-intro lore-intro"><div><div class="eyebrow"><span></span> OPOWIEŚĆ ŚWIATA GRY</div><h1>HISTORIA <em>VALORANT.</em></h1><p>Scenariusz do czytania na głos. Poznaj główną oś fabularną: od Pierwszego Światła i radianitu, przez konflikt Alpha z Omegą, aż po śledztwo w sprawie Scions of Hourglass. Riot rozwija historię fragmentami, dlatego w tekście oddzielam potwierdzone wydarzenia od wątków, które nadal pozostają tajemnicą.</p><div class="lore-read-time">SCENARIUSZ NARRACYJNY · ${lore.chapters.length} ROZDZIAŁÓW</div></div></section><article class="lore-script">${lore.chapters.map((chapter,index)=>`<section class="lore-chapter"><div class="eyebrow small"><span></span> ROZDZIAŁ ${String(index+1).padStart(2,'0')}</div><h2>${esc(chapter.title)}</h2>${chapter.paragraphs.map(paragraph=>`<p>${esc(paragraph)}</p>`).join('')}</section>`).join('')}</article><section class="lore-sources"><div class="eyebrow small"><span></span> ŹRÓDŁA RIOT</div><div>${lore.sources.map(([label,url])=>`<a href="${esc(url)}" target="_blank" rel="noreferrer">${esc(label)} ↗</a>`).join('')}</div></section>`;
 }
 function renderGlossary() {
   updateNav('glossary');
@@ -826,6 +836,7 @@ function showScreen(screen) {
   updateNav(screen);
   if (screen === 'roles') renderRoles();
   else if (screen === 'agents') renderAgents();
+  else if (screen === 'valorant-lore') renderValorantLore();
   else if (screen === 'maps') renderMapsLesson();
   else if (screen === 'ranks') renderRanks();
   else if (screen === 'weapons') renderWeapons();
