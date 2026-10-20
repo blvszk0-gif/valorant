@@ -57,6 +57,13 @@ window.VALORANT_LORE = {
       ]
     },
     {
+      title: 'WHY WE FIGHT i WHY WE FIGHT BACK',
+      paragraphs: [
+        'Riot kontynuuje opowieść także poza klasycznymi zwiastunami odcinków. W materiale WHY WE FIGHT, przygotowanym na piątą rocznicę gry, wracają obrazy Pierwszego Światła i osobiste historie agentów. To przypomnienie, że wielki konflikt między światami składa się również z ludzkich strat, rodzinnych więzi i decyzji podejmowanych przez poszczególne osoby.',
+        'WHY WE FIGHT BACK przenosi uwagę na agentów z Omegi. W centrum wydarzeń jest Viper z Legionu, a film pokazuje jej bliską, romantyczną i skomplikowaną więź z Omega Chamberem. Gdy Chamber zostaje ciężko ranny, Viper rusza po odwet. Riot wrócił do tego wątku w oficjalnym panelu lore; w 2026 roku ukazała się też karta gracza „For Retribution”, nawiązująca do sceny z tą parą. To ważne rozróżnienie: film pokazuje wersje agentów z Omegi. Nie potwierdza automatycznie, że Viper i Chamber z Alpha są parą.'
+      ]
+    },
+    {
       title: 'Gdzie historia jest teraz?',
       paragraphs: [
         'Główna oś fabularna prowadzi od Pierwszego Światła i pojawienia się radianitu, przez katastrofę w Wenecji i ujawnienie Omegi, aż po wyprawy Protokółu na drugi świat oraz śledztwo w sprawie Scions of Hourglass. Po RECKONING fabuła nadal rozwija się w krótszych fragmentach: oficjalne aktualizacje dodawały nowe rozmowy między agentami, a mapy i przedmioty w bazie Protokółu zawierają kolejne ślady wydarzeń. Nie ma jednego finału, po którym wszystkie zagadki zostają rozwiązane: VALORANT opowiada historię w odcinkach i zostawia część wątków otwartą.',
@@ -67,6 +74,9 @@ window.VALORANT_LORE = {
   sources: [
     ['The Story of VALORANT so far — Riot', 'https://playvalorant.com/en-us/news/dev/the-story-of-valorant-so-far/'],
     ['Patch 9.0: nowe rozmowy agentów — Riot', 'https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-9-0/'],
+    ['WHY WE FIGHT BACK — Season 2026 — VALORANT', 'https://www.youtube.com/watch?v=AnGdzz-XWcE'],
+    ['WHY WE FIGHT — Year 5 Music Video — VALORANT', 'https://www.youtube.com/watch?v=jAj_nbWYb7g'],
+    ['Patch 12.01: panel lore o Viper i Chamberze — Riot', 'https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-12-01/'],
     ['From the Archives: The Sting Audio Logs — Riot', 'https://playvalorant.com/en-us/news/game-updates/from-the-archives-the-sting-audio-logs-valorant/'],
     ['Controlled Ruptures: Fracture — Riot', 'https://playvalorant.com/en-gb/news/dev/controlled-ruptures-making-valorant-s-fracture/'],
     ['Lotus: Unearthing VALORANT’s Lost City — Riot', 'https://playvalorant.com/en-us/news/dev/lotus-unearthing-valorant-s-lost-city/'],

@@ -9,7 +9,9 @@ const roleEnglishNames = { Inicjator: 'Initiator', Szturmowiec: 'Duelist', Stra�
 function roleDisplayName(role) { return `${role} / ${roleEnglishNames[role] || role}`; }
 const agentRelationships = {
   Raze: 'Jest w związku z Killjoy. Ich relacja została potwierdzona w oficjalnej historii VALORANT.',
-  Killjoy: 'Jest w związku z Raze. Ich relacja została potwierdzona w oficjalnej historii VALORANT.'
+  Killjoy: 'Jest w związku z Raze. Ich relacja została potwierdzona w oficjalnej historii VALORANT.',
+  Chamber: 'Na Omedze Chamber i Viper są przedstawieni jako mający romantyczną, złożoną relację. Dotyczy to ich wersji z Omegi — relacja agentów z Alpha nie została tym potwierdzona.',
+  Viper: 'Na Omedze Viper i Chamber są przedstawieni jako mający romantyczną, złożoną relację. Dotyczy to ich wersji z Omegi — relacja agentów z Alpha nie została tym potwierdzona.'
 };
 const roleInfo = {
   'Inicjator': { icon: 'valorant_role_jpg/Inicjator_rola.jpg', examples: 'Sova · Gekko · Skye' },
