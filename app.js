@@ -191,7 +191,20 @@ function renderExtras() {
 function renderValorantLore() {
   updateNav('valorant-lore');
   const lore = window.VALORANT_LORE;
-  root.innerHTML = `<section class="page-intro lore-intro"><div><div class="eyebrow"><span></span> OPOWIEŚĆ ŚWIATA GRY</div><h1>HISTORIA <em>VALORANT.</em></h1><p>Scenariusz do czytania na głos. Poznaj główną oś fabularną: od Pierwszego Światła i radianitu, przez konflikt Alpha z Omegą, aż po śledztwo w sprawie Scions of Hourglass. Riot rozwija historię fragmentami, dlatego w tekście oddzielam potwierdzone wydarzenia od wątków, które nadal pozostają tajemnicą.</p><div class="lore-read-time">SCENARIUSZ NARRACYJNY · ${lore.chapters.length} ROZDZIAŁÓW</div></div></section><article class="lore-script">${lore.chapters.map((chapter,index)=>`<section class="lore-chapter"><div class="eyebrow small"><span></span> ROZDZIAŁ ${String(index+1).padStart(2,'0')}</div><h2>${esc(chapter.title)}</h2>${chapter.paragraphs.map(paragraph=>`<p>${esc(paragraph)}</p>`).join('')}</section>`).join('')}</article><section class="lore-sources"><div class="eyebrow small"><span></span> ŹRÓDŁA RIOT</div><div>${lore.sources.map(([label,url])=>`<a href="${esc(url)}" target="_blank" rel="noreferrer">${esc(label)} ↗</a>`).join('')}</div></section>`;
+  const videos = [
+    ['WHY WE FIGHT BACK', 'https://www.youtube.com/watch?v=AnGdzz-XWcE'],
+    ['WHY WE FIGHT', 'https://www.youtube.com/watch?v=jAj_nbWYb7g'],
+    ['DUALITY', 'https://www.youtube.com/watch?v=-M_r8MKQ3mo&pp=ygUQRFVBTElUWSB2YWxvcmFudA%3D%3D'],
+    ['DUELISTS', 'https://www.youtube.com/watch?v=e_E9W2vsRbQ'],
+    ['REVELATION', 'https://www.youtube.com/watch?v=XfuMEmcz3k0'],
+    ['SHATTERED', 'https://www.youtube.com/watch?v=PlpqhZiumDM'],
+    ['UNMADE', 'https://www.youtube.com/watch?v=sUoSPryMZr0'],
+    ['RECKONING', 'https://www.youtube.com/watch?v=q2eLOupmraQ']
+  ];
+  const videoTitles = new Map(videos);
+  const videoPattern = new RegExp(`\\b(${videos.map(([title]) => title).join('|')})\\b`, 'g');
+  const paragraphMarkup = paragraph => esc(paragraph).replace(videoPattern, title => `<a href="${esc(videoTitles.get(title))}" target="_blank" rel="noreferrer">${title}</a>`);
+  root.innerHTML = `<section class="page-intro lore-intro"><div><div class="eyebrow"><span></span> OPOWIEŚĆ ŚWIATA GRY</div><h1>HISTORIA <em>VALORANT.</em></h1><p>Scenariusz do czytania na głos. Poznaj główną oś fabularną: od Pierwszego Światła i radianitu, przez konflikt Alpha z Omegą, aż po śledztwo w sprawie Scions of Hourglass. Riot rozwija historię fragmentami, dlatego w tekście oddzielam potwierdzone wydarzenia od wątków, które nadal pozostają tajemnicą.</p><div class="lore-read-time">SCENARIUSZ NARRACYJNY · ${lore.chapters.length} ROZDZIAŁÓW</div></div></section><article class="lore-script">${lore.chapters.map((chapter,index)=>`<section class="lore-chapter"><div class="eyebrow small"><span></span> ROZDZIAŁ ${String(index+1).padStart(2,'0')}</div><h2>${esc(chapter.title)}</h2><div class="valorant-lore-audio"><label for="valorant-lore-audio-${index}">NAGRANIE ROZDZIAŁU ${String(index+1).padStart(2,'0')}</label><audio id="valorant-lore-audio-${index}" controls preload="none" src="${esc(mediaUrl(`valorant_history/historia-valorant-${String(index+1).padStart(2,'0')}.mp3`))}" aria-label="${esc(chapter.title)} — nagranie MP3">Twoja przeglądarka nie obsługuje odtwarzania audio.</audio></div>${chapter.paragraphs.map(paragraph=>`<p>${paragraphMarkup(paragraph)}</p>`).join('')}</section>`).join('')}</article><section class="lore-sources"><div class="eyebrow small"><span></span> ŹRÓDŁA RIOT</div><div>${lore.sources.map(([label,url])=>`<a href="${esc(url)}" target="_blank" rel="noreferrer">${esc(label)} ↗</a>`).join('')}</div></section>`;
 }
 function renderGlossary() {
   updateNav('glossary');

@@ -72,6 +72,9 @@ window.VALORANT_LORE = {
     }
   ],
   sources: [
+    ['DUALITY — Official Cinematic — VALORANT', 'https://www.youtube.com/watch?v=-M_r8MKQ3mo&pp=ygUQRFVBTElUWSB2YWxvcmFudA%3D%3D'],
+    ['DUELISTS — Official Launch Cinematic — VALORANT', 'https://www.youtube.com/watch?v=e_E9W2vsRbQ'],
+    ['REVELATION — Episode 6 Cinematic — VALORANT', 'https://www.youtube.com/watch?v=XfuMEmcz3k0'],
     ['The Story of VALORANT so far — Riot', 'https://playvalorant.com/en-us/news/dev/the-story-of-valorant-so-far/'],
     ['Patch 9.0: nowe rozmowy agentów — Riot', 'https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-9-0/'],
     ['WHY WE FIGHT BACK — Season 2026 — VALORANT', 'https://www.youtube.com/watch?v=AnGdzz-XWcE'],
