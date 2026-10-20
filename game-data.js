@@ -296,7 +296,7 @@ window.VALORANT_DATA = [
   {
     "id": "e370fa57-4757-3604-3648-499e1f642d3f",
     "name": "Gekko",
-    "description": "Gekko Angeleno przewodzi zgranej ekipie groźnych stworzeń. Jego kumple szarżują przed siebie, odrzucając wrogów z drogi, a Gekko ściga ich, by przegrupowali się i ponownie ruszyli do akcji.",
+    "description": "Gekko pochodzi z Los Angeles w Kalifornii — jest Angeleno, czyli mieszkańcem Miasta Aniołów. Przewodzi zgranej ekipie groźnych stworzeń. Jego kumple szarżują przed siebie, odrzucając wrogów z drogi, a Gekko ściga ich, by przegrupowali się i ponownie ruszyli do akcji.",
     "role": "Inicjator",
     "roleDescription": "Inicjatorzy obserwują teren i przygotowują swoją drużynę, by ta mogła wejść do akcji i odepchnąć obrońców.",
     "roleIcon": "valorant_role_jpg/Inicjator_rola.jpg",
