@@ -726,35 +726,64 @@ function renderMapPuzzle(map) {
   root.innerHTML = `<section class="page-intro"><div class="eyebrow"><span></span> LEKCJA MAP · ${esc(map.name).toLocaleUpperCase('pl')}</div><h1>CALL-OUTY <em>NA MIEJSCA.</em></h1><p>Przeciągnij nazwę z listy na pole mapy. Na telefonie stuknij nazwę, a potem właściwe pole. Losujemy osiem miejsc z puli wszystkich calloutów tej mapy.</p></section><section class="map-puzzle-layout"><div class="map-puzzle-board"><div class="map-puzzle-map" role="group" aria-label="Mapa ${esc(map.name)} z polami calloutów"><img src="${esc(map.image)}" alt="Podkład mapy ${esc(map.name)}" draggable="false">${activeMapRound.map((spot,i)=>`<button class="map-drop-slot" data-zone="${spot.id}" style="left:${spot.x}%;top:${spot.y}%" aria-label="Pole ${i+1} na mapie"><span>${i+1}</span></button>`).join('')}</div><div class="map-game-status"><span id="map-message" aria-live="polite">Wybierz klocek i dopasuj go do pola na mapie.</span><span id="map-score">0 / ${activeMapRound.length}</span></div><div class="map-answer-review" id="map-answer-review" aria-live="polite"></div></div><aside class="map-puzzle-aside"><div class="eyebrow small"><span></span> KLOCKI DO UŁOŻENIA</div><div class="map-tile-bank">${tiles.map(tile=>`<button class="map-name-tile" draggable="true" data-tile="${tile.id}">${esc(tile.label)}</button>`).join('')}</div><button class="primary-button map-check-button" id="map-check" disabled>SPRAWDŹ UŁOŻENIE <span>✓</span></button><button class="secondary-button map-reset-button" id="map-reset">NOWA LOSOWA RUNDA</button><button class="text-button map-back-button" id="map-back">← WRÓĆ DO MAP</button></aside></section>`;
   const slots = [...root.querySelectorAll('.map-drop-slot')];
   const bank = root.querySelector('.map-tile-bank');
+  const nameTiles = [...root.querySelectorAll('.map-name-tile')];
   const check = root.querySelector('#map-check');
   const updateCheck = () => { check.disabled = slots.some(slot => !slot.dataset.tile); };
+  const clearSlot = slot => {
+    if (!slot?.dataset.tile || mapPuzzleChecked) return;
+    const tile = nameTiles.find(item => item.dataset.tile === slot.dataset.tile);
+    if (tile) tile.classList.remove('placed');
+    slot.dataset.tile = '';
+    slot.querySelector('span').textContent = slot.dataset.number;
+    slot.classList.remove('filled');
+    updateCheck();
+  };
   const placeTile = (tileId, slot) => {
     if (mapPuzzleChecked) return;
-    const tile = root.querySelector(`[data-tile="${tileId}"]`);
+    const tile = nameTiles.find(item => item.dataset.tile === tileId);
     if (!tile || !slot) return;
     const oldSlot = root.querySelector(`.map-drop-slot[data-tile="${tileId}"]`);
+    if (oldSlot === slot) {
+      clearSlot(slot);
+      selectedMapTile = null;
+      tile.classList.remove('selected');
+      root.querySelector('#map-message').textContent = 'Miejsce zwolnione. Wybierz klocek i dopasuj go do pola na mapie.';
+      return;
+    }
     if (oldSlot) { oldSlot.dataset.tile = ''; oldSlot.querySelector('span').textContent = oldSlot.dataset.number; oldSlot.classList.remove('filled'); }
     const occupyingId = slot.dataset.tile;
     if (occupyingId && occupyingId !== tileId) {
-      const occupyingTile = root.querySelector(`[data-tile="${occupyingId}"]`);
+      const occupyingTile = nameTiles.find(item => item.dataset.tile === occupyingId);
       if (occupyingTile) { occupyingTile.classList.remove('placed'); bank.append(occupyingTile); }
     }
     slot.dataset.tile = tileId;
     slot.querySelector('span').textContent = tile.textContent;
     slot.classList.add('filled');
     tile.classList.toggle('placed', slots.some(item => item.dataset.tile === tileId));
+    tile.classList.remove('selected');
+    selectedMapTile = null;
+    root.querySelector('#map-message').textContent = 'Wybierz kolejny klocek albo kliknij zajęte pole, aby je zwolnić.';
     updateCheck();
   };
   slots.forEach((slot,i) => {
     slot.dataset.number = String(i+1);
     slot.addEventListener('dragover', event => event.preventDefault());
     slot.addEventListener('drop', event => { event.preventDefault(); placeTile(event.dataTransfer.getData('text/plain'), slot); });
-    slot.addEventListener('click', () => { if (selectedMapTile) placeTile(selectedMapTile, slot); });
+    slot.addEventListener('click', () => {
+      if (selectedMapTile) placeTile(selectedMapTile, slot);
+      else clearSlot(slot);
+    });
   });
-  root.querySelectorAll('.map-name-tile').forEach(tile => {
+  nameTiles.forEach(tile => {
     tile.addEventListener('dragstart', event => event.dataTransfer.setData('text/plain', tile.dataset.tile));
     tile.addEventListener('click', () => {
-      root.querySelectorAll('.map-name-tile').forEach(item => item.classList.remove('selected'));
+      if (selectedMapTile === tile.dataset.tile) {
+        selectedMapTile = null;
+        tile.classList.remove('selected');
+        root.querySelector('#map-message').textContent = 'Wybór anulowany. Wybierz klocek i dopasuj go do pola na mapie.';
+        return;
+      }
+      nameTiles.forEach(item => item.classList.remove('selected'));
       selectedMapTile = tile.dataset.tile;
       tile.classList.add('selected');
       root.querySelector('#map-message').textContent = `Kliknij właściwe pole dla: ${tile.textContent}`;
