@@ -137,7 +137,9 @@ function renderAgentGrid(filter = '') {
   const grid = document.querySelector('#agent-grid');
   if (!grid) return;
   const query = filter.trim().toLocaleLowerCase('pl');
-  const shown = agents.filter(a => a.name.toLocaleLowerCase('pl').includes(query) || roleDisplayName(a.role).toLocaleLowerCase('pl').includes(query));
+  const shown = agents
+    .filter(a => a.name.toLocaleLowerCase('pl').includes(query) || roleDisplayName(a.role).toLocaleLowerCase('pl').includes(query))
+    .sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
   grid.innerHTML = shown.map(agent => `<button class="agent-tile ${selectedAgent?.id === agent.id ? 'selected' : ''}" data-agent="${esc(agent.id)}"><img src="${esc(agent.portrait)}" alt=""><span><b>${esc(agent.name)}</b><small>${esc(roleDisplayName(agent.role))}</small></span><i>↗</i></button>`).join('') || '<p class="empty-state">Nie znaleziono agenta.</p>';
   grid.querySelectorAll('[data-agent]').forEach(button => button.addEventListener('click', () => {
     selectedAgent = agents.find(a => a.id === button.dataset.agent) || agents[0];
