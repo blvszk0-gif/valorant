@@ -1,6 +1,6 @@
 # Spike School — mini-kurs VALORANT
 
-Statyczna strona po polsku: lekcja 1 o rolach, lekcja 2 z 29 agentami, quizy z czterema odpowiedziami oraz dodatkowe nagrania o broniach i rozgrywce. Postęp zapisuje się lokalnie w przeglądarce.
+Statyczna strona po polsku: lekcja 1 o rolach, lekcja 2 z atlasem agentów, quizy z czterema odpowiedziami oraz dodatkowe nagrania o broniach i rozgrywce. Postęp zapisuje się lokalnie w przeglądarce.
 
 ## Podgląd lokalny
 

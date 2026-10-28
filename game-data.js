@@ -1072,5 +1072,47 @@ window.VALORANT_DATA = [
         "icon": "valorant_umiejetnosci_jpg/Yoru_Ult_Drift_Przez_Wymiary.jpg"
       }
     ]
+  },
+  {
+    "id": "ddd5a15c-4fbe-42fa-3789-11a55ca5ee04",
+    "name": "Hush",
+    "description": "Chińska agentka Hush pochodzi z prowincji Guangdong. Używa telekinezy, by rozwiązywać najtajniejsze sprawy. Walczy z precyzją i finezją, przekierowując swoje umiejętności w locie, by rozbić szyk wrogów, przemieścić ich i zawiesić w powietrzu.",
+    "role": "Szturmowiec",
+    "roleDescription": "Szturmowcy otwierają przestrzeń i jako pierwsi podejmują walkę, wykorzystując mobilność oraz presję.",
+    "roleIcon": "valorant_role_jpg/Szturmowiec_rola.jpg",
+    "portrait": "https://media.valorant-api.com/agents/ddd5a15c-4fbe-42fa-3789-11a55ca5ee04/fullportrait.png",
+    "video": null,
+    "abilities": [
+      {
+        "name": "Błyskówka",
+        "slot": "Ability1",
+        "description": "Rzuć albo przygotuj pocisk i aktywuj go ponownie, aby skierować go w stronę celownika. Wybucha po zetknięciu z powierzchnią lub po chwili, oślepiając graczy, którzy na niego patrzą.",
+        "icon": "https://media.valorant-api.com/agents/ddd5a15c-4fbe-42fa-3789-11a55ca5ee04/abilities/ability1/displayicon.png"
+      },
+      {
+        "name": "Przemieszczenie",
+        "slot": "Ability2",
+        "description": "Rzuć albo przygotuj ładunek i skieruj go ponownie w stronę celownika. Wybuch przyciąga graczy do środka; zderzenie z innym graczem lub powierzchnią powoduje ogłuszenie. Umiejętność odnawia się co dwa zabójstwa.",
+        "icon": "https://media.valorant-api.com/agents/ddd5a15c-4fbe-42fa-3789-11a55ca5ee04/abilities/ability2/displayicon.png"
+      },
+      {
+        "name": "Przepływ",
+        "slot": "Grenade",
+        "description": "Natychmiast utwórz kotwicę. Jeśli Hush jest w powietrzu, na chwilę zawiśnie w miejscu, po czym popędzi w kierunku kotwicy.",
+        "icon": "https://media.valorant-api.com/agents/ddd5a15c-4fbe-42fa-3789-11a55ca5ee04/abilities/grenade/displayicon.png"
+      },
+      {
+        "name": "Zawieszenie",
+        "slot": "Ultimate",
+        "description": "Wyślij przed siebie sterowany pocisk i zdetonuj go ponownie lub strzałem. Wybuch unosi wszystkich trafionych graczy w powietrze.",
+        "icon": "https://media.valorant-api.com/agents/ddd5a15c-4fbe-42fa-3789-11a55ca5ee04/abilities/ultimate/displayicon.png"
+      },
+      {
+        "name": "Telekineza",
+        "slot": "Passive",
+        "description": "Hush może podnosić broń i Spike’a oraz wchodzić w interakcję z przełącznikami z większej odległości.",
+        "icon": "https://media.valorant-api.com/agents/ddd5a15c-4fbe-42fa-3789-11a55ca5ee04/abilities/passive/displayicon.png"
+      }
+    ]
   }
 ];
