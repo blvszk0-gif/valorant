@@ -1081,7 +1081,7 @@ window.VALORANT_DATA = [
     "roleDescription": "Szturmowcy otwierają przestrzeń i jako pierwsi podejmują walkę, wykorzystując mobilność oraz presję.",
     "roleIcon": "valorant_role_jpg/Szturmowiec_rola.jpg",
     "portrait": "https://media.valorant-api.com/agents/ddd5a15c-4fbe-42fa-3789-11a55ca5ee04/fullportrait.png",
-    "video": null,
+    "video": "edytowane/2.30.mp4",
     "abilities": [
       {
         "name": "Błyskówka",

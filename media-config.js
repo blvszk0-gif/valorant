@@ -32,6 +32,7 @@ window.COURSE_DRIVE_FILES = {
   'edytowane/2.27.mp4': '1JqlLi3pr-6_k0pJkQoCHrhP28Tzl6gLZ',
   'edytowane/2.28.mp4': '1Bd2weSkeEuOlqB_NQJ8M7kQrp8jHeSlJ',
   'edytowane/2.29.mp4': '1Orx8727jDzyAXlfq__o_vLQQ48-uzgoh',
+  'edytowane/2.30.mp4': '1g_Yzq3HX8ATVkkzPS8Plpy2RWadNv3e0',
   'edytowane/3.1.mp4': '1IXO9j0BBEi30i6g242d8FIJKo0ZhWEbU',
   'edytowane/3.2.mp4': '1QwaOQSuyOyAnN010oqWTEZXYXxfnBNnc',
   'edytowane/3.3.mp4': '1-cbpncPAXZX-G1rmt6Q3mJ9_K_LAgxRO',
