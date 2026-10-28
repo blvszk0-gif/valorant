@@ -66,7 +66,7 @@ window.VALORANT_LORE = {
     {
       title: 'Gdzie historia jest teraz?',
       paragraphs: [
-        'Główna oś fabularna prowadzi od Pierwszego Światła i pojawienia się radianitu, przez katastrofę w Wenecji i ujawnienie Omegi, aż po wyprawy Protokółu na drugi świat oraz śledztwo w sprawie Scions of Hourglass. Po RECKONING fabuła nadal rozwija się w krótszych fragmentach: oficjalne aktualizacje dodawały nowe rozmowy między agentami, a mapy i przedmioty w bazie Protokółu zawierają kolejne ślady wydarzeń. Nie ma jednego finału, po którym wszystkie zagadki zostają rozwiązane: VALORANT opowiada historię w odcinkach i zostawia część wątków otwartą.',
+        'Główna oś fabularna prowadzi od Pierwszego Światła i pojawienia się radianitu, przez katastrofę w Wenecji i ujawnienie Omegi, aż po wyprawy Protokółu na drugi świat oraz śledztwo w sprawie Scions of Hourglass. Po RECKONING fabuła nadal rozwija się w krótszych fragmentach: oficjalne aktualizacje dodają nowe rozmowy między agentami, a mapy i przedmioty w bazie Protokółu zawierają kolejne ślady wydarzeń. Najnowszy zwiastun RISE AND FALL oraz materiały o Hush rozwijają jej osobistą historię — wcześniejszą pracę w Kingdom, więź z matką i przyjaźń z Sage — ale nie zmieniają dotąd głównego przebiegu konfliktu Alpha–Omega ani nie rozwiązują śledztwa Scions. Nie ma jednego finału, po którym wszystkie zagadki zostają rozwiązane: VALORANT opowiada historię w odcinkach i zostawia część wątków otwartą.',
         'Warto odróżniać kanon od interpretacji. Filmy, oficjalne opisy map, dialogi i materiały publikowane przez Riot są podstawą tej opowieści. Teorie fanów mogą łączyć poszlaki, ale nie należy ich przedstawiać jako potwierdzonych faktów. Dlatego scenariusz kończy się na tym, co oficjalne materiały wyraźnie pokazują, i zaznacza, gdzie odpowiedź wciąż nie padła.'
       ]
     }
@@ -78,6 +78,9 @@ window.VALORANT_LORE = {
     ['The Story of VALORANT so far — Riot', 'https://playvalorant.com/en-us/news/dev/the-story-of-valorant-so-far/'],
     ['Patch 9.0: nowe rozmowy agentów — Riot', 'https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-9-0/'],
     ['WHY WE FIGHT BACK — Season 2026 — VALORANT', 'https://www.youtube.com/watch?v=AnGdzz-XWcE'],
+    ['RISE AND FALL — Hush Agent Trailer — VALORANT', 'https://www.youtube.com/watch?v=AfcCyTsh4ag'],
+    ['Agent Cosplay Guide: Hush — Riot Games', 'https://playvalorant.com/en-gb/news/community/agent-cosplay-guide-hush/'],
+    ['Opis patcha VALORANT 13.09 — Riot Games', 'https://playvalorant.com/pl-pl/news/game-updates/valorant-patch-notes-1309/'],
     ['WHY WE FIGHT — Year 5 Music Video — VALORANT', 'https://www.youtube.com/watch?v=jAj_nbWYb7g'],
     ['Patch 12.01: panel lore o Viper i Chamberze — Riot', 'https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-12-01/'],
     ['From the Archives: The Sting Audio Logs — Riot', 'https://playvalorant.com/en-us/news/game-updates/from-the-archives-the-sting-audio-logs-valorant/'],
